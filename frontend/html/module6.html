@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Module 6 &mdash; Decision Engine | LogiYantra</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="stylesheet" href="/css/modules.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    // Authentication Guard
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem('ly_user') || '{}');
+        if (!u || !u.name) {
+          sessionStorage.setItem('ly_return_to', window.location.pathname);
+          window.location.replace('/login.html');
+        }
+      } catch (e) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+  <style>
+    /* ── Module 6 Visual & Analytics Styling ── */
+    .action-item {
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      border-left: 4px solid;
+      display: flex; align-items: flex-start; gap: 14px;
+      margin-bottom: 12px;
+      animation: slideInLeft 0.35s ease both;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .action-item:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateX(4px);
+    }
+    .action-item.CRITICAL { border-left-color: var(--danger);  }
+    .action-item.HIGH     { border-left-color: var(--warning); }
+    .action-item.MEDIUM   { border-left-color: var(--info);    }
+    .action-item.LOW      { border-left-color: var(--success); }
+    .action-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .action-name { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .action-reason { font-size: 0.80rem; color: var(--text-muted); line-height: 1.5; }
+    .action-cond { font-size: 0.72rem; color: var(--brand-sky); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+
+    .approval-banner {
+      margin-top: 18px; padding: 16px 20px;
+      background: rgba(255,193,7,0.08); border: 1px solid rgba(255,193,7,0.30);
+      border-radius: 14px; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .btn-approve {
+      padding: 8px 16px; border-radius: 8px; border: none;
+      background: linear-gradient(135deg, var(--brand-orange), var(--brand-gold));
+      color: #000; font-weight: 700; font-size: 0.80rem; cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-approve:hover { filter: brightness(1.1); transform: scale(1.02); }
+    .btn-approve:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Preset Scenarios */
+    .preset-container {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .preset-chip {
+      padding: 6px 12px; border-radius: 20px; font-size: 0.74rem; font-weight: 600;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease;
+    }
+    .preset-chip:hover {
+      background: rgba(255,140,66,0.15); border-color: var(--brand-orange); color: #fff;
+    }
+
+    /* Live Sliders */
+    .slider-row {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .slider-row input[type="range"] {
+      flex: 1; accent-color: var(--brand-orange); height: 6px;
+      background: rgba(255,255,255,0.10); border-radius: 4px;
+    }
+    .slider-val {
+      font-size: 0.82rem; font-weight: 700; color: var(--brand-gold);
+      min-width: 44px; text-align: right; font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Analytics Section */
+    .analytics-section {
+      margin-top: 36px; margin-bottom: 24px;
+    }
+    .analytics-section-title {
+      font-size: 0.80rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .analytics-section-title::after {
+      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+    }
+    .chart-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px; margin-bottom: 24px;
+    }
+    .chart-card {
+      background: rgba(255,255,255,0.04); backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+      padding: 22px 24px 20px; display: flex; flex-direction: column;
+    }
+    .chart-card-title {
+      font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .chart-card canvas { width: 100% !important; max-height: 280px; }
+
+    /* Policy Matrix Table */
+    .policy-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+    }
+    .policy-table th {
+      padding: 10px 12px; text-align: left; color: var(--text-muted);
+      border-bottom: 1px solid rgba(255,255,255,0.12); font-weight: 600;
+      text-transform: uppercase; font-size: 0.70rem; letter-spacing: 0.8px;
+    }
+    .policy-table td {
+      padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-secondary); vertical-align: middle;
+    }
+    .policy-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Architecture Flow Cards */
+    .flow-steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px; margin-bottom: 24px;
+    }
+    .flow-card {
+      padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; position: relative;
+    }
+    .flow-num {
+      width: 24px; height: 24px; border-radius: 50%; background: rgba(255,140,66,0.15);
+      color: var(--brand-orange); font-size: 0.72rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
+    }
+    .flow-title { font-size: 0.84rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .flow-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Pulse Status Glow */
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 0.82rem;
+      letter-spacing: 0.8px; text-transform: uppercase;
+    }
+    .status-pill.CRITICAL { background: rgba(239,83,80,0.15); color: #EF5350; border: 1px solid rgba(239,83,80,0.40); }
+    .status-pill.HIGH     { background: rgba(255,167,38,0.15); color: #FFA726; border: 1px solid rgba(255,167,38,0.40); }
+    .status-pill.MODERATE { background: rgba(79,195,247,0.15); color: #4FC3F7; border: 1px solid rgba(79,195,247,0.40); }
+    .status-pill.NORMAL   { background: rgba(129,199,132,0.15); color: #81C784; border: 1px solid rgba(129,199,132,0.40); }
+    .status-pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      box-shadow: 0 0 10px currentColor; animation: pulseGlow 1.6s infinite ease-in-out;
+    }
+    @keyframes pulseGlow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+  </style>
+</head>
+<body>
+  <div class="module-bg"></div>
+  <div class="module-overlay"></div>
+
+  <!-- Mobile Topbar & Backdrop -->
+  <div class="mobile-topbar">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">&#9776;</button>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;background:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Logi<span style="color:var(--brand-sky);-webkit-text-fill-color:var(--brand-sky);">Yantra</span></div>
+    <a href="/dashboard.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.8rem;display:flex;align-items:center;gap:4px;"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Hub</a>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><img src="../assets/logiyantra_logo.png" alt="LogiYantra Logo" class="sidebar-logo-img"><span>Logi<span style="color:var(--brand-sky)">Yantra</span></span></div>
+      <div class="sidebar-tagline">Think Smarter. Move Faster.</div>
+    </div>
+    <div class="sidebar-label">Navigation</div>
+    <a href="/dashboard.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
+    <div class="sidebar-label" style="margin-top:8px">Modules</div>
+    <a href="/module1.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></span> Demand Forecast</a>
+    <a href="/module2.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Delay Prediction</a>
+    <a href="/module3.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span> Route Optimizer</a>
+    <a href="/module4.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></span> Warehouse AI</a>
+    <a href="/module5.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Inventory Opt.</a>
+    <a href="/module6.html" class="sidebar-link active"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span> Decision Engine</a>
+    <a href="/module7.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></span> Explainable AI</a>
+    <div class="sidebar-bottom">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <div>
+          <div class="user-name" id="sidebarName">User</div>
+          <div class="user-role" id="sidebarRole">Logistics Analyst</div>
+        </div>
+      </div>
+      <button class="btn-signout" onclick="handleSignOut()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 14px;background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.25);border-radius:10px;color:#EF5350;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;" title="Sign out and return to landing page">
+        <svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="module-main">
+    <div class="module-header">
+      <div class="module-icon-lg"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+      <div>
+        <div class="module-number-label">Module 6 &bull; Multi-Echelon Orchestration</div>
+        <h1 class="module-title">Autonomous Decision Engine</h1>
+        <p class="module-subtitle">Synthesizes predictive risk signals from Delivery Delay, Warehouse Congestion, Route Disruptions, and Inventory Safety stock into ranked, policy-governed recommendations with human-in-the-loop sign-off.</p>
+      </div>
+    </div>
+
+    <!-- Quick Scenario Presets -->
+    <div class="preset-container">
+      <span style="font-size:0.74rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;margin-right:4px;">Operational Presets:</span>
+      <button class="preset-chip" onclick="applyPreset(0.92, 0.88, 0.75, 25, 100, true)">Critical Multi-Node Disruption</button>
+      <button class="preset-chip" onclick="applyPreset(0.82, 0.45, 0.70, 110, 100, true)">Route &amp; Carrier Delay Alert</button>
+      <button class="preset-chip" onclick="applyPreset(0.35, 0.75, 0.30, 85, 100, false)">Dock Congestion Surge</button>
+      <button class="preset-chip" onclick="applyPreset(0.25, 0.30, 0.20, 35, 100, false)">Buffer Stockout Breach</button>
+      <button class="preset-chip" onclick="applyPreset(0.18, 0.25, 0.22, 160, 100, true)">Safe Operational Baseline</button>
+    </div>
+
+    <div class="module-grid">
+      <!-- Input Panel -->
+      <div class="input-panel">
+        <div class="panel-title">Multi-Module Operational Inputs</div>
+        
+        <!-- Delay Risk Slider -->
+        <div class="form-group">
+          <label class="form-label" style="display:flex;justify-content:space-between;">
+            <span>Module 2 &bull; Delay Risk</span>
+            <span class="slider-val" id="val-delay">75.0%</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="m6-delay-range" min="0" max="1" step="0.01" value="0.75" oninput="syncInput('delay', this.value)"/>
+            <input class="form-control" type="number" id="m6-delay" step="0.01" min="0" max="1" value="0.75" style="width:75px;" oninput="syncRange('delay', this.value)"/>
+          </div>
+        </div>
+
+        <!-- Congestion Risk Slider -->
+        <div class="form-group">
+          <label class="form-label" style="display:flex;justify-content:space-between;">
+            <span>Module 4 &bull; Congestion Risk</span>
+            <span class="slider-val" id="val-cong">60.0%</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="m6-cong-range" min="0" max="1" step="0.01" value="0.60" oninput="syncInput('cong', this.value)"/>
+            <input class="form-control" type="number" id="m6-cong" step="0.01" min="0" max="1" value="0.60" style="width:75px;" oninput="syncRange('cong', this.value)"/>
+          </div>
+        </div>
+
+        <!-- Route Risk Slider -->
+        <div class="form-group">
+          <label class="form-label" style="display:flex;justify-content:space-between;">
+            <span>Module 3 &bull; Route Disruption Risk</span>
+            <span class="slider-val" id="val-route">30.0%</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="m6-route-range" min="0" max="1" step="0.01" value="0.30" oninput="syncInput('route', this.value)"/>
+            <input class="form-control" type="number" id="m6-route-risk" step="0.01" min="0" max="1" value="0.30" style="width:75px;" oninput="syncRange('route', this.value)"/>
+          </div>
+        </div>
+
+        <!-- Stock & ROP -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Current Stock (units)</label>
+            <input class="form-control" type="number" id="m6-stock" value="80" onchange="runDecision()"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Reorder Point (ROP)</label>
+            <input class="form-control" type="number" id="m6-rop" value="100" onchange="runDecision()"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Route Alternative Corridor Available</label>
+          <select class="form-control" id="m6-route" onchange="runDecision()">
+            <option value="true" selected>Yes &bull; Alternative corridor standby ready</option>
+            <option value="false">No &bull; Single corridor transit only</option>
+          </select>
+        </div>
+
+        <button class="submit-btn" onclick="runDecision()">Evaluate Operational Policies</button>
+      </div>
+
+      <!-- Output Panel -->
+      <div class="output-panel" id="m6-output">
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+          <h3>Awaiting Operational Telemetry</h3>
+          <p>Adjust the sliders or choose a preset scenario to trigger the autonomous multi-echelon rule engine.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Analytics & Visualizations Section ── -->
+    <div class="analytics-section">
+      <div class="analytics-section-title">Multi-Echelon Decision Analytics &amp; Risk Profiles</div>
+      
+      <!-- Chart Grid -->
+      <div class="chart-grid">
+        <!-- Chart 1: Multi-Risk Radar -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Multi-Node Risk Topology vs Policy Bounds</span>
+          </div>
+          <canvas id="chartRiskRadar"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Dashed rings indicate Alert (60-70%) and Critical (85%) threshold triggers.
+          </div>
+        </div>
+
+        <!-- Chart 2: Action Urgency Scores -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Action Priority &amp; Urgency Ranking</span>
+          </div>
+          <canvas id="chartActionScores"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Urgency score drives operational dispatch sequencing and human notification urgency.
+          </div>
+        </div>
+
+        <!-- Chart 3: Risk Balance Share -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Cross-Module Risk Share Balance</span>
+          </div>
+          <canvas id="chartRiskShare"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Identifies the predominant bottleneck source across logistics tiers.
+          </div>
+        </div>
+
+        <!-- Chart 4: Projected Risk Mitigation Impact -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Post-Mitigation Risk Trajectory</span>
+            <span id="mitigationDeltaBadge" class="badge" style="margin-left:auto;font-size:0.68rem;letter-spacing:0.5px;padding:3px 8px;border-radius:6px;background:rgba(76,175,80,0.18);border:1px solid rgba(76,175,80,0.4);color:#81C784;">-45% RISK</span>
+          </div>
+          <canvas id="chartMitigationImpact"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Simulates projected residual risk following execution of prioritized actions.
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture Topology & Operational Policy Matrix -->
+      <div class="chart-grid" style="grid-template-columns: 1fr 1fr;">
+        <!-- Card: Decision Architecture Workflow -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Decision Pipeline Topology</span>
+          </div>
+          <div class="flow-steps">
+            <div class="flow-card">
+              <div class="flow-num">1</div>
+              <div class="flow-title">Signals</div>
+              <div class="flow-desc">Ingests live feeds from M2, M3, M4, and M5.</div>
+            </div>
+            <div class="flow-card">
+              <div class="flow-num">2</div>
+              <div class="flow-title">Policies</div>
+              <div class="flow-desc">Validates against configurable thresholds in policies.json.</div>
+            </div>
+            <div class="flow-card">
+              <div class="flow-num">3</div>
+              <div class="flow-title">Prioritize</div>
+              <div class="flow-desc">Ranks: CRITICAL > HIGH > MEDIUM > LOW and deduplicates.</div>
+            </div>
+            <div class="flow-card">
+              <div class="flow-num">4</div>
+              <div class="flow-title">Human Gate</div>
+              <div class="flow-desc">Requires operator sign-off before dispatch execution.</div>
+            </div>
+          </div>
+          <div style="padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);line-height:1.6;">
+            <strong>System Safeguard:</strong> Module 6 operates under deterministic, auditable business policies. In the event of conflicting multi-tier alerts, high-impact safety rules preempt secondary optimizations.
+          </div>
+        </div>
+
+        <!-- Card: Live Threshold Policy Matrix Table -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Active Policy Matrix &amp; Trigger Status</span>
+          </div>
+          <table class="policy-table">
+            <thead>
+              <tr>
+                <th>Module &bull; Policy</th>
+                <th>Alert / Crit Bound</th>
+                <th>Action Generated</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="policyTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+        const iconMap = {
+      REROUTE_SHIPMENT: '<span class="action-tag tag-route">REROUTE</span>',
+      REVIEW_ALTERNATIVE_ROUTE: '<span class="action-tag tag-route">ALT ROUTE</span>',
+      TRIGGER_REPLENISHMENT: '<span class="action-tag tag-stock">RESTOCK</span>',
+      RESCHEDULE_WAREHOUSE_FLOW: '<span class="action-tag tag-dock">FLOW</span>',
+      NOTIFY_CUSTOMER: '<span class="action-tag tag-notify">NOTIFY</span>',
+      EXPEDITE_AND_NOTIFY: '<span class="action-tag tag-expedite">EXPEDITE</span>',
+      NO_ACTION_REQUIRED: '<span class="action-tag tag-safe">NORMAL</span>'
+    };
+
+    let chartRadarInstance = null;
+    let chartActionInstance = null;
+    let chartShareInstance = null;
+    let chartMitigationInstance = null;
+
+    function syncInput(prefix, val) {
+      document.getElementById(`m6-${prefix}`).value = val;
+      document.getElementById(`val-${prefix}`).textContent = (parseFloat(val) * 100).toFixed(1) + '%';
+      runDecision();
+    }
+    function syncRange(prefix, val) {
+      document.getElementById(`m6-${prefix}-range`).value = val;
+      document.getElementById(`val-${prefix}`).textContent = (parseFloat(val) * 100).toFixed(1) + '%';
+      runDecision();
+    }
+
+    function applyPreset(delay, cong, route, stock, rop, hasAlt) {
+      document.getElementById('m6-delay').value = delay;
+      document.getElementById('m6-delay-range').value = delay;
+      document.getElementById('val-delay').textContent = (delay * 100).toFixed(1) + '%';
+
+      document.getElementById('m6-cong').value = cong;
+      document.getElementById('m6-cong-range').value = cong;
+      document.getElementById('val-cong').textContent = (cong * 100).toFixed(1) + '%';
+
+      document.getElementById('m6-route-risk').value = route;
+      document.getElementById('m6-route-range').value = route;
+      document.getElementById('val-route').textContent = (route * 100).toFixed(1) + '%';
+
+      document.getElementById('m6-stock').value = stock;
+      document.getElementById('m6-rop').value = rop;
+      document.getElementById('m6-route').value = hasAlt ? 'true' : 'false';
+
+      runDecision();
+    }
+
+    async function runDecision() {
+      const out = document.getElementById('m6-output');
+      const delay = parseFloat(document.getElementById('m6-delay').value);
+      const cong = parseFloat(document.getElementById('m6-cong').value);
+      const route = parseFloat(document.getElementById('m6-route-risk').value);
+      const stock = parseFloat(document.getElementById('m6-stock').value);
+      const rop = parseFloat(document.getElementById('m6-rop').value);
+      const hasRouteAlt = document.getElementById('m6-route').value === 'true';
+
+      const payload = {
+        delay_risk: isNaN(delay) ? 0.75 : delay,
+        congestion_risk: isNaN(cong) ? 0.60 : cong,
+        route_risk: isNaN(route) ? 0.30 : route,
+        current_stock: isNaN(stock) ? 80 : stock,
+        stock_level: isNaN(stock) ? 80 : stock,
+        reorder_point: isNaN(rop) ? 100 : rop,
+        route_alternative_available: hasRouteAlt,
+        route_alternatives: hasRouteAlt ? [{ name: 'Northern Bypass Corridor', estimated_time_minutes: 42, route_risk_score: 0.22 }] : []
+      };
+
+      try {
+        const res = await fetch('/api/module6/decide', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) {
+          out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`;
+          return;
+        }
+
+        const r = res.result;
+        const actions = r.actions || [];
+        const primary = r.primary_action;
+        const status = r.overall_status || 'NORMAL';
+
+        out.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+            <div class="panel-title" style="margin-bottom:0;">Evaluated Operational Decisions</div>
+            <div class="status-pill ${status}">
+              <span class="status-pulse"></span>
+              Status: ${status}
+            </div>
+          </div>
+
+          <div style="padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-bottom:16px;">
+            <div style="font-size:0.70rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Primary Recommendation</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:1.15rem;font-weight:900;color:var(--brand-orange);display:flex;align-items:center;gap:10px;">
+              <span>${iconMap[primary] || '<span class="action-tag tag-safe">NORMAL</span>'}</span>
+              <span>${primary ? primary.replace(/_/g,' ') : 'MAINTAIN STANDARD OPERATIONS'}</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">
+              Ranked Action Queue (${actions.length} Triggered)
+            </div>
+            ${actions.length ? actions.map((a, i) => `
+              <div class="action-item ${a.priority}" style="animation-delay:${i * 0.06}s">
+                <div class="action-icon">${iconMap[a.action] || '<span class="action-tag tag-safe">ACTION</span>'}</div>
+                <div style="flex:1;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div class="action-name">${a.action.replace(/_/g, ' ')}</div>
+                    <span class="badge badge-${a.priority === 'CRITICAL' ? 'danger' : a.priority === 'HIGH' ? 'warning' : a.priority === 'MEDIUM' ? 'info' : 'success'}">${a.priority} &bull; ${(a.score * 100).toFixed(0)}%</span>
+                  </div>
+                  <div class="action-reason">${a.reason || ''}</div>
+                  <div class="action-cond">Rule: ${a.condition_triggered || a.source_module}</div>
+                </div>
+              </div>
+            `).join('') : `
+              <div style="padding:18px;text-align:center;color:var(--success);background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.20);border-radius:12px;font-size:0.86rem;">
+                <span class="status-indicator normal"></span> All operational telemetry parameters remain well within normal thresholds. No intervention required.
+              </div>
+            `}
+          </div>
+
+          ${r.requires_human_approval && actions.length ? `
+            <div class="approval-banner">
+              <div>
+                <strong style="color:var(--brand-gold);">Human Verification Required</strong>
+                <div style="font-size:0.74rem;color:var(--text-secondary);margin-top:2px;">Automated execution paused. Authorization is recorded for compliance audit.</div>
+              </div>
+              <button class="btn-approve" id="authBtn" onclick="authorizeAction()">Authorize Operational Dispatch</button>
+            </div>
+          ` : ''}
+
+          <div class="model-info" style="margin-top:14px;font-size:0.75rem;">
+            <strong>Missing Inputs:</strong> ${(r.missing_inputs || []).join(', ') || 'None &bull; Full observability active'}
+          </div>
+        `;
+
+        updateCharts(payload, actions, status);
+        updatePolicyTable(payload);
+
+      } catch (e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    function authorizeAction() {
+      const btn = document.getElementById('authBtn');
+      if (btn) {
+        btn.textContent = 'Authorized & Dispatched';
+        btn.style.background = 'rgba(76,175,80,0.25)';
+        btn.style.color = '#81C784';
+        btn.style.border = '1px solid #81C784';
+        btn.disabled = true;
+      }
+    }
+
+    function updateCharts(inputs, actions, overallStatus) {
+      const stockoutRisk = inputs.current_stock <= (inputs.reorder_point * 0.5) ? 0.95
+                         : inputs.current_stock <= inputs.reorder_point ? 0.70
+                         : 0.15;
+
+      // ── 1. Radar Chart ──
+      const radarCtx = document.getElementById('chartRiskRadar');
+      if (radarCtx) {
+        const radarData = {
+          labels: ['Delay Risk', 'Congestion Risk', 'Route Disruption', 'Stockout Risk'],
+          datasets: [
+            {
+              label: 'Observed Telemetry',
+              data: [inputs.delay_risk, inputs.congestion_risk, inputs.route_risk, stockoutRisk],
+              backgroundColor: overallStatus === 'CRITICAL' ? 'rgba(239,83,80,0.30)' : overallStatus === 'HIGH' ? 'rgba(255,167,38,0.30)' : 'rgba(79,195,247,0.30)',
+              borderColor: overallStatus === 'CRITICAL' ? '#EF5350' : overallStatus === 'HIGH' ? '#FFA726' : '#4FC3F7',
+              borderWidth: 2,
+              pointBackgroundColor: '#fff',
+              pointRadius: 4
+            },
+            {
+              label: 'Alert Threshold',
+              data: [0.70, 0.60, 0.60, 0.70],
+              borderColor: 'rgba(255,193,7,0.60)',
+              borderWidth: 1.5,
+              borderDash: [4, 4],
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Critical Threshold',
+              data: [0.85, 0.85, 0.85, 0.85],
+              borderColor: 'rgba(239,83,80,0.60)',
+              borderWidth: 1.5,
+              borderDash: [2, 2],
+              pointRadius: 0,
+              fill: false
+            }
+          ]
+        };
+
+        if (chartRadarInstance) {
+          chartRadarInstance.data = radarData;
+          chartRadarInstance.update();
+        } else {
+          chartRadarInstance = new Chart(radarCtx, {
+            type: 'radar',
+            data: radarData,
+            options: {
+              responsive: true,
+              scales: {
+                r: {
+                  min: 0, max: 1.0,
+                  ticks: { stepSize: 0.25, display: false },
+                  grid: { color: 'rgba(255,255,255,0.08)' },
+                  angleLines: { color: 'rgba(255,255,255,0.08)' },
+                  pointLabels: { color: 'rgba(255,255,255,0.75)', font: { size: 11, weight: '600' } }
+                }
+              },
+              plugins: {
+                legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,0.7)', boxWidth: 12 } }
+              }
+            }
+          });
+        }
+      }
+
+      // ── 2. Action Score Bar Chart ──
+      const actionCtx = document.getElementById('chartActionScores');
+      if (actionCtx) {
+        const actionLabels = actions.length ? actions.map(a => a.action.replace(/_/g, ' ')) : ['Standard Monitoring'];
+        const actionScores = actions.length ? actions.map(a => parseFloat((a.score * 100).toFixed(1))) : [10];
+        const actionColors = actions.length ? actions.map(a => 
+          a.priority === 'CRITICAL' ? '#EF5350' :
+          a.priority === 'HIGH' ? '#FFA726' :
+          a.priority === 'MEDIUM' ? '#4FC3F7' : '#81C784'
+        ) : ['#81C784'];
+
+        const barData = {
+          labels: actionLabels,
+          datasets: [{
+            label: 'Urgency Score (%)',
+            data: actionScores,
+            backgroundColor: actionColors,
+            borderRadius: 6,
+            borderWidth: 0
+          }]
+        };
+
+        if (chartActionInstance) {
+          chartActionInstance.data = barData;
+          chartActionInstance.update();
+        } else {
+          chartActionInstance = new Chart(actionCtx, {
+            type: 'bar',
+            data: barData,
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              scales: {
+                x: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.6)' } },
+                y: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 11 } } }
+              },
+              plugins: { legend: { display: false } }
+            }
+          });
+        }
+      }
+
+      // ── 3. Risk Share Doughnut Chart ──
+      const shareCtx = document.getElementById('chartRiskShare');
+      if (shareCtx) {
+        const shareData = {
+          labels: ['Delay (M2)', 'Congestion (M4)', 'Route (M3)', 'Stockout (M5)'],
+          datasets: [{
+            data: [inputs.delay_risk, inputs.congestion_risk, inputs.route_risk, stockoutRisk],
+            backgroundColor: ['#FFA726', '#AB47BC', '#4FC3F7', '#EF5350'],
+            borderWidth: 1,
+            borderColor: 'rgba(5,8,20,0.8)'
+          }]
+        };
+
+        if (chartShareInstance) {
+          chartShareInstance.data = shareData;
+          chartShareInstance.update();
+        } else {
+          chartShareInstance = new Chart(shareCtx, {
+            type: 'doughnut',
+            data: shareData,
+            options: {
+              responsive: true,
+              cutout: '65%',
+              plugins: {
+                legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,0.7)', boxWidth: 12 } }
+              }
+            }
+          });
+        }
+      }
+
+      // ── 4. Mitigation Impact Bar Chart ──
+      const impactCtx = document.getElementById('chartMitigationImpact');
+      if (impactCtx) {
+        const actionNames = actions.map(a => a.action);
+        const hasDelayAction = actionNames.some(a => a.includes('EXPEDITE') || a.includes('NOTIFY'));
+        const hasCongAction = actionNames.some(a => a.includes('RESCHEDULE'));
+        const hasRouteAction = actionNames.some(a => a.includes('REROUTE') || a.includes('ALTERNATIVE_ROUTE'));
+        const hasStockAction = actionNames.some(a => a.includes('REPLENISH'));
+
+        const preDelay = parseFloat((inputs.delay_risk * 100).toFixed(1));
+        const preCong = parseFloat((inputs.congestion_risk * 100).toFixed(1));
+        const preRoute = parseFloat((inputs.route_risk * 100).toFixed(1));
+        const preStock = parseFloat((stockoutRisk * 100).toFixed(1));
+
+        const postDelay = parseFloat(((hasDelayAction ? inputs.delay_risk * 0.38 : inputs.delay_risk) * 100).toFixed(1));
+        const postCong = parseFloat(((hasCongAction ? inputs.congestion_risk * 0.42 : inputs.congestion_risk) * 100).toFixed(1));
+        const postRoute = parseFloat(((hasRouteAction ? inputs.route_risk * 0.28 : inputs.route_risk) * 100).toFixed(1));
+        const postStock = parseFloat(((hasStockAction ? 0.12 : stockoutRisk) * 100).toFixed(1));
+
+        const avgPre = (preDelay + preCong + preRoute + preStock) / 4;
+        const avgPost = (postDelay + postCong + postRoute + postStock) / 4;
+        const reductionPct = Math.max(0, Math.round(((avgPre - avgPost) / (avgPre || 1)) * 100));
+
+        const badgeEl = document.getElementById('mitigationDeltaBadge');
+        if (badgeEl) {
+          if (reductionPct > 0) {
+            badgeEl.textContent = `-${reductionPct}% RISK EXPOSURE`;
+            badgeEl.style.background = 'rgba(76,175,80,0.18)';
+            badgeEl.style.borderColor = 'rgba(76,175,80,0.4)';
+            badgeEl.style.color = '#81C784';
+          } else {
+            badgeEl.textContent = 'OPTIMAL BASELINE';
+            badgeEl.style.background = 'rgba(79,195,247,0.18)';
+            badgeEl.style.borderColor = 'rgba(79,195,247,0.4)';
+            badgeEl.style.color = '#4FC3F7';
+          }
+        }
+
+        const impactData = {
+          labels: ['Delay (M2)', 'Congestion (M4)', 'Route (M3)', 'Stockout (M5)'],
+          datasets: [
+            {
+              label: 'Pre-Mitigation (Current)',
+              data: [preDelay, preCong, preRoute, preStock],
+              backgroundColor: 'rgba(239, 83, 80, 0.65)',
+              borderColor: '#EF5350',
+              borderWidth: 1,
+              borderRadius: 5
+            },
+            {
+              label: 'Post-Mitigation (Projected)',
+              data: [postDelay, postCong, postRoute, postStock],
+              backgroundColor: 'rgba(0, 230, 118, 0.65)',
+              borderColor: '#00E676',
+              borderWidth: 1,
+              borderRadius: 5
+            }
+          ]
+        };
+
+        if (chartMitigationInstance) {
+          chartMitigationInstance.data = impactData;
+          chartMitigationInstance.update();
+        } else {
+          chartMitigationInstance = new Chart(impactCtx, {
+            type: 'bar',
+            data: impactData,
+            options: {
+              responsive: true,
+              scales: {
+                x: {
+                  grid: { display: false },
+                  ticks: { color: 'rgba(255,255,255,0.75)', font: { size: 10, weight: '600' } }
+                },
+                y: {
+                  min: 0,
+                  max: 100,
+                  grid: { color: 'rgba(255,255,255,0.06)' },
+                  ticks: {
+                    color: 'rgba(255,255,255,0.6)',
+                    callback: v => v + '%'
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels: { color: 'rgba(255,255,255,0.7)', boxWidth: 12 }
+                },
+                tooltip: {
+                  callbacks: {
+                    label: context => ` ${context.dataset.label}: ${context.raw}%`
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+    }
+
+    function updatePolicyTable(inputs) {
+      const tbody = document.getElementById('policyTableBody');
+      if (!tbody) return;
+
+      const policies = [
+        { module: 'M2 Delivery', rule: 'Delay Risk >= 0.85', bound: '85.0%', val: inputs.delay_risk, action: 'EXPEDITE_AND_NOTIFY (CRITICAL)' },
+        { module: 'M2 Delivery', rule: 'Delay Risk >= 0.70', bound: '70.0%', val: inputs.delay_risk, action: 'NOTIFY_CUSTOMER (HIGH)' },
+        { module: 'M4 Warehouse', rule: 'Congestion >= 0.85', bound: '85.0%', val: inputs.congestion_risk, action: 'RESCHEDULE_WAREHOUSE_FLOW (CRITICAL)' },
+        { module: 'M4 Warehouse', rule: 'Congestion >= 0.60', bound: '60.0%', val: inputs.congestion_risk, action: 'RESCHEDULE_WAREHOUSE_FLOW (HIGH)' },
+        { module: 'M3 Transit', rule: 'Route Risk >= 0.85', bound: '85.0%', val: inputs.route_risk, action: 'REROUTE_SHIPMENT (CRITICAL)' },
+        { module: 'M3 Transit', rule: 'Route Risk >= 0.60', bound: '60.0%', val: inputs.route_risk, action: 'REVIEW_ALTERNATIVE_ROUTE (HIGH)' },
+        { module: 'M5 Inventory', rule: 'Stock <= 0.5 * ROP', bound: `${(inputs.reorder_point * 0.5).toFixed(0)} units`, val: inputs.current_stock, isStockCrit: true, action: 'TRIGGER_REPLENISHMENT (CRITICAL)' },
+        { module: 'M5 Inventory', rule: 'Stock <= ROP', bound: `${inputs.reorder_point} units`, val: inputs.current_stock, isStock: true, action: 'TRIGGER_REPLENISHMENT (HIGH)' }
+      ];
+
+      tbody.innerHTML = policies.map(p => {
+        let triggered = false;
+        if (p.isStockCrit) {
+          triggered = inputs.current_stock <= (inputs.reorder_point * 0.5);
+        } else if (p.isStock) {
+          triggered = inputs.current_stock <= inputs.reorder_point;
+        } else {
+          const thresh = parseFloat(p.bound) / 100.0;
+          triggered = p.val >= thresh;
+        }
+
+        return `
+          <tr>
+            <td><strong>${p.module}</strong><div style="font-size:0.70rem;color:var(--text-muted);">${p.rule}</div></td>
+            <td><code>${p.bound}</code></td>
+            <td style="font-weight:600;color:${triggered ? 'var(--brand-gold)' : 'var(--text-muted)'};">${p.action}</td>
+            <td>
+              <span class="badge badge-${triggered ? (p.action.includes('CRITICAL') ? 'danger' : 'warning') : 'success'}">
+                ${triggered ? '<span class="status-indicator alert"></span>TRIGGERED' : '<span class="status-indicator normal"></span>NORMAL'}
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Auto-initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check for incoming cross-module session handoffs
+      const incomingDelay = sessionStorage.getItem('ly_incoming_delay');
+      if (incomingDelay) {
+        try {
+          const d = JSON.parse(incomingDelay);
+          if (d.delay_risk !== undefined) {
+            document.getElementById('m6-delay').value = parseFloat(d.delay_risk).toFixed(2);
+            document.getElementById('m6-delay-range').value = parseFloat(d.delay_risk).toFixed(2);
+            document.getElementById('val-delay').textContent = (parseFloat(d.delay_risk) * 100).toFixed(1) + '%';
+          }
+        } catch(e) {}
+      }
+
+      const incomingCong = sessionStorage.getItem('ly_incoming_congestion');
+      if (incomingCong) {
+        try {
+          const c = JSON.parse(incomingCong);
+          if (c.congestion_risk !== undefined) {
+            document.getElementById('m6-cong').value = parseFloat(c.congestion_risk).toFixed(2);
+            document.getElementById('m6-cong-range').value = parseFloat(c.congestion_risk).toFixed(2);
+            document.getElementById('val-cong').textContent = (parseFloat(c.congestion_risk) * 100).toFixed(1) + '%';
+          }
+        } catch(e) {}
+      }
+
+      runDecision();
+    });
+  </script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('ly_user') || '{}');
+    if (user.name) {
+      const sName = document.getElementById('sidebarName');
+      const sAvatar = document.getElementById('sidebarAvatar');
+      const sRole = document.getElementById('sidebarRole');
+      if (sName) sName.textContent = user.name;
+      if (sAvatar) sAvatar.textContent = user.name[0].toUpperCase();
+      if (sRole && user.role) sRole.textContent = user.role + (user.employee_id ? ' • ' + user.employee_id : '');
+    }
+    function toggleSidebar() {
+      const sb = document.querySelector('.sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (sb) sb.classList.toggle('open');
+      if (bd) bd.classList.toggle('active');
+    }
+    function handleSignOut() {
+      if (confirm('Are you sure you want to sign out?')) {
+        localStorage.removeItem('ly_user');
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
+  </script>
+  <script src="/js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,5568 @@
+Feature,Importance
+Shipping Mode_Standard Class,0.105228186
+Days for shipment (scheduled),0.047428016
+Shipping Mode_First Class,0.04182414
+Shipping Mode_Same Day,0.025033465
+Shipping Mode_Second Class,0.02067949
+Type_TRANSFER,0.0052007902
+Type_DEBIT,0.0017069256
+Type_PAYMENT,0.001693057
+Type_CASH,0.0015612934
+Order City_Paris,0.0013048629
+Order City_Melbourne,0.0012762747
+Order Country_Italia,0.0012137558
+Order State_Querétaro,0.0011979052
+Order City_Wuxi,0.0011396074
+Customer City_Fairfield,0.0011356432
+Order State_Cheliábinsk,0.0011240056
+Order State_Nueva Jersey,0.0011062787
+Customer City_Chesapeake,0.0011055495
+Order State_Yogyakarta,0.0010897084
+Customer City_Hayward,0.0010882458
+Order Country_Cuba,0.001084834
+Order State_Punyab,0.001079755
+Customer City_Cerritos,0.0010599351
+Order City_Araranguá,0.0010582298
+Customer City_Revere,0.0010577907
+Order City_David,0.0010474338
+Order State_Guanajuato,0.0010473848
+Order City_San Francisco de Macorís,0.001039079
+Customer City_Fullerton,0.0010370932
+Customer City_Corona,0.0010275869
+Customer City_Colorado Springs,0.001025734
+Order Region_North Africa,0.0010195856
+Order City_Milpa Alta,0.0010188778
+Order Country_Panamá,0.0010174235
+Order City_Bendigo,0.0010149517
+Order State_Chiriquí,0.0010117755
+Customer City_Provo,0.0010079338
+Customer City_San Antonio,0.0010051859
+Customer City_Riverside,0.0010051671
+Customer City_Carlsbad,0.0010042563
+Order Country_Rusia,0.0009998054
+Order City_Orizaba,0.0009945347
+Order State_País Vasco,0.000991268
+Order State_Inglaterra,0.0009895305
+Order Country_Polonia,0.0009892023
+Order City_Chicago,0.0009880768
+Order State_Borgoña-Franco Condado,0.0009867987
+Order City_Bezerros,0.0009825641
+Order City_Le Mans,0.0009800704
+Order State_Massachusetts,0.0009794305
+Order City_Florence,0.0009792215
+Order Country_Malasia,0.0009791896
+Order Country_Japón,0.0009782104
+Customer State_WA,0.0009726231
+Customer City_Moreno Valley,0.00097241707
+Order Region_South Asia,0.00097134284
+Customer City_Hialeah,0.00097064074
+Order State_Bogotá,0.0009657431
+Order City_Pune,0.00096515263
+Customer City_Wyoming,0.0009618675
+Customer City_Algonquin,0.0009615192
+Order City_Cuernavaca,0.0009614719
+Customer City_Hickory,0.00096126227
+Customer City_Arlington,0.0009556953
+Order City_Depok,0.00095511694
+Order City_Baltimore,0.0009448586
+Order City_Philadelphia,0.0009433511
+Order City_Lusaka,0.00094131
+Customer City_Palatine,0.00094127894
+Order Region_Eastern Europe,0.00093898876
+Customer City_Denver,0.00093890884
+Order State_Victoria,0.0009353807
+Customer City_Winnetka,0.00093495485
+Order Country_Países Bajos,0.0009346104
+Order Country_Kenia,0.0009330627
+Order State_Michigan,0.00093249034
+Order State_Duarte,0.0009312473
+Order State_Michoacán,0.00092996104
+Order City_Krefeld,0.00092855224
+Customer City_Victorville,0.00092798896
+Order Country_Chile,0.00092618185
+Customer City_Duluth,0.00092533237
+Customer City_Bronx,0.0009240588
+Order City_Contramaestre,0.0009221946
+Order City_Mexicali,0.0009219907
+Order State_Veracruz,0.0009217934
+Order State_Pernambuco,0.0009200274
+Order City_Nagpur,0.0009182157
+Order State_Uttar Pradesh,0.0009179925
+Order State_Marañón,0.00091754994
+Customer City_Yonkers,0.0009154871
+Customer City_Mission,0.000915222
+Order City_Dakar,0.00091410376
+Order State_Porto,0.0009104551
+Customer City_Brooklyn,0.00091026555
+Order City_Recife,0.0009093946
+Order State_Haifa,0.0009088392
+Customer City_Greensburg,0.0009083127
+Customer City_Eagle Pass,0.00090712635
+Order City_Berlín,0.0009059365
+Order State_Murcia,0.00090558885
+Order City_León,0.00090457493
+Customer City_Virginia Beach,0.00090344547
+Order City_Nantes,0.00090291497
+Order City_Rangún,0.0009020431
+Order City_Springfield,0.0009003211
+Customer City_Gardena,0.00089901825
+Customer City_Laguna Niguel,0.00089793105
+Customer City_Amarillo,0.0008966074
+Order City_Chimbote,0.00089378824
+Order City_Jinan,0.00089373096
+Customer City_Longview,0.0008917965
+Order City_Lagos,0.0008917802
+Customer City_Clearfield,0.00089130417
+Customer City_Crystal Lake,0.00089101214
+Order Country_Marruecos,0.0008907567
+Order State_Xinjiang Uygur,0.00089070224
+Order City_Toluca,0.00088984886
+Customer State_AR,0.00088864646
+Order State_Karnataka,0.00088752055
+Order Country_Myanmar (Birmania),0.0008865723
+Order City_Tokio,0.0008863456
+Order City_San Francisco,0.0008845426
+Order City_Chongqing,0.00088376267
+Order State_Tokio,0.0008836676
+Customer City_Irwin,0.0008820111
+Order City_Bloomington,0.00088156667
+Customer City_Grand Prairie,0.0008812093
+Order City_Gothenburg,0.0008808832
+Customer City_Catonsville,0.00088065927
+Order City_Vilna,0.0008798967
+Customer City_Saint Louis,0.0008797906
+Order City_Itu,0.00087964267
+Order State_Benguela,0.0008795932
+Order City_San Jose,0.0008789005
+Order City_Huehuetenango,0.0008788841
+Order State_Viena,0.00087860634
+Order State_Bengala Occidental,0.00087781315
+Customer City_Antioch,0.0008773255
+Order City_Escuintla,0.0008769998
+Customer City_Lake Forest,0.0008766267
+Customer State_TN,0.0008762291
+Customer City_Burnsville,0.000875465
+Order City_Viena,0.0008751281
+Customer City_Murfreesboro,0.0008741269
+Customer City_El Paso,0.0008735578
+Order City_Los Angeles,0.0008722263
+Order State_Sajonia,0.00087185885
+Order State_Quintana Roo,0.0008717434
+Order City_Apopa,0.0008715059
+Customer City_San Diego,0.0008701516
+Order City_Santo Domingo,0.0008694234
+Order City_Santo André,0.00086894544
+Order Country_Benín,0.00086782116
+Order Country_Irak,0.0008670885
+Customer City_Lakewood,0.00086686894
+Order State_Anhui,0.00086679053
+Order State_Piamonte,0.0008667433
+Order City_Auburn,0.0008663018
+Order City_Shiraz,0.0008661405
+Order City_Villa Nueva,0.00086547504
+Customer City_Round Rock,0.00086394564
+Order City_Medellín,0.0008639226
+Order State_Escuintla,0.0008625493
+Order Country_Colombia,0.000862059
+Customer State_KS,0.0008620408
+Order City_Peoria,0.00086201023
+Order State_Bolívar,0.00086127216
+Order State_Paraná,0.0008595201
+Order City_Los Mochis,0.0008581732
+Order State_Santa Catarina,0.00085651194
+Order State_Brandenburgo,0.00085627777
+Order State_Teherán,0.00085354334
+Order State_Chongqing,0.00085321633
+Order City_Lyon,0.0008527068
+Order City_Roseville,0.0008523716
+Order City_Bra?ov,0.00085189537
+Order State_Al Bahr al Ahmar,0.0008515321
+Order City_Chinandega,0.0008512938
+Order State_Tamaulipas,0.0008510935
+Order State_Nueva York,0.00085085694
+Customer City_Azusa,0.0008503198
+Order State_Cuscatlán,0.00085011363
+Customer City_Santa Cruz,0.00085004495
+Customer City_Plano,0.00085001986
+Order State_Amberes,0.0008494056
+Order City_Villahermosa,0.0008493772
+Customer City_Wheeling,0.0008484526
+Order State_Liaoning,0.000847549
+Customer City_Stockton,0.00084700104
+Order City_Riverside,0.00084691035
+Customer City_Hampton,0.00084676774
+Order State_Jilin,0.0008467043
+Order Country_Alemania,0.00084663386
+Customer City_Denton,0.0008462854
+Customer City_Dallas,0.00084564637
+Order City_Guadalajara,0.0008434991
+Customer City_Costa Mesa,0.0008427934
+Order State_Durango,0.0008419942
+Order Country_El Salvador,0.0008414511
+Customer City_Greensboro,0.00084143685
+Customer State_MO,0.0008412198
+Order City_Dallas,0.0008401467
+Order State_Hubei,0.00083988265
+Customer City_Napa,0.00083896023
+Customer City_Jackson,0.0008389496
+Customer City_Del Rio,0.00083875604
+Order State_Limburgo,0.00083862076
+Customer City_Fremont,0.0008369781
+Order City_San Salvador,0.0008367762
+Order City_Durango,0.0008362523
+Order State_Lagos,0.0008360441
+Order State_Hunan,0.00083585246
+Order City_Munich,0.00083555846
+Order State_Bra?ov,0.0008338586
+Order City_Yonkers,0.0008315593
+Order State_Pinar del Río,0.0008314284
+Order City_Ulm,0.00083124306
+Customer City_Dundalk,0.0008303103
+Customer City_Bellflower,0.00083014317
+Order Country_República Democrática del Congo,0.0008297656
+Order City_Bari,0.00082903117
+Order City_Hargeysa,0.000828963
+Customer City_Harvey,0.00082886656
+Order State_Ontario,0.0008287249
+Customer City_Tustin,0.0008279979
+Order City_Soyapango,0.0008267346
+Order State_Atlántida,0.0008265481
+Order City_San Martín,0.00082568073
+Order State_Calabarzón,0.00082550023
+Customer City_Richardson,0.0008254228
+Customer City_Orange Park,0.0008252521
+Order City_Lowestoft,0.00082523905
+Order City_Villemomble,0.00082518824
+Order State_Ciudad Ho Chi Minh,0.0008248128
+Order State_Vilna,0.000824475
+Order City_Hurghada,0.00082390674
+Order City_Nacka,0.0008227926
+Order State_Java Occidental,0.0008224046
+Order City_Amberes,0.0008215773
+Order Country_Irán,0.0008193978
+Customer City_Garden Grove,0.00081920164
+Order City_Poza Rica de Hidalgo,0.0008168447
+Order City_Grand Prairie,0.00081663614
+Order City_Metepec,0.00081637176
+Order City_Cleveland,0.0008148656
+Customer City_Columbia,0.00081419066
+Order State_Kentucky,0.00081380137
+Order City_Córdoba,0.00081323565
+Order State_Bavaria,0.0008125142
+Customer City_Lockport,0.00081195
+Customer State_NC,0.0008114842
+Order City_Atlixco,0.0008108774
+Customer City_Baytown,0.00081037055
+Order City_Sakaka,0.0008074177
+Order City_Beauvais,0.00080700085
+Order City_Valencia,0.00080640544
+Order City_Yakarta,0.00080636045
+Customer City_Irving,0.0008044596
+Order State_Carabobo,0.00080443115
+Order City_Ibadan,0.0008041297
+Order City_Tipitapa,0.00080396415
+Order State_Heilongjiang,0.0008031093
+Order State_Skikda,0.00080215867
+Order State_Cross River,0.0008021142
+Customer City_Kaneohe,0.00080169574
+Customer City_South Richmond Hill,0.0008015531
+Order City_Sangli,0.00080133067
+Customer City_Lompoc,0.0008012305
+Customer City_Bend,0.0008004986
+Order Country_Israel,0.0007999846
+Order State_Bagdad,0.0007999353
+Customer City_Wichita,0.00079926645
+Order State_Chaco,0.0007975666
+Customer City_Vega Baja,0.0007971234
+Order State_Cortés,0.0007967902
+Order City_Miass,0.0007967589
+Customer City_Lawton,0.00079650915
+Order City_Choloma,0.000796505
+Order City_Seúl,0.0007964408
+Customer City_Hamilton,0.0007961803
+Order City_Kota,0.00079614494
+Order City_Mumbai,0.000796019
+Order City_Bandung,0.00079497567
+Order City_Cuajimalpa,0.000794771
+Order City_Le Havre,0.0007940115
+Customer City_College Station,0.0007939892
+Order City_Mcallen,0.0007938159
+Order City_Stoke-on-Trent,0.00079361274
+Order City_Brest,0.00079204916
+Order City_Arlington,0.00079170987
+Order State_Fars,0.00079154305
+Order State_Riau,0.00079127384
+Order State_Washington,0.0007909653
+Customer City_Memphis,0.00078959006
+Order Country_Namibia,0.00078895857
+Order City_Kuala Lumpur,0.00078889664
+Order City_Neiva,0.000788122
+Customer City_San Pedro,0.0007878443
+Customer City_Pico Rivera,0.00078780635
+Order State_Flanders Oriental,0.00078771776
+Order State_Kasai Occidental,0.00078731746
+Customer City_West Jordan,0.0007870138
+Order Country_Argelia,0.0007861028
+Order State_Buenos Aires (provincia),0.00078518706
+Order City_Blackpool,0.0007850592
+Order State_Centro,0.00078486744
+Order City_Fairfield,0.0007848602
+Order City_Solapur,0.0007846513
+Customer City_Weslaco,0.0007829843
+Order State_Bahía,0.0007827441
+Order City_Duisburg,0.0007826273
+Customer City_Sacramento,0.0007821891
+Order City_Ghent,0.000781742
+Order Country_Suecia,0.0007816554
+Customer City_Philadelphia,0.0007815803
+Order Region_Eastern Asia,0.0007810401
+Order City_Portland,0.00078054
+Customer City_Hilliard,0.00078025705
+Order City_Aswan,0.0007799024
+Customer City_Brownsville,0.0007793144
+Order City_Al Mahallah al Kubra,0.00077914353
+Order Country_Bielorrusia,0.00077873084
+Customer City_San Jose,0.00077760307
+Customer City_Medina,0.00077750103
+Order City_Huancayo,0.0007772523
+Order Country_Portugal,0.0007769774
+Order State_Tabasco,0.00077695487
+Order City_Nice,0.0007761226
+Order City_Phoenix,0.00077520875
+Order City_Mixco,0.00077451434
+Order State_Dar es Salaam,0.0007744905
+Customer City_Milford,0.00077372935
+Order State_Silesia,0.00077370787
+Order State_Nueva Gales del Sur,0.00077164196
+Order State_Finlandia del Sudoeste,0.0007714686
+Order Country_Indonesia,0.00077134673
+Order State_México,0.0007706182
+Order City_Cincinnati,0.000769715
+Order State_Lombardía,0.00076951075
+Order City_Benguela,0.0007676635
+Order City_Bogotá,0.0007670795
+Order State_Kivu del Sur,0.00076685107
+Order City_Basildon,0.00076681946
+Customer City_Elmhurst,0.0007659986
+Order City_Sydney,0.0007657718
+Customer City_Plainfield,0.0007652088
+Order State_Matanzas,0.00076510623
+Order City_Louisville,0.00076452683
+Customer City_Mentor,0.00076408044
+Order City_Brandenburgo,0.0007637826
+Customer City_Carson,0.0007636461
+Order Country_Tanzania,0.00076339307
+Customer City_Baltimore,0.00076312444
+Customer City_Apopka,0.000761929
+Order State_Java Oriental,0.00076127896
+Order Country_Ghana,0.0007610211
+Order State_Risaralda,0.0007607965
+Order City_Tegucigalpa,0.00076076976
+Order City_Turku,0.00075932196
+Customer City_Malden,0.0007587012
+Customer City_Garland,0.00075838895
+Customer City_Arlington Heights,0.00075667317
+Order City_Abidjan,0.00075647124
+Order City_Rome,0.0007564037
+Customer City_Knoxville,0.00075523474
+Order State_San Salvador,0.0007543695
+Customer City_Chula Vista,0.0007526944
+Order City_Kitwe,0.00075261743
+Order State_Rio Grande do Sul,0.00075211405
+Order City_Valladolid,0.0007515961
+Order City_Wellington,0.0007514387
+Order State_Baden-Wurtemberg,0.00075119577
+Order City_Turin,0.000750009
+Order City_Budapest,0.0007497714
+Order City_Warsaw,0.00074971915
+Order City_Tuxtla Gutiérrez,0.00074929086
+Customer City_Pomona,0.0007482819
+Order City_Bagdad,0.00074798334
+Order City_Cologne,0.0007478112
+Order City_Qena,0.0007473768
+Order City_Kananga,0.0007467331
+Order City_Laval,0.00074665406
+Order State_Chernihiv,0.0007458913
+Order Country_Bélgica,0.00074545684
+Order City_Dover,0.0007451577
+Order City_Ho Chi Minh City,0.00074432156
+Order State_Maryland,0.0007438325
+Order Country_Canada,0.0007437727
+Customer City_Dorchester Center,0.00074318267
+Customer City_Cleveland,0.00074313924
+Order City_San Andrés Tuxtla,0.00074239454
+Customer City_Decatur,0.0007422873
+Order City_San Nicolás de los Arroyos,0.000742079
+Order State_Campania,0.00074176164
+Customer City_Roseville,0.0007417572
+Customer City_Fresno,0.00074159924
+Customer City_Buffalo,0.00074151723
+Order City_Maracaibo,0.0007412411
+Customer State_LA,0.00074062776
+Order City_Aurora,0.00074047974
+Customer City_Far Rockaway,0.00074022723
+Order State_Estambul,0.0007399896
+Order State_Normandía,0.00073963864
+Customer City_Lenoir,0.0007387585
+Order State_Kurdistán,0.0007386451
+Customer City_Laredo,0.00073775084
+Order City_Santa Ana,0.00073688384
+Order Region_West Africa,0.00073648326
+Order City_São Miguel dos Campos,0.00073565566
+Order City_Changzhou,0.0007355252
+Customer City_Clarksville,0.00073529966
+Order City_Maryborough,0.00073506724
+Order City_Montenegro,0.00073416
+Order State_Baja California Sur,0.0007336172
+Order State_Colón,0.000732712
+Order City_Managua,0.000732302
+Order City_Mantes-la-Jolie,0.00073221273
+Order State_Ciudad de Almatý,0.0007320698
+Order City_Benevento,0.00073159946
+Order State_Oregón,0.00073071406
+Order City_Chitungwiza,0.0007306258
+Customer State_UT,0.00072981225
+Order City_Cancún,0.0007296813
+Order City_Montauban,0.0007296646
+Customer City_Reynoldsburg,0.00072962267
+Order State_Pensilvania,0.00072921574
+Order Country_Costa de Marfil,0.00072841963
+Customer City_Opelousas,0.00072826835
+Order State_Escocia,0.00072824414
+Order City_Wuppertal,0.0007282188
+Customer City_Las Cruces,0.0007280083
+Order City_Nieuwegein,0.000727108
+Customer City_Escondido,0.0007270094
+Order City_Dar es Salaam,0.00072677847
+Order City_Lippstadt,0.00072658784
+Order State_Ancash,0.0007264005
+Order City_Birmingham,0.0007261288
+Order State_Auvernia-Ródano-Alpes,0.0007238339
+Order City_Plainfield,0.0007235874
+Order City_Semarang,0.00072348106
+Customer City_San Bernardino,0.0007232565
+Order City_La Ceiba,0.00072325073
+Order City_La Paz,0.0007231758
+Order City_Pekín,0.0007230195
+Order State_Rajastán,0.0007229648
+Order State_Santiago de Chile,0.00072258484
+Order State_Dakar,0.00072255137
+Order City_Almaty,0.0007224142
+Customer City_Des Plaines,0.00072170794
+Order City_Perth,0.0007215769
+Customer City_Oxnard,0.000721541
+Order State_Chiapas,0.00072136027
+Order City_Wuchang,0.0007212462
+Order City_Pforzheim,0.0007210311
+Order State_Norte-Paso de Calais-Picardía,0.00072085165
+Customer City_Vista,0.00072080526
+Order State_Guatemala,0.0007205289
+Order City_Detroit,0.0007199357
+Order City_Cuscatancingo,0.0007198179
+Order Country_Hungría,0.0007197958
+Order State_Queensland,0.00071897265
+Customer City_Painesville,0.000718959
+Order City_Ivry-sur-Seine,0.00071895035
+Order City_Le Pontet,0.00071849604
+Customer City_Chicago,0.00071740977
+Order State_Artibonito,0.00071717333
+Order State_Renania-Palatinado,0.0007170585
+Order City_Buenos Aires,0.0007168161
+Customer City_Anaheim,0.00071635796
+Customer City_Bay Shore,0.00071550964
+Order State_Alejandría,0.00071546854
+Order City_Laredo,0.0007154371
+Customer City_Waipahu,0.00071489107
+Order City_Salamanca,0.0007148832
+Customer City_West Haven,0.0007147997
+Order City_Accra,0.0007147937
+Order City_Waterlooville,0.00071467005
+Order Country_Angola,0.000714197
+Order Country_Nigeria,0.0007140317
+Order City_Bologna,0.00071386667
+Order City_Colón,0.0007133599
+Order City_Caloundra,0.0007132683
+Order City_Roswell,0.00071308087
+Customer City_Houston,0.0007126767
+Order State_Aswan,0.0007126014
+Customer City_Madera,0.00071259955
+Customer City_Marion,0.0007124755
+Order City_Rimini,0.0007117071
+Customer City_Hawthorne,0.00071116467
+Customer City_Pittsburg,0.0007109115
+Order City_Parma,0.00070995814
+Order Country_Australia,0.00070969685
+Order City_Maracay,0.00070968736
+Customer City_Rancho Cucamonga,0.0007093099
+Customer City_Sheboygan,0.0007089261
+Order Region_South America,0.00070862356
+Order Country_Arabia Saudí,0.00070855423
+Order City_Balikpapan,0.0007078726
+Order City_Austin,0.00070735154
+Customer City_Ballwin,0.000707111
+Order City_Kaluga,0.0007066179
+Order City_Tempe,0.0007065085
+Order Country_Ecuador,0.0007058717
+Order State_Qina,0.0007058701
+Order City_Resistencia,0.00070564705
+Customer City_Lynn,0.0007044315
+Order City_Mulhouse,0.00070437853
+Order City_Seattle,0.000704016
+Order City_Athens,0.0007033005
+Order City_Glendale,0.0007030309
+Customer City_Williamsport,0.00070262444
+Order City_Porto,0.0007025146
+Order City_Milan,0.000702433
+Order City_Marietta,0.0007019406
+Order State_Gy?r,0.0007018128
+Customer City_Encinitas,0.00070147926
+Order State_Gran Accra,0.00069999497
+Order City_Daejeon,0.00069932995
+Order State_Lagunes,0.0006993245
+Order Country_Corea del Sur,0.00069910265
+Order Region_Oceania,0.0006990248
+Order State_Minas Gerais,0.00069901266
+Order State_Bashkortostán,0.000698903
+Order State_Azuay,0.0006987274
+Order City_Simões Filho,0.0006979492
+Customer City_Broomfield,0.0006978958
+Order Country_Turquía,0.0006974658
+Order State_Irkutsk,0.0006971724
+Order City_Vadodara,0.00069629034
+Order City_Ahvaz,0.0006953659
+Customer City_Union City,0.0006949968
+Order City_San Juan del Río,0.00069474365
+Customer City_Doylestown,0.0006941644
+Order State_Meridional,0.0006937811
+Order City_Brindisi,0.0006934744
+Order City_Vorónezh,0.00069322507
+Order City_Guayana,0.00069285807
+Order City_Montpellier,0.0006927928
+Customer City_Flushing,0.00069245446
+Customer City_Temecula,0.0006915571
+Order City_Dijon,0.0006910253
+Order City_Probolinggo,0.0006908103
+Order City_Kermanshah,0.0006907373
+Order State_Gharbia,0.0006901848
+Order State_Zhytómyr,0.00069018104
+Order State_Qazvín,0.0006901023
+Order City_San Miguelito,0.000689527
+Order State_Ginebra,0.0006888796
+Order State_Apulia,0.00068861165
+Customer City_Woonsocket,0.0006881004
+Order City_Gorakhpur,0.0006880824
+Order Region_East of USA,0.00068784656
+Customer City_Ann Arbor,0.00068741036
+Order City_Delhi,0.00068735646
+Order City_Oviedo,0.00068682677
+Order Country_Turkmenistán,0.0006865603
+Order State_Brest,0.00068607595
+Order City_Ulhasnagar,0.0006850421
+Customer City_Ewa Beach,0.00068496354
+Order State_Kalimantan Oriental,0.0006849345
+Order City_Dortmund,0.00068490376
+Customer City_Carlisle,0.0006841376
+Customer City_North Richland Hills,0.000683283
+Order State_Karagandá,0.0006829494
+Order State_Harare,0.0006828133
+Order State_Nuevo Hampshire,0.0006820636
+Order City_Mar del Plata,0.0006819519
+Order Country_Paraguay,0.00068174745
+Order State_Sind,0.0006806753
+Order City_Richmond,0.00068009575
+Order Country_República Dominicana,0.00067995244
+Order City_Pirapora,0.0006793428
+Order State_Marche,0.0006789238
+Order State_Aichi,0.00067867717
+Order City_Warrnambool,0.0006778495
+Order City_Kano,0.00067639677
+Order State_Vorónezh,0.0006762918
+Order City_Mersin,0.0006755997
+Order City_Nizhyn,0.00067482056
+Order State_Australia Occidental,0.0006746452
+Customer City_Cordova,0.00067443005
+Order City_Panama City,0.000674268
+Order City_Punta Arenas,0.0006742125
+Order City_Gy?r,0.00067374785
+Order Region_West of USA ,0.0006736122
+Order City_Northampton,0.0006734445
+Order City_Chihuahua,0.00067117903
+Customer State_NY,0.0006711558
+Order City_Coyoacán,0.0006709334
+Customer City_Miami,0.00066990394
+Order State_Magallanes y Antártica Chilena,0.00066943344
+Order Country_Camerún,0.0006690294
+Order City_Griffith,0.00066895795
+Order State_Fromager,0.0006686416
+Order City_Joinville,0.00066746346
+Order City_Lawton,0.00066732767
+Order City_Angarsk,0.0006672142
+Order State_Alagoas,0.0006658663
+Order City_Kaduna,0.0006650056
+Order City_Ranchi,0.000664688
+Order City_Alexandria,0.00066445605
+Order City_Kuching,0.00066412217
+Order City_Tiruchchirappalli,0.0006636277
+Customer City_Levittown,0.00066348613
+Order City_Obregón,0.00066323625
+Order City_Gold Coast,0.0006628589
+Customer City_Lithonia,0.0006627739
+Order City_Tengzhou,0.0006625577
+Order City_Calamba,0.00066223287
+Order City_Gujranwala,0.00066216
+Customer City_Waukegan,0.0006612295
+Customer City_Littleton,0.0006610709
+Order State_Chihuahua,0.0006609572
+Customer City_Fort Worth,0.00066063786
+Order State_Guizhou,0.00066053116
+Order City_Queanbeyan,0.0006601695
+Customer City_Fayetteville,0.0006600982
+Customer City_Winter Park,0.0006592976
+Customer City_Glendale,0.0006592939
+Customer City_Pawtucket,0.00065920455
+Order City_Samarinda,0.00065893185
+Order City_Great Falls,0.0006585046
+Customer City_Hacienda Heights,0.0006579592
+Order Country_SudAfrica,0.0006572675
+Order City_Guayaquil,0.000656933
+Order City_Rotorua,0.0006564336
+Order State_Haryana,0.00065619784
+Order City_Hampton,0.0006561113
+Customer State_NJ,0.0006558712
+Order City_New York City,0.0006556022
+Order State_California,0.0006554252
+Order City_Rotterdam,0.00065540784
+Order City_Lawrence,0.00065531983
+Order State_Jiangsu,0.00065527274
+Order State_Manawatu-Wanganui,0.0006547001
+Customer City_Ridgewood,0.0006543537
+Order City_San Pedro de Macorís,0.00065275386
+Order City_Glasgow,0.0006519916
+Order City_Cagnes-sur-Mer,0.00065088394
+Order City_Las Tunas,0.0006507861
+Order City_Sonsonate,0.000650696
+Order City_Diyarbakir,0.00065068
+Order Region_Central Africa,0.00065004575
+Order City_Cadereyta,0.00064966275
+Order City_Rosario,0.0006487622
+Order City_Mérida,0.0006482946
+Order City_Katoomba,0.0006479807
+Order City_Naperville,0.0006477197
+Customer City_Jonesboro,0.00064756605
+Order City_East London,0.0006471055
+Order City_Targu Mures,0.0006470347
+Order State_Huila,0.00064702303
+Order State_Groningen,0.00064610253
+Order City_Ivanovo,0.0006459899
+Order City_Bouake,0.0006457936
+Order City_Townsville,0.00064571074
+Customer City_Buena Park,0.0006453405
+Order State_Mazovia,0.00064347143
+Customer State_MD,0.0006430453
+Order City_Chandigarh,0.0006423687
+Order City_Sandakan,0.00064143696
+Order City_Tongi,0.00063928205
+Customer City_Bakersfield,0.00063857186
+Order State_Guyarat,0.00063822005
+Order City_Juazeiro,0.00063806033
+Order City_Chaoyang,0.0006375551
+Order Country_China,0.0006363393
+Order State_Kermanshah,0.00063628703
+Order State_Hatay,0.0006361088
+Order City_Khulna,0.00063562975
+Customer City_Goose Creek,0.00063514936
+Order City_Essen,0.00063503685
+Order City_Morelia,0.00063501473
+Order City_Foggia,0.00063445047
+Customer City_Bountiful,0.00063435646
+Order City_Conselheiro Lafaiete,0.0006341503
+Order City_Cranston,0.0006341013
+Order City_Roman,0.00063353864
+Order State_Southland,0.0006330543
+Order City_Orange,0.0006330432
+Order City_Belo Horizonte,0.00063220283
+Order City_Jizán,0.00063192804
+Order City_Santa Clara,0.0006318744
+Order City_Lome,0.00063172297
+Order City_Toulouse,0.00063168077
+Order City_Pilsen,0.00063150027
+Order City_Gennevilliers,0.00063112716
+Customer City_Frankfort,0.00063108903
+Order State_Texas,0.00063092454
+Order Region_Canada,0.0006297531
+Order City_Yibuti,0.000629229
+Order State_Delhi,0.0006287574
+Order City_Gawler,0.0006283111
+Order City_Christchurch,0.0006281426
+Order City_Timisoara,0.0006281068
+Order City_York,0.00062748883
+Order City_Zhanjiang,0.0006273743
+Order City_Waynesboro,0.00062712753
+Order City_La Plata,0.0006270801
+Order City_Medan,0.000626608
+Order State_Pilsen,0.00062656635
+Order City_Camagüey,0.0006264488
+Order City_Newcastle upon Tyne,0.00062627543
+Order State_Buenos Aires,0.0006261082
+Order City_San Juan de la Maguana,0.000625982
+Order State_Zacatecas,0.00062565063
+Order City_Teresópolis,0.0006254568
+Customer City_Santa Ana,0.0006253381
+Order State_Ivano-Frankivsk,0.0006249025
+Order State_Sarawak,0.0006248318
+Order City_San Luis Río Colorado,0.000624546
+Customer City_Brandon,0.00062443817
+Order Region_West Asia,0.00062406325
+Order State_Guárico,0.00062348484
+Order City_Mexico City,0.00062229193
+Order City_Waitakere,0.00062228256
+Order City_Miramas,0.0006220435
+Order City_Nanyang,0.0006218588
+Order State_Maniema,0.0006213363
+Order State_Shanxi,0.00062104565
+Order City_Windhoek,0.0006200407
+Order City_Zanyán,0.0006194599
+Customer State_CO,0.00061898254
+Order State_Camagüey,0.0006183946
+Order City_Kingswood,0.0006177133
+Order City_Jacobina,0.0006172056
+Order City_Dalian,0.00061668584
+Order City_Velbert,0.000615911
+Order City_Menemen,0.0006155183
+Order City_Betim,0.00061550766
+Customer City_Mission Viejo,0.000615416
+Customer City_Peoria,0.00061490934
+Order City_Ginebra,0.00061485206
+Customer City_Saint Paul,0.000614847
+Order City_Iskenderun,0.0006147979
+Order State_Pará,0.00061462476
+Order Country_Mozambique,0.0006137658
+Order State_Gómel,0.00061353424
+Customer City_Union,0.00061347213
+Order City_Bhavnagar,0.00061342475
+Order City_La Teste-de-Buch,0.00061288156
+Order State_Languedoc-Rosellón-Mediodía-Pirineos,0.00061278016
+Order State_Afyonkarahisar,0.0006126503
+Order State_Timis,0.0006125819
+Order State_Jalisco,0.0006120551
+Customer City_Quincy,0.0006119255
+Order State_Tennessee,0.00061157986
+Order City_Le Chesnay,0.00061155134
+Customer State_CA,0.0006112808
+Order City_Longview,0.0006110204
+Order City_Uberaba,0.0006108139
+Order City_Vallejo,0.0006107873
+Order City_Monza,0.00061025255
+Order State_KwaZulu-Natal,0.0006098866
+Order City_Antipolo,0.000609482
+Order City_Mesa,0.000609307
+Order City_Apopka,0.00060919946
+Customer City_Tulare,0.00060917524
+Order City_Amatitlán,0.0006088776
+Order City_Porlamar,0.00060881214
+Order State_Maharashtra,0.00060838315
+Order State_Bélgorod,0.000608104
+Order City_Moers,0.00060781394
+Order City_Garbsen,0.00060758914
+Order Country_Estonia,0.00060672325
+Order City_Gonaïves,0.000606676
+Order Country_Brasil,0.0006066274
+Customer State_AZ,0.000606085
+Customer City_Westerville,0.00060572487
+Order City_Bello,0.00060568744
+Order City_Prato,0.00060555607
+Order City_Qazvín,0.00060542295
+Order State_Gyeonggi,0.0006050035
+Order State_Uttarakhand,0.00060490076
+Order City_Mejicanos,0.0006045328
+Order State_Oruro,0.00060424744
+Order City_Barquisimeto,0.00060380565
+Order City_Barranquilla,0.0006034794
+Order City_Corrientes,0.00060331094
+Order City_Westfield,0.0006032568
+Order City_Mackay,0.0006028238
+Order City_Murray Bridge,0.00060159917
+Order City_Medina,0.0006015799
+Order City_Cabo Frio,0.0006015457
+Order City_Tlaquepaque,0.00060105236
+Order City_Coatzacoalcos,0.00060071907
+Order City_Coimbatore,0.00060068653
+Order State_Jerusalén,0.00060044474
+Order State_Alberta,0.00059994636
+Order City_Ivano-Frankivs'k,0.00059947703
+Customer City_Billings,0.00059912505
+Order City_Dire Dawa,0.000598903
+Order Country_República Checa,0.0005987673
+Order City_Wiesbaden,0.0005982197
+Order City_Igarassu,0.0005972294
+Order State_Sicilia,0.00059669546
+Order City_Petrópolis,0.0005965946
+Order City_Narbonne,0.00059636676
+Order City_Grodno,0.00059601996
+Order State_Baluchistán,0.00059572223
+Order City_Likasi,0.0005950145
+Customer City_Granada Hills,0.0005944986
+Order City_Torquay,0.0005936205
+Order State_Est,0.00059332186
+Order City_Bytom,0.00059315434
+Order City_Langenfeld,0.0005930434
+Order City_Laiyang,0.00059295865
+Order City_Matsubara,0.0005929203
+Order City_Palma Soriano,0.000592771
+Order City_Hollywood,0.0005925924
+Order City_Santiago de Cuba,0.0005924056
+Customer State_CT,0.0005923418
+Order State_Valle del Cauca,0.00059218216
+Customer State_GA,0.0005919832
+Customer City_New York,0.00059170224
+order_day,0.0005915417
+Order City_Brumado,0.0005915115
+Market_LATAM,0.00059122796
+Order City_Chesterfield,0.00059116335
+Order City_Puno,0.000590608
+Customer State_VA,0.00059027463
+Order City_Kanpur,0.0005900325
+Order City_Mont-de-Marsan,0.0005893734
+Order State_Estocolmo,0.00058930344
+Order State_Zaporiyia,0.0005889965
+Order City_Oruro,0.0005885554
+Order City_Fiumicino,0.00058805605
+Order City_Calais,0.00058796606
+Order City_Huaiyin,0.00058777246
+Order City_San Bernardo,0.0005877041
+Order City_Rawalpindi,0.000587354
+Order City_Bhopal,0.0005869369
+Order City_Aurangabad,0.00058690744
+Order Region_US Center ,0.00058673305
+Order City_Afyon,0.0005867318
+order_dayofyear,0.0005863143
+Order City_Konya,0.0005863014
+Order City_Fort Lauderdale,0.0005859231
+Order City_Harare,0.000585824
+Order City_Denver,0.0005855582
+Latitude,0.0005854061
+Order State_Hainan,0.0005844573
+Customer City_Clovis,0.000584447
+Customer State_OR,0.0005842311
+Order City_Camarillo,0.0005840963
+Order State_Mayabeque,0.0005839209
+Order City_Orlando,0.00058368145
+Order City_Naples,0.0005823257
+Customer City_Marrero,0.00058221805
+Order City_Guanajuato,0.00058215903
+Order City_Watford,0.00058207527
+Order City_Hyderabad,0.00058177847
+Customer State_FL,0.0005813861
+Order City_Ballarat,0.00058096915
+Customer City_Middletown,0.0005807157
+Order City_Anshan,0.0005804425
+Order State_Renania del Norte-Westfalia,0.0005804127
+Order City_Bertoua,0.0005801942
+Order City_Tauranga,0.0005801174
+Order State_Menia,0.00057982554
+Customer City_Columbus,0.00057973235
+Order City_Cottbus,0.0005790805
+Order City_Quetta,0.00057888206
+Order State_Idaho,0.000578611
+Order City_Guantánamo,0.0005783439
+order_weekofyear,0.0005778354
+Customer City_San Ramon,0.0005771756
+Order State_Bío-Bío,0.0005771147
+Product Name_Nike Men's Dri-FIT Victory Golf Polo,0.00057639735
+Order State_Medina,0.00057630264
+Order Country_Níger,0.00057602907
+Order City_Albacete,0.0005758413
+Order City_Lens,0.0005750484
+Order City_Kwinana,0.00057499786
+Order State_Marítima,0.0005746568
+Order City_Jilin,0.00057444506
+Order City_Argenteuil,0.00057430845
+Customer City_Pekin,0.00057380274
+Customer State_WI,0.0005735117
+Order City_East Point,0.000573504
+Customer City_Michigan City,0.00057349517
+Order City_Thornton,0.0005731151
+Order City_Chimoio,0.00057273783
+Order City_Noisy-le-Grand,0.0005718217
+Order City_Santa Fe,0.000571426
+Order City_Cárdenas,0.000571282
+Customer City_Orlando,0.0005712539
+Order City_Dordrecht,0.0005710823
+Order City_Gelsenkirchen,0.0005685976
+Order City_Miami,0.0005677846
+Order City_Itapevi,0.00056751055
+Order City_Huangshan,0.00056672125
+Order State_Harjumaa,0.00056637934
+Order City_Jerusalén,0.0005660528
+Order City_Derby,0.0005656549
+Customer City_Bell Gardens,0.000565528
+Order City_Sargodha,0.0005650275
+Customer City_Las Vegas,0.00056449434
+Order City_Recklinghausen,0.00056445104
+Order City_Cerignola,0.0005640833
+Order City_Mons-en-Baroeul,0.0005639535
+Order City_Cairo,0.0005637171
+Order City_Minneapolis,0.0005636254
+Longitude,0.0005632508
+Order Country_Finlandia,0.0005630128
+Order City_Invercargill,0.0005624418
+Order City_Gagnoa,0.0005617788
+Order City_Colombes,0.000561504
+Order City_Wenzhou,0.0005606363
+Order City_Memphis,0.000560248
+Order City_Kindu,0.0005597305
+Order City_Zapopan,0.0005595803
+Order City_Hendersonville,0.00055936084
+Order City_Tours,0.00055928784
+Order City_Clarksville,0.00055915664
+Customer State_MA,0.00055865716
+Order City_La Seyne-sur-Mer,0.0005584129
+Market_Europe,0.0005581536
+Order Country_Venezuela,0.00055760395
+Customer City_New Castle,0.0005575949
+Order State_Umbría,0.0005574547
+Order City_Kryvyy Rih,0.00055735285
+Order City_Surat,0.0005570961
+Order City_Zacatecas,0.00055680395
+Order City_Port Macquarie,0.00055628136
+Order City_Albi,0.0005562327
+Order Region_Caribbean,0.0005562246
+Order City_Mataram,0.0005547561
+Order City_Bolzano,0.00055407244
+Order Region_Southeast Asia,0.00055362604
+Customer City_Jackson Heights,0.00055291643
+Customer City_Norfolk,0.0005528546
+Order City_San Pedro,0.0005528061
+Order City_Bayonne,0.0005525606
+Order City_Dniprodzerzhyns'k,0.00055250846
+Order City_Dumai,0.00055239606
+Order City_Santiago del Estero,0.00055153813
+Order City_Mardan,0.0005514268
+Order City_Catia La Mar,0.00055122713
+Order State_Mures,0.0005511025
+Order State_Ohio,0.0005510908
+Order City_Regina,0.00055105553
+Order State_Santiago del Estero,0.00055105455
+Order State_Zhejiang,0.00055073184
+Order State_El Cairo,0.0005500088
+Customer City_Bayonne,0.0005492046
+dow_sin,0.0005478149
+Order State_Quebec,0.0005474588
+Order City_Pontoise,0.0005458908
+Product Name_Hirzl Women's Soffft Flex Golf Glove,0.0005458456
+Customer City_Los Angeles,0.0005435381
+Order City_Tallinn,0.0005429339
+Order City_Bagé,0.0005428211
+Order City_Bagnolet,0.0005417231
+Order City_Greenville,0.0005410166
+Order Region_South of  USA ,0.00054053904
+Order Country_Rumania,0.00054043817
+Order City_Montréal,0.000540327
+Order City_Woking,0.00054011506
+Order State_Vallée du Bandama,0.0005398309
+Customer Country_Puerto Rico,0.000539436
+Order City_Francisco Beltrão,0.0005390934
+Order City_Huixquilucan,0.00053842476
+order_dayofweek,0.00053836923
+Order City_Castrop-Rauxel,0.0005381295
+Order State_São Paulo,0.00053765555
+Order Country_Honduras,0.00053664634
+Order City_Taizhou,0.00053643953
+Category Name_Indoor/Outdoor Games,0.00053240865
+Customer City_Albuquerque,0.0005322546
+Order Region_Northern Europe,0.00053130515
+Order State_Jujuy,0.000531241
+Customer City_Arecibo,0.00052894594
+Order City_Hefei,0.00052854675
+Order City_Brescia,0.00052853813
+Order State_Manica,0.0005281113
+Order City_Bélgorod,0.0005265873
+Order City_Haikou,0.0005265688
+Order State_Briansk,0.00052642997
+Customer City_San Juan,0.00052636303
+Order City_Taiyuan,0.00052204117
+Order City_Leverkusen,0.00052121724
+Customer Segment_Corporate,0.000519437
+Order State_Illinois,0.00051912694
+Order State_Cabo Oriental,0.0005185233
+Order City_Shahreza,0.00051841507
+Order City_Tegal,0.00051835063
+Customer City_Honolulu,0.0005161502
+Order State_Delta,0.00051573775
+Customer City_Detroit,0.0005148467
+Order City_Tepic,0.000513335
+Customer State_PA,0.0005125392
+Customer City_Aurora,0.0005100984
+Order State_Pahang,0.00050800375
+dow_cos,0.00050767214
+Category Name_Camping & Hiking,0.00050630927
+Order Region_Southern Europe,0.0005057866
+Order City_Oslo,0.00050530385
+Order City_Houston,0.00050433655
+order_year,0.000503863
+month_sin,0.0005027028
+Customer Segment_Home Office,0.0005011052
+Order Country_India,0.00050059723
+Customer City_Lancaster,0.0004988822
+Market_USCA,0.00049787236
+Order State_Alabama,0.0004966842
+Order Country_España,0.00049611984
+Customer State_TX,0.0004959099
+Order State_Florida,0.0004933383
+Order Country_México,0.0004926856
+Order State_Arizona,0.0004924403
+Order City_Kinshasa,0.00049059733
+Order City_Altamira,0.00048796574
+Order City_Lubumbashi,0.00048640824
+Order State_Lara,0.00048605737
+Order Country_Francia,0.00048470692
+Order State_Isla de Francia,0.00048434094
+Customer Segment_Consumer,0.00047622275
+Customer State_OH,0.00047388015
+Category Name_Women's Apparel,0.00047245965
+Customer City_Oceanside,0.00046914179
+Order City_Hempstead,0.00046888745
+Order City_Rybnik,0.0004654755
+Customer State_IL,0.0004652039
+Order State_Gran Casablanca,0.00046280588
+Order Region_Central America,0.00046072569
+Customer State_MI,0.00046062501
+Order State_Alsacia-Champaña-Ardenas-Lorena,0.00046055517
+Order State_Andalucía,0.000458796
+Order City_Brisbane,0.00045070483
+Customer State_SC,0.0004499322
+month_cos,0.00044863735
+Market_Africa,0.00043534389
+Order Country_Estados Unidos,0.00043512773
+order_month,0.00043336482
+Customer Country_EE. UU.,0.0004279183
+Order City_Bogor,0.0004255108
+Order Region_Western Europe,0.0004250786
+Order City_Lima,0.00042296777
+Order State_Yucatán,0.0004149345
+Market_Pacific Asia,0.00041492193
+order_quarter,0.0004078441
+Product Price,0.000401498
+Order State_Baja Sajonia,0.00039700884
+Order City_Reynosa,0.00039636213
+Order Item Cardprod Id,0.0003940826
+Order Country_Reino Unido,0.00039347727
+Order City_Clinton,0.00039295072
+Customer City_Tampa,0.00038797676
+Order City_Kalemie,0.00038598446
+Order City_Nicolás Romero,0.00038536423
+Order Item Profit Ratio,0.00037999044
+Order City_Catania,0.00037215254
+Order Item Product Price,0.00036980235
+Order State_Santa Fe,0.00036846474
+Benefit per order,0.00036703804
+Order City_Miramar,0.00036135293
+Order Item Discount Rate,0.0003580665
+Order Country_Ucrania,0.00035119802
+Order City_Edmonton,0.0003436665
+Department Name_Golf,0.0003407522
+Order Item Quantity,0.00033777245
+Order Item Total,0.00033735085
+Order Item Discount,0.00033543658
+Sales per customer,0.00033336374
+Category Name_Men's Footwear,0.00033117633
+Order Country_Perú,0.00032719522
+Sales,0.0003268384
+Customer City_West Chester,0.00032668439
+Order Profit Per Order,0.00032406542
+Order City_Victoria,0.00032035916
+Order City_Saint-Chamond,0.00031351834
+Customer City_Caguas,0.00030640877
+Category Id,0.00029809083
+Order City_North York,0.00029682054
+Order City_Mississauga,0.00029385302
+Department Name_Footwear,0.00028840973
+Order City_Villeurbanne,0.00028797315
+Order City_Blumenau,0.0002871585
+Customer City_Raleigh,0.00027498347
+Category Name_Cleats,0.000269024
+Department Name_Apparel,0.00026330628
+Department Id,0.000260886
+Order State_Distrito Federal,0.0002516854
+Order City_Kolwezi,0.00024604445
+Product Category Id,0.00023296241
+Product Name_Perfect Fitness Perfect Rip Deck,0.0002298548
+Order City_Nuremberg,0.00022475679
+Category Name_Cardio Equipment,0.00021141698
+Product Name_Under Armour Girls' Toddler Spine Surge Runni,0.00019409558
+Customer City_Sumner,0.0
+Order City_Villeneuve-le-Roi,0.0
+Order City_Villeneuve-Saint-Georges,0.0
+Customer City_Sun Valley,0.0
+Customer City_Summerville,0.0
+Customer City_Strongsville,0.0
+Customer City_Sunnyvale,0.0
+Customer City_Sylmar,0.0
+Customer City_Tallahassee,0.0
+Order City_Voiron,0.0
+Order City_Volksrust,0.0
+Order City_Votuporanga,0.0
+Order City_Várzea Grande,0.0
+Customer City_Sugar Land,0.0
+Customer City_Stone Mountain,0.0
+Customer City_Stockbridge,0.0
+Customer City_Staten Island,0.0
+Order City_Washington,0.0
+Order City_Warwick,0.0
+Order City_Warrington,0.0
+Order City_Warri,0.0
+Order City_Warner Robins,0.0
+Order City_West Allis,0.0
+Order City_Wenling,0.0
+Order City_Wendeng,0.0
+Order City_Wels,0.0
+Order City_Weimar,0.0
+Order City_Weihai,0.0
+Order City_Vryburg,0.0
+Order City_Villejuif,0.0
+Order City_Villefontaine,0.0
+Order City_Villavicencio,0.0
+Order City_Vlore,0.0
+Order City_Vladímir,0.0
+Order City_Vlaardingen,0.0
+Order City_Viña del Mar,0.0
+Order City_Vitória de Santo Antão,0.0
+Order City_Vitória da Conquista,0.0
+Order City_Vitória,0.0
+Order City_Vittoria,0.0
+Order City_Vitry-sur-Seine,0.0
+Order City_Vitrolles,0.0
+Order City_Vitoria,0.0
+Order City_Viterbo,0.0
+Order City_Weifang,0.0
+Order City_Vínnytsia,0.0
+Order City_Villenave-d'Ornon,0.0
+Order City_Waco,0.0
+Order City_Wad Madani,0.0
+Order City_Wadi as Sir,0.0
+Order City_Wafangdian,0.0
+Order City_Wausau,0.0
+Order City_Visalia,0.0
+Order City_Waiblingen,0.0
+Order City_Wakefield,0.0
+Order City_Wallasey,0.0
+Order City_Walsall,0.0
+Order City_Warangal,0.0
+Order City_Virginia Beach,0.0
+Order City_Viroflay,0.0
+Order City_Visakhapatnam,0.0
+Order City_Wagga Wagga,0.0
+Order City_Worthing,0.0
+Order City_Wuchuan,0.0
+Order City_Wuhai,0.0
+Order City_Wuhan,0.0
+Order City_Wuzhou,0.0
+Order City_Xi'an,0.0
+Order City_Xiamen,0.0
+Order City_Villeneuve-d'Ascq,0.0
+Order City_Xiangtan,0.0
+Order City_Xianning,0.0
+Order City_Xiantao,0.0
+Order City_Xianyang,0.0
+Order City_Widnes,0.0
+Order City_Wigan,0.0
+Order City_Wilhelmshaven,0.0
+Order City_Willich,0.0
+Order City_Xiangfan,0.0
+Order City_Xinghua,0.0
+Order City_Xingtai,0.0
+Order City_Xining,0.0
+Order City_Xinshi,0.0
+Order City_Xintai,0.0
+Order City_Xinxiang,0.0
+Order City_Xinyi,0.0
+Order City_Xinzhou,0.0
+Order City_Worms,0.0
+Order City_Xuzhou,0.0
+Order City_Yacuiba,0.0
+Order City_Yalova,0.0
+Order City_Yambol,0.0
+Order City_Yamoussoukro,0.0
+Order City_Woodstock,0.0
+Order City_Woonsocket,0.0
+Order City_Worcester,0.0
+Order City_Xuanhua,0.0
+Order City_Wetter (Ruhr),0.0
+Order City_Wetzlar,0.0
+Order City_Whakatane,0.0
+Order City_Whangarei,0.0
+Order City_Wheeling,0.0
+Order City_Whitby,0.0
+Order City_Whittier,0.0
+Order City_Whyalla,0.0
+Order City_Wilmington,0.0
+Customer City_Taunton,0.0
+Customer City_Taylor,0.0
+Order City_Wasquehal,0.0
+Order City_Waterbury,0.0
+Order City_Waterloo,0.0
+Order City_Watertown,0.0
+Order City_Wattrelos,0.0
+Order City_Waukesha,0.0
+Order City_Wichita,0.0
+Order City_Wilson,0.0
+Order City_Windsor,0.0
+Order City_Winnipeg,0.0
+Order City_Winterthur,0.0
+Order City_Witten,0.0
+Order City_Wodonga,0.0
+Order City_Wolfsburg,0.0
+Order City_Wollongong,0.0
+Order City_Westonaria,0.0
+Order City_Woodbury,0.0
+Order City_Woodland,0.0
+Order City_West Bromwich,0.0
+Order City_West Jordan,0.0
+Order City_West Palm Beach,0.0
+Order City_Westland,0.0
+Order City_Westminster,0.0
+Order City_Weston-super-Mare,0.0
+Order City_Wolverhampton,0.0
+Order City_Valence,0.0
+Order City_Valenciennes,0.0
+Order City_Valenzuela,0.0
+Order City_Udaipur,0.0
+Order City_Ueda,0.0
+Order City_Ufa,0.0
+Order City_Ugep,0.0
+Order City_Xichang,0.0
+Order City_Ujjain,0.0
+Order City_Ulan Bator,0.0
+Order City_Ulsan,0.0
+Order City_Ulundi,0.0
+Order City_Uman,0.0
+Order City_Umraniye,0.0
+Order City_Umtata,0.0
+Order City_Umuarama,0.0
+Order City_Uithoorn,0.0
+Order City_Vantaa,0.0
+Order City_Vanves,0.0
+Order City_Varamin,0.0
+Order City_Urbandale,0.0
+Order City_Urganch,0.0
+Order City_Uruguaiana,0.0
+Order City_Usak,0.0
+Order City_Valdemoro,0.0
+Order City_Usol'ye-Sibirskoye,0.0
+Order City_Utica,0.0
+Order City_Utrecht,0.0
+Order City_Uvarovo,0.0
+Order City_Uvinza,0.0
+Order City_Uvira,0.0
+Order City_Vacaria,0.0
+Customer City_Wayne,0.0
+Order City_Uskudar,0.0
+Order City_Trebisonda,0.0
+Order City_Tremblay-en-France,0.0
+Order City_Trento,0.0
+Order City_Trenton,0.0
+Order City_Treviglio,0.0
+Order City_Treviso,0.0
+Order City_Trier,0.0
+Order City_Unna,0.0
+Order City_Trinidad,0.0
+Order City_Tripoli,0.0
+Order City_Troisdorf,0.0
+Order City_Troy,0.0
+Order City_Troyes,0.0
+Order City_Trujillo,0.0
+Order City_Tsukuba,0.0
+Order City_Tucson,0.0
+Order City_Trieste,0.0
+Order City_Upper Hutt,0.0
+Order City_Upsala,0.0
+Order City_Tulancingo,0.0
+Order City_Tulle,0.0
+Order City_Tulsa,0.0
+Order City_Tumkur,0.0
+Order City_Tupã,0.0
+Order City_Turgutlu,0.0
+Order City_Uberlândia,0.0
+Order City_Turmero,0.0
+Order City_Tuscaloosa,0.0
+Order City_Tuzla,0.0
+Order City_Twin Falls,0.0
+Order City_Tychy,0.0
+Order City_Tyler,0.0
+Order City_Túnez,0.0
+Order City_Ube,0.0
+Order City_Turkmenabat,0.0
+Order City_Vilhena,0.0
+Order City_Villa Alemana,0.0
+Order City_Villa Canales,0.0
+Order City_Villa Frontera,0.0
+Order City_Villach,0.0
+Order City_Vaughan,0.0
+Order City_Vaulx-en-Velin,0.0
+Order City_Vannes,0.0
+Order City_Velletri,0.0
+Order City_Velsen,0.0
+Order City_Vence,0.0
+Order City_Venice,0.0
+Order City_Venlo,0.0
+Order City_Veracruz,0.0
+Order City_Verdun,0.0
+Order City_Vereeniging,0.0
+Order City_Veenendaal,0.0
+Order City_Villeneuve-sur-Lot,0.0
+Order City_Villeparisis,0.0
+Order City_Villiers-le-Bel,0.0
+Order City_Villiers-sur-Marne,0.0
+Order City_Villingen-Schwenningen,0.0
+Order City_Vincennes,0.0
+Order City_Vineland,0.0
+Order City_Viransehir,0.0
+Order City_Vila Nova de Gaia,0.0
+Order City_Vicenza,0.0
+Order City_Vichy,0.0
+Order City_Vientiane,0.0
+Order City_Viersen,0.0
+Order City_Vigevano,0.0
+Order City_Vignola,0.0
+Order City_Vigo,0.0
+Order City_Vijayawada,0.0
+Order City_Vespasiano,0.0
+Customer City_Tucson,0.0
+Customer City_Upland,0.0
+Customer City_Vacaville,0.0
+Order City_Vassouras,0.0
+Order City_Valinhos,0.0
+Order City_Vallauris,0.0
+Order City_Valle Hermoso,0.0
+Order City_Vernon,0.0
+Order City_Valledupar,0.0
+Order City_Valles,0.0
+Order City_Valparaíso,0.0
+Order City_Valparaíso de Goiás,0.0
+Order City_Van,0.0
+Order City_Vanadzor,0.0
+Order City_Vancouver,0.0
+Order City_Vanderbijlpark,0.0
+Order City_Valle de La Pascua,0.0
+Order City_Verona,0.0
+Order City_Versailles,0.0
+Order City_Verviers,0.0
+Order City_Vesoul,0.0
+Order City_Varanasi,0.0
+Order City_Varese,0.0
+Order City_Torremolinos,0.0
+Order City_Varna,0.0
+Customer City_Trujillo Alto,0.0
+Order City_Torrance,0.0
+Customer City_Tinley Park,0.0
+Customer City_Toa Alta,0.0
+Customer City_Toa Baja,0.0
+Customer City_Toms River,0.0
+Customer City_Tonawanda,0.0
+Customer City_Tracy,0.0
+Customer City_Troy,0.0
+Customer City_Tempe,0.0
+Order Country_Mauritania,0.0
+Order Country_Moldavia,0.0
+Order Country_Mongolia,0.0
+Order Country_Montenegro,0.0
+Customer City_Porterville,0.0
+Customer City_Portland,0.0
+Customer City_Potomac,0.0
+Order City_Torre del Greco,0.0
+Customer City_Powder Springs,0.0
+Customer City_Princeton,0.0
+Customer City_Rancho Cordova,0.0
+Customer City_Redmond,0.0
+Customer City_Rego Park,0.0
+Customer City_Reno,0.0
+Order Country_Irlanda,0.0
+Order Country_Jamaica,0.0
+Customer City_Poway,0.0
+Customer City_Reseda,0.0
+Order Country_Nepal,0.0
+Order Country_Nicaragua,0.0
+Order Country_Noruega,0.0
+Order Country_Nueva Zelanda,0.0
+Order Country_Omán,0.0
+Order Country_Pakistán,0.0
+Order Country_Martinica,0.0
+Customer City_Perth Amboy,0.0
+Customer City_Pharr,0.0
+Customer City_Phoenix,0.0
+Customer City_Piscataway,0.0
+Customer City_Pittsfield,0.0
+Customer City_Placentia,0.0
+Customer City_Plymouth,0.0
+Customer City_Pompano Beach,0.0
+Order Country_Papúa Nueva Guinea,0.0
+Order Country_Hong Kong,0.0
+Customer City_Rialto,0.0
+Customer City_Richmond,0.0
+Customer City_Rio Grande,0.0
+Customer City_Rio Rancho,0.0
+Customer City_Rochester,0.0
+Customer City_Rock Hill,0.0
+Order Country_Jordania,0.0
+Customer City_Roseburg,0.0
+Customer City_Rosemead,0.0
+Customer City_Roswell,0.0
+Customer City_San Francisco,0.0
+Order Country_Croacia,0.0
+Order Country_Dinamarca,0.0
+Order Country_Egipto,0.0
+Order Country_Emiratos Árabes Unidos,0.0
+Customer City_Rome,0.0
+Order Country_Kazajistán,0.0
+Order Country_Kirguistán,0.0
+Order Country_Kuwait,0.0
+Order Country_Laos,0.0
+Order Country_Lesoto,0.0
+Order Country_Liberia,0.0
+Order Country_Libia,0.0
+Order Country_Lituania,0.0
+Order Country_Haití,0.0
+Order Country_Líbano,0.0
+Order Country_Macedonia,0.0
+Order Country_Madagascar,0.0
+Order Country_Mali,0.0
+Order Country_Guinea,0.0
+Order Country_Guinea Ecuatorial,0.0
+Order Country_Guinea-Bissau,0.0
+Order Country_Guyana,0.0
+Order Country_Luxemburgo,0.0
+Order State_Abia,0.0
+Order State_Abruzos,0.0
+Order State_Aceh,0.0
+Order State_Acre,0.0
+Order State_Adamaoua,0.0
+Order Country_Tayikistán,0.0
+Order Country_Togo,0.0
+Order Country_Sudán,0.0
+Order Country_Túnez,0.0
+Order Country_Uganda,0.0
+Order Country_Uruguay,0.0
+Order Country_Uzbekistán,0.0
+Order Country_Vietnam,0.0
+Order Country_Yemen,0.0
+Order Country_Yibuti,0.0
+Order Country_Zambia,0.0
+Order Country_Trinidad y Tobago,0.0
+Customer City_New Haven,0.0
+Customer City_Newark,0.0
+Customer City_Newburgh,0.0
+Customer City_Norcross,0.0
+Customer City_Normal,0.0
+Customer City_North Bergen,0.0
+Customer City_North Hills,0.0
+Customer City_O Fallon,0.0
+Order Region_Southern Africa,0.0
+Customer City_Oakland,0.0
+Customer City_Ogden,0.0
+Customer City_Olathe,0.0
+Customer City_Ontario,0.0
+Customer City_Opa Locka,0.0
+Customer City_Oregon City,0.0
+Order Region_Central Asia,0.0
+Order Region_East Africa,0.0
+Customer City_Oak Lawn,0.0
+Customer City_Passaic,0.0
+Customer City_Peabody,0.0
+Customer City_Ponce,0.0
+Order Country_Qatar,0.0
+Order Country_República Centroafricana,0.0
+Order Country_República de Gambia,0.0
+Order Country_República del Congo,0.0
+Order Country_Zimbabue,0.0
+Order Country_Senegal,0.0
+Order Country_Serbia,0.0
+Order Country_Sierra Leona,0.0
+Order Country_Singapur,0.0
+Order Country_Siria,0.0
+Order Country_Somalia,0.0
+Order Country_Sri Lanka,0.0
+Order Country_Suazilandia,0.0
+Order Country_Ruanda,0.0
+Customer City_North Hollywood,0.0
+Customer City_North Las Vegas,0.0
+Customer City_North Tonawanda,0.0
+Customer City_Norwalk,0.0
+Order Country_Sudán del Sur,0.0
+Order Country_Suiza,0.0
+Order Country_Surinam,0.0
+Order Country_Sáhara Occidental,0.0
+Customer City_Pasadena,0.0
+Order Country_Taiwán,0.0
+Customer City_Oviedo,0.0
+Customer City_Pacoima,0.0
+Customer City_Palmdale,0.0
+Customer City_Palo Alto,0.0
+Customer City_Panorama City,0.0
+Customer City_Paramount,0.0
+Customer City_Parkville,0.0
+Order Country_Tailandia,0.0
+Order City_Zhaoyuan,0.0
+Order City_Zhengzhou,0.0
+Order City_Yuyao,0.0
+Order City_Zaanstad,0.0
+Customer City_Seattle,0.0
+Customer City_Silver Spring,0.0
+Customer City_Simi Valley,0.0
+Order Country_Eritrea,0.0
+Customer City_South El Monte,0.0
+Customer City_South Gate,0.0
+Customer City_South Ozone Park,0.0
+Customer City_South San Francisco,0.0
+Customer City_Spokane,0.0
+Customer City_Spring,0.0
+Customer City_Spring Valley,0.0
+Customer City_Springfield,0.0
+Customer City_Smyrna,0.0
+Order City_Zilina,0.0
+Order City_Zinder,0.0
+Order City_Zlatoust,0.0
+Order City_Zunyi,0.0
+Order City_Zabol,0.0
+Order City_Zabrze,0.0
+Order City_Zagreb,0.0
+Order City_Zahedan,0.0
+Order City_Zhaoqing,0.0
+Order City_Zaoyang,0.0
+Order City_Zaozhuang,0.0
+Order City_Zaporiyia,0.0
+Order City_Zaria,0.0
+Order City_Zeist,0.0
+Order City_Zenica,0.0
+Order City_Zhangjiakou,0.0
+Order City_Zhangzhou,0.0
+Order City_Zamora,0.0
+Order City_Yancheng,0.0
+Order City_Yangjiang,0.0
+Order City_Yangquan,0.0
+Order City_Yangzhou,0.0
+Order City_Yanji,0.0
+Order City_Yantai,0.0
+Order City_Yao,0.0
+Customer City_Stafford,0.0
+Order City_Yaritagua,0.0
+Order City_Yaroslavl,0.0
+Order City_Yazd,0.0
+Order City_Yerres,0.0
+Order City_Yibin,0.0
+Order City_Yicheng,0.0
+Order City_Yichun,0.0
+Order City_Xiaogan,0.0
+Order City_Yaounde,0.0
+Customer City_Stamford,0.0
+Order City_Yingcheng,0.0
+Order City_Yiwu,0.0
+Order City_Yiyang,0.0
+Order City_Yogyakarta,0.0
+Order City_Yokkaichi,0.0
+Order City_Yongchuan,0.0
+Order City_Yopal,0.0
+Order City_Yanbu al Bahr,0.0
+Order City_Yucaipa,0.0
+Order City_Yuci,0.0
+Order City_Yueyang,0.0
+Order City_Yulin,0.0
+Order City_Yuma,0.0
+Order City_Yuncheng,0.0
+Order City_Yunyang,0.0
+Order City_Yushu,0.0
+Order City_Yuanjiang,0.0
+Customer City_Saginaw,0.0
+Customer City_Saint Charles,0.0
+Customer City_Saint Peters,0.0
+Customer City_Salem,0.0
+Customer City_Salina,0.0
+Customer City_Salinas,0.0
+Customer City_Salt Lake City,0.0
+Order City_Zihuatanejo,0.0
+Order Country_Baréin,0.0
+Order Country_Belice,0.0
+Order Country_Bolivia,0.0
+Order Country_Bosnia y Herzegovina,0.0
+Order Country_Botsuana,0.0
+Customer City_San Marcos,0.0
+Customer City_San Pablo,0.0
+Customer City_San Sebastian,0.0
+Customer City_San Benito,0.0
+Order Country_Eslovaquia,0.0
+Order Country_Eslovenia,0.0
+Order Country_Etiopía,0.0
+Order Country_Filipinas,0.0
+Order Country_Gabón,0.0
+Order Country_Georgia,0.0
+Order Country_Grecia,0.0
+Order Country_Guadalupe,0.0
+Customer City_Rowland Heights,0.0
+Order Country_Guayana Francesa,0.0
+Order Country_Burkina Faso,0.0
+Order Country_Burundi,0.0
+Order Country_Bután,0.0
+Order Country_Camboya,0.0
+Order Country_Chad,0.0
+Order Country_Chipre,0.0
+Order Country_Costa Rica,0.0
+Order Country_Guatemala,0.0
+Order Country_Armenia,0.0
+Order Country_Austria,0.0
+Order Country_Azerbaiyán,0.0
+Order Country_Bangladés,0.0
+Order Country_Barbados,0.0
+Order City_Zhenjiang,0.0
+Order City_Zhlobin,0.0
+Customer City_Sandusky,0.0
+Order City_Zhoukou,0.0
+Order City_Zhuhai,0.0
+Order City_Zhumadian,0.0
+Order City_Zhuzhou,0.0
+Order City_Zhytómyr,0.0
+Order City_Zielona Gora,0.0
+Order City_Zigong,0.0
+Order City_Ziguinchor,0.0
+Order City_Zhongxiang,0.0
+Customer City_Sanford,0.0
+Customer City_Santa Clara,0.0
+Customer City_Santa Fe,0.0
+Customer City_Santa Maria,0.0
+Customer City_Santee,0.0
+Customer City_Scottsdale,0.0
+Order Country_Bulgaria,0.0
+Order City_Zurich,0.0
+Order Country_Argentina,0.0
+Order City_Zwickau,0.0
+Order City_Zwolle,0.0
+Order City_eMbalenhle,0.0
+Order City_Águas Lindas de Goiás,0.0
+Order City_Çanakkale,0.0
+Order City_Ústí nad Labem,0.0
+Order Country_Afganistán,0.0
+Order Country_Albania,0.0
+Order City_Zwedru,0.0
+Order City_Sandnes,0.0
+Order City_Sandy Springs,0.0
+Order City_Sanford,0.0
+Order City_Sanliurfa,0.0
+Order City_Sanming,0.0
+Order City_Sannois,0.0
+Order City_Sant Boi de Llobregat,0.0
+Customer City_New Orleans,0.0
+Customer State_NV,0.0
+Customer State_OK,0.0
+Customer State_PR,0.0
+Customer State_RI,0.0
+Customer State_WV,0.0
+Order City_Aachen,0.0
+Order City_Aalen,0.0
+Order City_Aalst,0.0
+Order City_Santa Barbara,0.0
+Order City_Santa Cruz de la Sierra,0.0
+Order City_Santa Cruz do Sul,0.0
+Order City_Santa Helena,0.0
+Order City_Santa Maria,0.0
+Order City_Santa Marta,0.0
+Order City_Santa Rosa,0.0
+Order City_Santana de Parnaíba,0.0
+Order City_Sancti Spíritus,0.0
+Order City_Santarém,0.0
+Order City_Santiago de Chile,0.0
+Order City_Santiago de Compostela,0.0
+Order City_Santiago de los Caballeros,0.0
+Order City_Santo Domingo de los Colorados,0.0
+Order City_Santos,0.0
+Order City_Sanandaj,0.0
+Order City_Sanary-sur-Mer,0.0
+Order City_Santander,0.0
+Order City_San José de Guanipa,0.0
+Order City_San José de las Lajas,0.0
+Order City_San Juan,0.0
+Order City_San Justo,0.0
+Order City_San Lorenzo,0.0
+Department Name_Fan Shop,0.0
+Department Name_Fitness,0.0
+Order City_Aba,0.0
+Order City_San Diego,0.0
+Order City_San Fernando,0.0
+Order City_Abakaliki,0.0
+Order City_Abbeville,0.0
+Order City_Abbotsford,0.0
+Order City_Abeokuta,0.0
+Order City_Aberdeen,0.0
+Order City_Abha,0.0
+Department Name_Outdoors,0.0
+Order City_Abadan,0.0
+Order City_San Luis,0.0
+Order City_San Luis Obispo,0.0
+Order City_San Luis Potosí,0.0
+Order City_San Marcos,0.0
+Order City_San Mateo,0.0
+Order City_San Pablo de las Salinas,0.0
+Order City_San Pedro Sula,0.0
+Order City_San Jose del Monte,0.0
+Order City_San Salvador de Jujuy,0.0
+Order City_San Sebastian,0.0
+Order City_San Severo,0.0
+Order City_San Fernando del Valle de Catamarca,0.0
+Order City_San Francisco del Rincón,0.0
+Order City_San Gabriel,0.0
+Order City_San Galo,0.0
+Order City_San Ignacio,0.0
+Order City_San Rafael,0.0
+Order City_Shijiazhuang,0.0
+Order City_Shimoga,0.0
+Order City_Semnán,0.0
+Order City_Senhor do Bonfim,0.0
+Order City_Senlis,0.0
+Order City_Seraing,0.0
+Order City_Seremban,0.0
+Order City_Santa Cruz de Barahona,0.0
+Order City_Serra,0.0
+Order City_Sesto San Giovanni,0.0
+Order City_Settat,0.0
+Order City_Sevastopol,0.0
+Order City_Severodvinsk,0.0
+Order City_Seville,0.0
+Order City_Sevran,0.0
+Order City_Shagamu,0.0
+Order City_Seropédica,0.0
+Order City_Siauliai,0.0
+Order City_Sibiu,0.0
+Order City_Sidi Bel Abbes,0.0
+Order City_Sidi Qacem,0.0
+Order City_Shanghái,0.0
+Order City_Shangqiu,0.0
+Order City_Shangyu,0.0
+Order City_Shangzhi,0.0
+Order City_Shihezi,0.0
+Order City_Shanwei,0.0
+Order City_Shaoxing,0.0
+Order City_Shashi,0.0
+Order City_Sheboygan,0.0
+Order City_Sheffield,0.0
+Order City_Shelton,0.0
+Order City_Shenyang,0.0
+Order City_Shenzhen,0.0
+Order City_Shantou,0.0
+Order City_Sapele,0.0
+Order City_Sapucaia do Sul,0.0
+Order City_Saqqez,0.0
+Order City_Sarajevo,0.0
+Order City_Sarcelles,0.0
+Order City_Sari,0.0
+Order City_Sarkand,0.0
+Order City_Shah Alam,0.0
+Order City_Sartrouville,0.0
+Order City_Saskatoon,0.0
+Order City_Sassari,0.0
+Order City_Satna,0.0
+Order City_Satu Mare,0.0
+Order City_Saumur,0.0
+Order City_Saveh,0.0
+Order City_Santa Catarina,0.0
+Order City_Sarreguemines,0.0
+Order City_Shahriar,0.0
+Order City_Savigny-le-Temple,0.0
+Order City_Savona,0.0
+Order City_Sceaux,0.0
+Order City_Schiedam,0.0
+Order City_Schiffweiler,0.0
+Order City_Schiltigheim,0.0
+Order City_Schwerin,0.0
+Order City_Sanya,0.0
+Customer State_ID,0.0
+Customer State_IN,0.0
+Customer State_KY,0.0
+Customer State_MN,0.0
+Customer State_MT,0.0
+Customer State_ND,0.0
+Customer State_NM,0.0
+Order City_Segovia,0.0
+Order City_Scottsdale,0.0
+Order City_Rohtak,0.0
+Order City_Roissy-en-Brie,0.0
+Order City_Rolândia,0.0
+Order City_Romeoville,0.0
+Order City_Ronchin,0.0
+Order City_Rondonópolis,0.0
+Order City_Roodepoort,0.0
+Order City_Abilene,0.0
+Order City_Rosarito,0.0
+Order City_Rosenheim,0.0
+Order City_Rosny-sous-Bois,0.0
+Order City_Rostock,0.0
+Order City_Rotherham,0.0
+Order City_Rottingdean,0.0
+Order City_Rockhampton,0.0
+Order City_Acámbaro,0.0
+Order City_Roosendaal,0.0
+Order City_Roubaix,0.0
+Order City_Rouen,0.0
+Order City_Round Rock,0.0
+Order City_Rovigo,0.0
+Order City_Royal Oak,0.0
+Order City_Rubí,0.0
+Order City_Ruda Slaska,0.0
+Order City_Rueil-Malmaison,0.0
+Order City_Roeselare,0.0
+Order City_Runcorn,0.0
+Order City_Rustenburg,0.0
+Order City_Rybinsk,0.0
+Order City_Río Bravo,0.0
+Order City_Saanich,0.0
+Order City_Sabadell,0.0
+Order City_Sabanalarga,0.0
+Order City_Roermond,0.0
+Order City_Rugby,0.0
+Order City_Rivne,0.0
+Order City_Riyadh,0.0
+Order City_Rize,0.0
+Order City_Rizhao,0.0
+Order City_Roanne,0.0
+Order City_Rochdale,0.0
+Order City_Rochefort,0.0
+Order City_Ad Diwaniyah,0.0
+Order City_Rochester Hills,0.0
+Order City_Rock Hill,0.0
+Order City_Rockford,0.0
+Order City_Renqiu,0.0
+Order City_Renton,0.0
+Order City_Resende,0.0
+Order City_Resita,0.0
+Order City_Reutlingen,0.0
+Order City_Rochester,0.0
+Order City_Ad Diwem,0.0
+Order City_Adana,0.0
+Order City_Adelaide,0.0
+Order City_Adiyaman,0.0
+Order City_Aew?l-li,0.0
+Order City_Afragola,0.0
+Order City_Agadir,0.0
+Order City_Agde,0.0
+Order City_Rivera,0.0
+Order City_Agrigento,0.0
+Order City_Ain Oussera,0.0
+Order City_Aix-en-Provence,0.0
+Order City_Rockville,0.0
+Order City_Rio Grande,0.0
+Order City_Rio Rancho,0.0
+Order City_Riom,0.0
+Order City_Ris-Orangis,0.0
+Order City_Agra,0.0
+Order City_San Bernardino,0.0
+Order City_San Carlos del Zulia,0.0
+Order City_San Clemente,0.0
+Order City_San Cristóbal,0.0
+Order City_San Cristóbal de Las Casas,0.0
+Order City_Saint-Michel-sur-Orge,0.0
+Order City_Saint-Nazaire,0.0
+Order City_Saint Petersburg,0.0
+Order City_Saint-Pierre-des-Corps,0.0
+Order City_Saint-Pol-sur-Mer,0.0
+Order City_Saint-Priest,0.0
+Order City_Saint-Quentin,0.0
+Order City_Sakai,0.0
+Order City_Salavat,0.0
+Order City_Sale,0.0
+Order City_Salem,0.0
+Order City_Saint-Ouen,0.0
+Order City_Abreu e Lima,0.0
+Order City_Abu Kabir,0.0
+Order City_Acarigua,0.0
+Order City_Acayucan,0.0
+Order City_Acerra,0.0
+Order City_Acireale,0.0
+Order City_Acuña,0.0
+Order City_Salt Lake City,0.0
+Order City_San Antonio,0.0
+Order City_Saltillo,0.0
+Order City_Salvador,0.0
+Order City_Salzburgo,0.0
+Order City_Samalut,0.0
+Order City_Samarra,0.0
+Order City_Samobor,0.0
+Order City_Samsun,0.0
+Order City_San Angelo,0.0
+Order City_Salta,0.0
+Order City_Saint-Malo,0.0
+Order City_Sabzevar,0.0
+Order City_Sacramento,0.0
+Order City_Safi,0.0
+Order City_Saga,0.0
+Order City_Sagamihara,0.0
+Order City_Saginaw,0.0
+Order City_Salihli,0.0
+Order City_Saharanpur,0.0
+Order City_Sahuayo de José María Morelos,0.0
+Order City_Saida,0.0
+Order City_Saint Charles,0.0
+Order City_Saint Cloud,0.0
+Order City_Saint Louis,0.0
+Order City_Saint Paul,0.0
+Order City_Saint Peters,0.0
+Order City_Sagunto,0.0
+Order City_Salina Cruz,0.0
+Order City_Salinas,0.0
+Order City_Sallanches,0.0
+Order City_Salon-de-Provence,0.0
+Order City_Saint-Avold,0.0
+Order City_Saint-Brieuc,0.0
+Order City_Saint-Cloud,0.0
+Order City_Saint-Cyr-sur-Loire,0.0
+Order City_Saint-Louis,0.0
+Order City_Saint-Dizier,0.0
+Order City_Saint-Genis-Laval,0.0
+Order City_Saint-Germain-en-Laye,0.0
+Order City_Saint-Gratien,0.0
+Order City_Saint-Herblain,0.0
+Order City_Saint-Jean-de-la-Ruelle,0.0
+Order City_Saint-Laurent,0.0
+Order City_Saint-Laurent-du-Var,0.0
+Order City_Saint-Denis,0.0
+Order City_Terneuzen,0.0
+Order City_Ternópil,0.0
+Order City_Tete,0.0
+Order City_Tetouan,0.0
+Order City_Targu Jiu,0.0
+Order City_Tarnow,0.0
+Order City_Tarragona,0.0
+Order City_Sialkot,0.0
+Order City_Tartagal,0.0
+Order City_Tartu,0.0
+Order City_Tasikmalaya,0.0
+Order City_Tatuí,0.0
+Order City_Taubaté,0.0
+Order City_Taunton,0.0
+Order City_Taupo,0.0
+Order City_Taverny,0.0
+Order City_Tarsus,0.0
+Customer City_Westland,0.0
+Customer City_Westminster,0.0
+Customer City_Wheaton,0.0
+Customer City_Wilkes Barre,0.0
+Order City_The Colony,0.0
+Order City_Tecomán,0.0
+Order City_Teherán,0.0
+Order City_Termez,0.0
+Order City_Tekirdag,0.0
+Order City_Tel Aviv,0.0
+Order City_Tembisa,0.0
+Order City_Temecula,0.0
+Order City_Temirtau,0.0
+Order City_Temixco,0.0
+Order City_Teramo,0.0
+Order City_Teresina,0.0
+Order City_Tehuacán,0.0
+Order City_Tarbes,0.0
+Order City_Tabuk,0.0
+Order City_Tahta,0.0
+Order City_Taipei,0.0
+Order City_Taiping,0.0
+Order City_Taixing,0.0
+Order City_Taizz,0.0
+Order City_Tawau,0.0
+Order City_Takasaki,0.0
+Order City_Takatsuki,0.0
+Order City_Takestan,0.0
+Order City_Talara,0.0
+Order City_Talavera de la Reina,0.0
+Order City_Talcahuano,0.0
+Order City_Taldyqorghan,0.0
+Order City_Talence,0.0
+Order City_Takamatsu,0.0
+Order City_Taylor,0.0
+Order City_Taytay,0.0
+Order City_Taza,0.0
+Order City_Tallahassee,0.0
+Order City_Tamale,0.0
+Order City_Tamarac,0.0
+Order City_Tampa,0.0
+Order City_Tampico,0.0
+Order City_Taraz,0.0
+Order City_Tanga,0.0
+Order City_Tangerang,0.0
+Order City_Tanggu,0.0
+Order City_Tangier,0.0
+Order City_Tangshan,0.0
+Order City_Tanta,0.0
+Order City_Tapachula,0.0
+Order City_Taranto,0.0
+Order City_Tamworth,0.0
+Order City_Toronto,0.0
+Customer City_Vallejo,0.0
+Customer City_Valrico,0.0
+Customer City_Van Nuys,0.0
+Customer City_Ventura,0.0
+Customer City_Visalia,0.0
+Customer City_Walnut,0.0
+Customer City_West Orange,0.0
+Customer City_Washington,0.0
+Customer City_Watsonville,0.0
+Order City_Timaru,0.0
+Order City_Tinaquillo,0.0
+Order City_Tinley Park,0.0
+Order City_Tirunelveli,0.0
+Order City_Tirupati,0.0
+Order City_Tiruppur,0.0
+Customer City_Warren,0.0
+Order City_Torrevieja,0.0
+Order City_Torreón,0.0
+Order City_Tottori,0.0
+Order City_Toul,0.0
+Order City_Toulon,0.0
+Order City_Tourcoing,0.0
+Order City_Tournai,0.0
+Order City_Tournefeuille,0.0
+Order City_Torcy,0.0
+Order City_Trapani,0.0
+Order City_Trappes,0.0
+Order City_Traralgon,0.0
+Order City_Tongling,0.0
+Order City_Tongzhou,0.0
+Order City_Toowoomba,0.0
+Order City_Torbali,0.0
+Order City_Torbat-e Heydariyeh,0.0
+Order City_Toyohashi,0.0
+Order City_Tianguá,0.0
+Order City_Tianjin,0.0
+Order City_Tieling,0.0
+Order City_Tiflis,0.0
+Order City_Tigard,0.0
+Order City_Tijuana,0.0
+Order City_Tilburg,0.0
+Order City_Tivoli,0.0
+Order City_Texas City,0.0
+Order City_Teziutlán,0.0
+Order City_Thane,0.0
+Order City_Thanjavur,0.0
+Customer City_Webster,0.0
+Customer City_West Covina,0.0
+Customer City_West Lafayette,0.0
+Customer City_West New York,0.0
+Order City_Texarkana,0.0
+Order City_Tlalnepantla,0.0
+Order City_Tlalpan,0.0
+Order City_Tlemcen,0.0
+Order City_Toamasina,0.0
+Order City_Tokat,0.0
+Order City_Toledo,0.0
+Order City_Toliara,0.0
+Order City_Tongchuan,0.0
+Order City_Thousand Oaks,0.0
+Order City_The Hague,0.0
+Order City_Thiais,0.0
+Order City_Thies Nones,0.0
+Order City_Thika,0.0
+Order City_Thionville,0.0
+Order City_Thiruvananthapuram,0.0
+Order City_Thomasville,0.0
+Order City_Thonon-les-Bains,0.0
+Order City_Tongliao,0.0
+Order City_Solna,0.0
+Order City_Soma,0.0
+Order City_Sonderborg,0.0
+Order City_Sonipat,0.0
+Order City_Sonneberg,0.0
+Order City_Sorgues,0.0
+Order City_Sorocaba,0.0
+Order City_Tallaght,0.0
+Order City_Six-Fours-les-Plages,0.0
+Order City_Skikda,0.0
+Order City_Skokie,0.0
+Order City_Sliven,0.0
+Order City_Slough,0.0
+Order City_Slupsk,0.0
+Order City_Smyrna,0.0
+Order City_Soacha,0.0
+Order City_Sorriso,0.0
+Order City_Southend-on-Sea,0.0
+Order City_Southport,0.0
+Order City_Soweto,0.0
+Order City_Spanish Town,0.0
+Order City_Sparks,0.0
+Order City_Spijkenisse,0.0
+Order City_Split,0.0
+Order City_Spokane,0.0
+Order City_Solingen,0.0
+Order City_Springs,0.0
+Order City_Sohag,0.0
+Order City_Soissons,0.0
+Order City_Sokode,0.0
+Order City_Sokoto,0.0
+Order City_Soledad,0.0
+Order City_Soledad Díez Gutiérrez,0.0
+Order City_Solihull,0.0
+Order City_Springdale,0.0
+Order City_Singapur,0.0
+Order City_Sinop,0.0
+Order City_Sioux Falls,0.0
+Order City_Sittard,0.0
+Order City_Sivas,0.0
+Order City_Shimonoseki,0.0
+Order City_Shinyanga,0.0
+Order City_Sobral,0.0
+Order City_Shkoder,0.0
+Order City_Shouguang,0.0
+Order City_Shrewsbury,0.0
+Order City_Shuangcheng,0.0
+Order City_Shuangyashan,0.0
+Order City_Shulan,0.0
+Order City_Shumen,0.0
+Order City_Shushtar,0.0
+Order City_Shizuishan,0.0
+Order City_Sofia,0.0
+Customer State_AL,0.0
+Customer State_DC,0.0
+Customer State_DE,0.0
+Customer State_HI,0.0
+Customer State_IA,0.0
+Order City_Sogamoso,0.0
+Order City_Siedlce,0.0
+Order City_Sindelfingen,0.0
+Order City_Siena,0.0
+Order City_Sierra Vista,0.0
+Order City_Siirt,0.0
+Order City_Sikasso,0.0
+Order City_Silao,0.0
+Order City_Silivri,0.0
+Order City_Silopi,0.0
+Order City_Sincan,0.0
+Order City_Siegen,0.0
+Order City_Surabaya,0.0
+Order City_Surakarta,0.0
+Order City_Suresnes,0.0
+Order City_Surrey,0.0
+Order City_Surubim,0.0
+Order City_Suwon,0.0
+Order City_Suzhou,0.0
+Order City_Southaven,0.0
+Order City_Swindon,0.0
+Order City_Sylhet,0.0
+Order City_São Benedito,0.0
+Order City_São Bernardo do Campo,0.0
+Order City_São Gonçalo,0.0
+Order City_São José dos Campos,0.0
+Order City_Strasbourg,0.0
+Order City_Stuttgart,0.0
+Order City_Swansea,0.0
+Order City_São Leopoldo,0.0
+Order City_São Luís,0.0
+Order City_São Paulo,0.0
+Order City_São Pedro da Aldeia,0.0
+Order City_São Vicente,0.0
+Order City_Tabora,0.0
+Order City_Taboão da Serra,0.0
+Customer City_Wilmington,0.0
+Order City_Superior,0.0
+Customer City_Woodside,0.0
+Customer City_Wyandotte,0.0
+Customer City_Yauco,0.0
+Customer City_York,0.0
+Customer City_Ypsilanti,0.0
+Customer City_Yuma,0.0
+Customer City_Zanesville,0.0
+Order City_Sunnyvale,0.0
+Customer City_Woodbridge,0.0
+Order City_Stanger,0.0
+Order City_Stara Zagora,0.0
+Order City_Stavanger,0.0
+Order City_Stellenbosch,0.0
+Order City_Sterling Heights,0.0
+Order City_Sterlitamak,0.0
+Order City_Stockport,0.0
+Order City_Suceava,0.0
+Order City_Stockton-on-Tees,0.0
+Order City_Stolberg,0.0
+Order City_Stralsund,0.0
+Order City_Sosnowiec,0.0
+Order City_Sousa,0.0
+Order City_South Bend,0.0
+Order City_South Shields,0.0
+Order City_Southampton,0.0
+Order City_Stockton,0.0
+Order City_Sucre,0.0
+Order City_Sucy-en-Brie,0.0
+Order City_Suffolk,0.0
+Order City_Suihua,0.0
+Order City_Suining,0.0
+Order City_Suizhou,0.0
+Order City_Sukabumi,0.0
+Order City_Sukkur,0.0
+Order City_Stakhanov,0.0
+Order City_Summerville,0.0
+Order City_Sumy,0.0
+Order City_Sunbury,0.0
+Order City_Sunderland,0.0
+Order City_Srinagar,0.0
+Order City_St. Catharines,0.0
+Order City_St. John's,0.0
+Order City_Stadtlohn,0.0
+Order City_Sumaré,0.0
+Order State_Occidental,0.0
+Order State_Odisha,0.0
+Order State_Ogun,0.0
+Order State_Oita,0.0
+Order State_Okayama,0.0
+Order State_Oklahoma,0.0
+Order State_Olomouc,0.0
+Order City_Reus,0.0
+Order State_Opole,0.0
+Customer City_Cicero,0.0
+Customer City_Cincinnati,0.0
+Customer City_Citrus Heights,0.0
+Customer City_Clementon,0.0
+Order State_Nord,0.0
+Order State_Nord-Ouest,0.0
+Order State_Noroeste,0.0
+Order State_Ondo,0.0
+Order State_Osjecko-Baranjska,0.0
+Order State_Oslo,0.0
+Order State_Osmaniye,0.0
+Order State_Osun,0.0
+Order State_Otago,0.0
+Order State_Ouest,0.0
+Order State_Ouest del Sur,0.0
+Order State_Ouémé,0.0
+Order State_Oaxaca,0.0
+Order State_Oyo,0.0
+Order State_Panamá,0.0
+Order State_Nyanza,0.0
+Order State_Nzérékoré,0.0
+Order State_Níger,0.0
+Order State_Nínive,0.0
+Order State_Nóvgorod,0.0
+Order State_O'Higgins,0.0
+Order State_Overijssel,0.0
+Customer City_Chapel Hill,0.0
+Customer City_Charlotte,0.0
+Customer City_Chicago Heights,0.0
+Customer City_Chillicothe,0.0
+Customer City_Chino,0.0
+Customer City_Chino Hills,0.0
+Order State_Nakhon Ratchasima,0.0
+Order State_Norte de Santander,0.0
+Order State_Namibe,0.0
+Order State_Nampula,0.0
+Order State_Namur,0.0
+Order State_Nangarhar,0.0
+Order State_Nariño,0.0
+Order State_Navarra,0.0
+Order State_Nayarit,0.0
+Order State_Neamt,0.0
+Order State_Namangán,0.0
+Order State_Northland,0.0
+Order State_Nouakchott,0.0
+Order State_Nueva Escocia,0.0
+Order State_Nueva Esparta,0.0
+Order State_Nuevo León,0.0
+Order State_Nuevo México,0.0
+Order State_Nusa Tenggara Oriental,0.0
+Order State_Nusatenggara Occidental,0.0
+Customer City_Chandler,0.0
+Order State_Niari,0.0
+Order State_Niassa,0.0
+Order State_Nicosia,0.0
+Order State_Nigde,0.0
+Order State_Nilo Blanco,0.0
+Order State_Ningxia Hui,0.0
+Order State_Nitra,0.0
+Order State_Nom Pen,0.0
+Order State_Niamey,0.0
+Order State_Pomerania,0.0
+Order State_Portuguesa,0.0
+Order State_Potosí,0.0
+Order State_Praga,0.0
+Order State_Prahova,0.0
+Order State_Prefectura de Vientián,0.0
+Order State_Primorje-Gorski Kotar,0.0
+Order State_Osh,0.0
+Order State_Provincia Oriental,0.0
+Order State_Puducherry,0.0
+Customer City_Brentwood,0.0
+Customer City_Bridgeton,0.0
+Customer City_Brighton,0.0
+Customer City_Bristol,0.0
+Customer City_Brockton,0.0
+Customer City_Cayey,0.0
+Order State_Provenza-Alpes-Costa Azul,0.0
+Order State_Saga,0.0
+Order State_Saida,0.0
+Customer City_Broken Arrow,0.0
+Customer City_Campbell,0.0
+Order State_Puebla,0.0
+Order State_Puerto Saíd,0.0
+Order State_Puno,0.0
+Order State_Pwani,0.0
+Order State_Poltava,0.0
+Order State_Qom,0.0
+Order State_Quezaltenango,0.0
+Order State_Quindío,0.0
+Order State_Rabat-Salé-Zemur-Zaer,0.0
+Order State_Rajshahi,0.0
+Order State_Rangún,0.0
+Order State_Ras al-Jaima,0.0
+Order State_Región Capital,0.0
+Order State_Qinghai,0.0
+Order State_Pavlodar,0.0
+Order State_Paysandú,0.0
+Order State_Pazardzhik,0.0
+Customer City_Canoga Park,0.0
+Customer City_Canovanas,0.0
+Customer City_Canton,0.0
+Customer City_Canyon Country,0.0
+Customer City_Chambersburg,0.0
+Customer City_Carol Stream,0.0
+Customer City_Carolina,0.0
+Customer City_Carrollton,0.0
+Customer City_Cary,0.0
+Order State_Ordu,0.0
+Order State_Oriental,0.0
+Order State_Orán,0.0
+Order State_Osaka,0.0
+Customer City_Carmichael,0.0
+Order State_Países del Loira,0.0
+Order State_Pekín,0.0
+Order State_Perak,0.0
+Order State_Peravia,0.0
+Order State_Pernik,0.0
+Order State_Piauí,0.0
+Order State_Pichincha,0.0
+Order State_Piura,0.0
+Order State_Paraíba,0.0
+Order State_Plateaux,0.0
+Order State_Plovdiv,0.0
+Order State_Podgorica,0.0
+Order State_Podlaquia,0.0
+Order State_Polonia Menor,0.0
+Order State_Panevezys,0.0
+Order State_Papua,0.0
+Order State_Paramaribo,0.0
+Order State_Plateau,0.0
+Order State_Manabí,0.0
+Order State_Managua,0.0
+Customer City_Dubuque,0.0
+Customer City_East Brunswick,0.0
+Customer City_East Lansing,0.0
+Customer City_Edinburg,0.0
+Customer City_Edison,0.0
+Order State_Nebraska,0.0
+Customer City_El Centro,0.0
+Customer City_El Monte,0.0
+Customer City_Elgin,0.0
+Customer City_Elk Grove,0.0
+Order State_Mandoul,0.0
+Order State_Los Ríos,0.0
+Order State_Luanda,0.0
+Order State_Lublin,0.0
+Customer City_El Cajon,0.0
+Order State_Manipur,0.0
+Order State_Manisa,0.0
+Order State_Manitoba,0.0
+Order State_Manzini,0.0
+Order State_Maputo,0.0
+Order State_Mar Rojo,0.0
+Order State_Mara,0.0
+Order State_Maradi,0.0
+Order State_Maluku,0.0
+Customer City_Cypress,0.0
+Customer City_Daly City,0.0
+Customer City_Danbury,0.0
+Customer City_Davis,0.0
+Customer City_Dayton,0.0
+Customer City_Dearborn,0.0
+Order State_Malanje,0.0
+Order State_Malatya,0.0
+Order State_Maramures,0.0
+Order State_Limpopo,0.0
+Order State_Lisboa,0.0
+Order State_Litoral,0.0
+Order State_Littoral,0.0
+Order State_Liubliana,0.0
+Order State_Lodz,0.0
+Order State_Lorestan,0.0
+Order State_Lubusz,0.0
+Order State_Lori,0.0
+Order State_Los Lagos,0.0
+Order State_Kumanovo,0.0
+Order State_Kwara,0.0
+Order State_Kymenlaakso,0.0
+Order State_Kütahya,0.0
+Order State_La Libertad,0.0
+Order State_La Pampa,0.0
+Order State_Loreto,0.0
+Order State_Lucerna,0.0
+Order State_Lugansk,0.0
+Order State_Luisiana,0.0
+Order State_Lusaka,0.0
+Order State_Luxemburgo,0.0
+Order State_Luzón Central,0.0
+Order State_Lviv,0.0
+Order State_Líbano del Norte,0.0
+Order State_Lima (ciudad),0.0
+Order State_Madrid,0.0
+Order State_Magdalena,0.0
+Order State_Maine,0.0
+Order State_León,0.0
+Order State_Liberec,0.0
+Order State_Lieja,0.0
+Order State_Liguria,0.0
+Order State_Lima,0.0
+Order State_Madhya Pradesh,0.0
+Order State_Nagano,0.0
+Order State_Nagasaki,0.0
+Order State_Nairobi,0.0
+Order State_Meta,0.0
+Order State_Mie,0.0
+Order State_Mindanao Septentrional,0.0
+Order State_Minnesota,0.0
+Order State_Manicalandia,0.0
+Order State_Misiones,0.0
+Order State_Misisipi,0.0
+Order State_Misurata,0.0
+Order State_Misuri,0.0
+Order State_Monagas,0.0
+Order State_Mongolia Interior,0.0
+Order State_Mono,0.0
+Order State_Monseñor Nouel,0.0
+Order State_Miranda,0.0
+Order State_Negeri Sembilan,0.0
+Order State_Nelson,0.0
+Order State_Neuquén,0.0
+Order State_Nevada,0.0
+Order State_Nevsehir,0.0
+Order State_Mopti,0.0
+Order State_Moquegua,0.0
+Order State_Moravia-Silesia,0.0
+Order State_Mérida,0.0
+Order State_Morogoro,0.0
+Order State_Moscú,0.0
+Order State_Mostaganem,0.0
+Order State_Mpumalanga,0.0
+Order State_Mtwara,0.0
+Order State_Muharraq,0.0
+Order State_Mwanza,0.0
+Order State_Mykolayiv,0.0
+Order State_Morelos,0.0
+Customer City_Diamond Bar,0.0
+Customer City_Douglasville,0.0
+Order State_Mardin,0.0
+Order State_Markazí,0.0
+Order State_Marlborough,0.0
+Order State_Marrakech-Tensift-Al Hauz,0.0
+Order State_Martinica,0.0
+Order State_Montana,0.0
+Order State_Masaya,0.0
+Order State_Mascate,0.0
+Order State_Maseru,0.0
+Order State_Mashonalandia Occidental,0.0
+Order State_Matagalpa,0.0
+Order State_Mato Grosso,0.0
+Order State_Mato Grosso del Sur,0.0
+Order State_Matruh,0.0
+Order State_Mary,0.0
+Order State_Montevideo,0.0
+Order State_Montserrado,0.0
+Order State_Mazandarán,0.0
+Order State_Mbeya,0.0
+Order State_Meca,0.0
+Order State_Mecklemburgo-Pomerania Occidental,0.0
+Order State_Mehedinti,0.0
+Order State_Melilla,0.0
+Order State_Mesena,0.0
+Order State_Mequinez-Tafilalet,0.0
+Order State_Mersin,0.0
+Customer City_Colton,0.0
+Customer City_Compton,0.0
+Customer City_Conway,0.0
+Customer City_Crown Point,0.0
+Customer City_Cumberland,0.0
+Customer City_Cupertino,0.0
+Order State_Mendoza,0.0
+Order State_Värmland,0.0
+Order State_Västra Götaland,0.0
+Order State_Véneto,0.0
+Order State_Vínnytsia,0.0
+Order State_Varna,0.0
+Order State_Vaud,0.0
+Order State_Vermont,0.0
+Order State_Sabah,0.0
+Category Name_Golf Balls,0.0
+Category Name_Golf Gloves,0.0
+Category Name_Golf Shoes,0.0
+Category Name_Hockey,0.0
+Category Name_Hunting & Shooting,0.0
+Category Name_Lacrosse,0.0
+Category Name_Shop By Sport,0.0
+Category Name_Tennis & Racquet,0.0
+Order State_Vest-Agder,0.0
+Order State_Yevrey,0.0
+Order State_Yibuti,0.0
+Order State_Yobe,0.0
+Order State_Yoro,0.0
+Order State_Yunnan,0.0
+Order State_Zagrebacka,0.0
+Customer City_Alameda,0.0
+Customer City_Albany,0.0
+Order State_Vâlcea,0.0
+Order State_Virginia,0.0
+Order State_Virginia Occidental,0.0
+Order State_Visayas Occidental,0.0
+Order State_Vitsyebsk,0.0
+Order State_Vladímir,0.0
+Order State_Vlorë,0.0
+Order State_Volinia,0.0
+Order State_Vrancea,0.0
+Order State_Villa Clara,0.0
+Order State_Tianjin,0.0
+Order State_Tiflis,0.0
+Order State_Tipaza,0.0
+Order State_Tirol,0.0
+Order State_Tizi Ouzou,0.0
+Order State_Tlemcen,0.0
+Order State_Tocantins,0.0
+Category Name_Trade-In,0.0
+Order State_Tokat,0.0
+Order State_Tolima,0.0
+Order State_Toscana,0.0
+Order State_Tottori,0.0
+Order State_Trebisonda,0.0
+Order State_Trengganu,0.0
+Order State_Trentino-Alto Adigio,0.0
+Order State_Tripura,0.0
+Order State_Tochigi,0.0
+Category Name_Water Sports,0.0
+Customer City_Aguadilla,0.0
+Order State_Turingia,0.0
+Order State_Táchira,0.0
+Order State_Tánger-Tetuán,0.0
+Order State_Túnez,0.0
+Order State_Ucayali,0.0
+Order State_Ulsan,0.0
+Order State_Vargas,0.0
+Order State_Upsala,0.0
+Order State_Usak,0.0
+Order State_Utah,0.0
+Order State_Utrecht,0.0
+Order State_Uusimaa,0.0
+Order State_Valenciana,0.0
+Order State_Valparaíso,0.0
+Order State_Van,0.0
+Order State_Ulán Bator,0.0
+Product Name_Under Armour Men's Compression EV SL Slide,0.0
+Product Name_Under Armour Men's Tech II T-Shirt,0.0
+Product Name_Under Armour Women's Ignite PIP VI Slide,0.0
+Product Name_Under Armour Women's Ignite Slide,0.0
+Product Name_Under Armour Women's Micro G Skulpt Running S,0.0
+Product Name_adidas Kids' F5 Messi FG Soccer Cleat,0.0
+Product Name_adidas Men's F10 Messi TRX FG Soccer Cleat,0.0
+Order State_Yazd,0.0
+Product Name_adidas Youth Germany Black/Red Away Match Soc,0.0
+Order City_Bingöl,0.0
+Order City_Binjai,0.0
+Product Name_Titleist Pro V1x High Numbers Personalized Go,0.0
+Product Name_Bridgestone e6 Straight Distance NFL San Dieg,0.0
+Product Name_Bridgestone e6 Straight Distance NFL Tennesse,0.0
+Product Name_Clicgear 8.0 Shoe Brush,0.0
+Product Name_Clicgear Rovic Cooler Bag,0.0
+Product Name_adidas Men's Germany Black Crest Away Tee,0.0
+Product Name_Top Flite Women's 2014 XL Hybrid,0.0
+Product Name_Glove It Imperial Golf Towel,0.0
+Product Name_Glove It Urban Brick Golf Towel,0.0
+Product Name_Glove It Women's Imperial Golf Glove,0.0
+Product Name_Glove It Women's Mod Oval 3-Zip Carry All Gol,0.0
+Product Name_Glove It Women's Mod Oval Golf Glove,0.0
+Product Name_Hirzl Men's Hybrid Golf Glove,0.0
+Product Name_Hirzl Women's Hybrid Golf Glove,0.0
+Product Name_Under Armour Kids' Mercenary Slide,0.0
+Product Name_Nike Dri-FIT Crew Sock 6 Pack,0.0
+Product Name_Nike Men's CJ Elite 2 TD Football Cleat,0.0
+Product Name_Nike Men's Comfort 2 Slide,0.0
+Product Name_Nike Men's Deutschland Weltmeister Winners Bl,0.0
+Product Name_Nike Men's Free 5.0+ Running Shoe,0.0
+Order City_Binzhou,0.0
+Product Name_Nike Women's Tempo Shorts,0.0
+Product Name_Under Armour Hustle Storm Medium Duffle Bag,0.0
+Product Name_LIJA Women's Eyelet Sleeveless Golf Polo,0.0
+Order State_iauliai,0.0
+Order State_ilina,0.0
+Order State_Çanakkale,0.0
+Order State_Équateur,0.0
+Order State_Ústí nad Labem,0.0
+Product Name_Bag Boy Beverage Holder,0.0
+Product Name_Bridgestone e6 Straight Distance NFL Carolina,0.0
+Product Name_Columbia Men's PFG Anchor Tough T-Shirt,0.0
+Order State_Wellington,0.0
+Order State_Wisconsin,0.0
+Order State_Yakarta,0.0
+Order State_Yalova,0.0
+Order State_Yamaguchi,0.0
+Order State_Yambol,0.0
+Order State_Yaracuy,0.0
+Order State_Yaroslavl,0.0
+Order State_Waikato,0.0
+Product Name_Diamondback Women's Serene Classic Comfort Bi,0.0
+Category Name_Accessories,0.0
+Category Name_Baseball & Softball,0.0
+Category Name_Boxing & MMA,0.0
+Category Name_Electronics,0.0
+Category Name_Fishing,0.0
+Category Name_Fitness Accessories,0.0
+Category Name_Girls' Apparel,0.0
+Order State_Zúrich,0.0
+Order State_Zambezia,0.0
+Order State_Zamfara,0.0
+Order State_Zanyán,0.0
+Order State_Zelanda,0.0
+Order State_Zhambyl,0.0
+Order State_Ziguinchor,0.0
+Order State_Zinder,0.0
+Order State_Zulia,0.0
+Category Name_Golf Apparel,0.0
+Order State_Septentrional,0.0
+Order State_Serbia Central,0.0
+Order State_Sergipe,0.0
+Order State_Setúbal,0.0
+Order State_Sevastopol,0.0
+Order State_Seúl,0.0
+Order State_Salzburgo,0.0
+Order State_Tarapacá,0.0
+Order State_San Cristóbal,0.0
+Order State_San Fernando,0.0
+Order State_San Galo,0.0
+Order State_San Juan,0.0
+Order State_San Luis,0.0
+Order State_San Luis Potosí,0.0
+Order State_San Miguel,0.0
+Order State_San Pedro de Macorís,0.0
+Order State_Samsun,0.0
+Order State_Sichuan,0.0
+Customer City_Asheboro,0.0
+Customer City_Astoria,0.0
+Customer City_Atlanta,0.0
+Customer City_Augusta,0.0
+Customer City_Austin,0.0
+Customer City_Baldwin Park,0.0
+Customer City_Bartlett,0.0
+Order State_Semnán,0.0
+Order State_Santo Domingo,0.0
+Order State_Sarre,0.0
+Order State_Saskatchewan,0.0
+Order State_Satu Mare,0.0
+Order State_Savanes,0.0
+Order State_Schleswig-Holstein,0.0
+Order State_Selandia,0.0
+Order State_Selangor,0.0
+Order State_Santiago de Cuba,0.0
+Customer City_Bloomfield,0.0
+Customer City_Bolingbrook,0.0
+Customer City_Bowling Green,0.0
+Order State_Rhode Island,0.0
+Order State_Riad,0.0
+Order State_Rivera,0.0
+Order State_Rivne,0.0
+Order State_Sancti Spíritus,0.0
+Order State_Rogaland,0.0
+Order State_Rondônia,0.0
+Order State_Roraima,0.0
+Order State_Ruvuma,0.0
+Order State_Río Grande del Norte,0.0
+Order State_Río Negro,0.0
+Order State_Río de Janeiro,0.0
+Order State_Ríos,0.0
+Order State_Rize,0.0
+Order State_Sanliurfa,0.0
+Order State_Santa Ana,0.0
+Order State_Santa Caterina,0.0
+Order State_Santa Cruz,0.0
+Order State_Santander,0.0
+Order State_Saint-Louis,0.0
+Order State_Saitama,0.0
+Order State_Sajonia-Anhalt,0.0
+Customer City_Blacksburg,0.0
+Order State_Salta,0.0
+Customer City_Beaverton,0.0
+Customer City_Bellingham,0.0
+Customer City_Beloit,0.0
+Customer City_Bensalem,0.0
+Customer City_Berwyn,0.0
+Customer City_Birmingham,0.0
+Customer City_Bismarck,0.0
+Order State_Saladino,0.0
+Order State_Tadla-Azilal,0.0
+Order State_Taipéi,0.0
+Order State_Taiz,0.0
+Order State_Tambov,0.0
+Order State_Tamil Nadu,0.0
+Order State_Tanga,0.0
+Customer City_Alhambra,0.0
+Order State_Sibiu,0.0
+Customer City_Alpharetta,0.0
+Customer City_Annandale,0.0
+Customer City_Annapolis,0.0
+Customer City_Apex,0.0
+Order State_Taranaki,0.0
+Order State_Stara Zagora,0.0
+Order State_Stiria,0.0
+Order State_Stávropol,0.0
+Customer City_Allentown,0.0
+Order State_Tarija,0.0
+Order State_Tartu,0.0
+Order State_Tasmania,0.0
+Order State_Taza-Alhucemas-Taunat,0.0
+Order State_Tekirdag,0.0
+Order State_Tel Aviv,0.0
+Order State_Telangana,0.0
+Order State_Ternópil,0.0
+Order State_Tabuk,0.0
+Order State_Territorio de la Capital Australiana,0.0
+Order State_Territorio de la Capital Federal,0.0
+Order State_Territorio del Norte,0.0
+Order State_Tete,0.0
+Order State_Th? Dô Hà N?i,0.0
+Order State_Thiès,0.0
+Order State_T?nh C?n Th?,0.0
+Order State_Tabora,0.0
+Order State_Terranova,0.0
+Order State_Sirnak,0.0
+Order State_Sistán y Baluchistán,0.0
+Order State_Sivas,0.0
+Order State_Sliven,0.0
+Order State_Sofala,0.0
+Order State_Sofía-Ciudad,0.0
+Order State_Sokoto,0.0
+Order State_Sonora,0.0
+Order State_Suceava,0.0
+Order State_Split-Dalmacia,0.0
+Order State_Shaanxi,0.0
+Order State_Shandong,0.0
+Order State_Shanghái,0.0
+Order State_Shinyanga,0.0
+Order State_Shizuoka,0.0
+Order State_Shkodër,0.0
+Order State_Shumen,0.0
+Order State_Sonsonate,0.0
+Order State_Sucre,0.0
+Order State_Sud,0.0
+Order State_Sudeste,0.0
+Order State_Suhaj,0.0
+Order State_Sumatra Meridional,0.0
+Order State_Sumatra Occidental,0.0
+Order State_Sumatra Septentrional,0.0
+Order State_Sumy,0.0
+Order State_Singapur,0.0
+Order State_Sus-Masa-Draa,0.0
+Order State_Sylhet,0.0
+Order State_Södermanland,0.0
+Customer City_Bayamon,0.0
+Order State_Sidi Bel Abbes,0.0
+Order State_Siirt,0.0
+Order State_Sikasso,0.0
+Order State_Sinaloa,0.0
+Order State_Surjandarín,0.0
+Order State_Caquetá,0.0
+Order State_Caras-Severin,0.0
+Order State_Carintia,0.0
+Order State_Carolina del Norte,0.0
+Order State_Carolina del Sur,0.0
+Order State_Casanare,0.0
+Order State_Castilla y León,0.0
+Order State_La Paz,0.0
+Order State_Béchar,0.0
+Order State_Békés,0.0
+Order State_Cabo Delgado,0.0
+Order State_Cabo Occidental,0.0
+Order State_Cadisia,0.0
+Order State_Cajamarca,0.0
+Customer City_Livermore,0.0
+Customer City_Lodi,0.0
+Order State_Buzau,0.0
+Order State_Cesar,0.0
+Order State_Ceuta,0.0
+Order State_Chaguanas,0.0
+Customer City_Lansdale,0.0
+Customer City_Lawrence,0.0
+Customer City_Lawrenceville,0.0
+Customer City_Lewisville,0.0
+Customer City_Lilburn,0.0
+Order State_Capital Nacional,0.0
+Customer City_Lynwood,0.0
+Order State_Calabria,0.0
+Order State_Caldas,0.0
+Order State_Callao,0.0
+Order State_Campeche,0.0
+Order State_Canelones,0.0
+Order State_Cantabria,0.0
+Order State_Canterbury,0.0
+Customer City_Lindenhurst,0.0
+Order State_Busan,0.0
+Order State_Bushehr,0.0
+Order State_Buskerud,0.0
+Order State_Buyumbura Mairie,0.0
+Order State_Borneo Occidental,0.0
+Order State_Borno,0.0
+Order State_Botosani,0.0
+Customer City_Lombard,0.0
+Customer City_Madison,0.0
+Customer City_Manati,0.0
+Customer City_Manchester,0.0
+Customer City_Marietta,0.0
+Customer City_Martinez,0.0
+Customer City_Martinsburg,0.0
+Customer City_Massapequa,0.0
+Customer City_Massillon,0.0
+Order State_Boyacá,0.0
+Customer City_Long Beach,0.0
+Customer City_Longmont,0.0
+Customer City_Louisville,0.0
+Customer City_Loveland,0.0
+Customer City_Lutz,0.0
+Customer City_Lynnwood,0.0
+Order State_Brabante Flamenco,0.0
+Order State_Brabante Septentrional,0.0
+Order State_Bursa,0.0
+Order State_Braila,0.0
+Order State_Bremen,0.0
+Order State_Bretaña,0.0
+Order State_Bruselas,0.0
+Order State_Budapest,0.0
+Order State_Bugía,0.0
+Order State_Bulawayo,0.0
+Order State_Burgas,0.0
+Order State_Braga,0.0
+Order State_Costa,0.0
+Order State_Cundinamarca,0.0
+Customer City_Joliet,0.0
+Customer City_Juana Diaz,0.0
+Customer City_Kailua,0.0
+Customer City_Katy,0.0
+Customer City_Kenner,0.0
+Order State_Cerdeña,0.0
+Customer City_La Crosse,0.0
+Customer City_La Habra,0.0
+Customer City_La Mesa,0.0
+Customer City_La Mirada,0.0
+Customer City_La Puente,0.0
+Order State_Ciego de Ávila,0.0
+Order State_Cienfuegos,0.0
+Order State_Cluj,0.0
+Customer City_Kent,0.0
+Order State_Célebes Central,0.0
+Order State_Célebes Septentrional,0.0
+Order State_Célebes Suroriental,0.0
+Order State_Córdoba,0.0
+Order State_Daca,0.0
+Order State_Daegu,0.0
+Order State_Daejeon,0.0
+Order State_Daguestán,0.0
+Order State_Corum,0.0
+Order State_Dakota del Sur,0.0
+Order State_Dayr az Zawr,0.0
+Order State_Delaware,0.0
+Order State_Demerara-Berbice Superior,0.0
+Order State_Denizli,0.0
+Order State_Departamento Atlántico,0.0
+Order State_Corrientes,0.0
+Order State_Corse,0.0
+Order State_Dakota del Norte,0.0
+Order State_Chinandega,0.0
+Order State_Chisináu,0.0
+Order State_Chittagong,0.0
+Order State_Chocó,0.0
+Order State_Choluteca,0.0
+Order State_Chubut,0.0
+Order State_Chukha,0.0
+Order State_Coahuila,0.0
+Order State_Chuquisaca,0.0
+Order State_Cidade De Maputo,0.0
+Order State_Castilla-La Mancha,0.0
+Order State_Cataluña,0.0
+Order State_Catamarca,0.0
+Order State_Ceará,0.0
+Order State_Central,0.0
+Order State_Centro-Valle de Loira,0.0
+Order State_Chungcheong del Sur,0.0
+Order State_Cochabamba,0.0
+Order State_Coimbra,0.0
+Order State_Cojedes,0.0
+Order State_Colima,0.0
+Order State_Colorado,0.0
+Order State_Columbia británica,0.0
+Order State_Connecticut,0.0
+Order State_Constantina,0.0
+Order State_Chimaltenango,0.0
+Order State_Copperbelt,0.0
+Order State_Cordillera,0.0
+Order State_Cork,0.0
+Order State_Chandigarh,0.0
+Order State_Chauía-Uardiga,0.0
+Order State_Cherkasy,0.0
+Order State_Chhattisgarh,0.0
+Order State_Chiba,0.0
+Order State_Constanza,0.0
+Customer City_Modesto,0.0
+Customer City_Moline,0.0
+Customer City_Montebello,0.0
+Customer City_Morganton,0.0
+Customer City_Morristown,0.0
+Customer City_Morrisville,0.0
+Customer City_Mount Pleasant,0.0
+Customer City_Mayaguez,0.0
+Customer City_Muskegon,0.0
+Customer City_Nashville,0.0
+Order State_Ardahan,0.0
+Order State_Amur,0.0
+Order State_Amán,0.0
+Order State_Analamanga,0.0
+Order State_Anambra,0.0
+Order State_Andhra Pradesh,0.0
+Customer City_Mount Prospect,0.0
+Order State_Arica y Parinacota,0.0
+Order State_Arjánguelsk,0.0
+Order State_Arkansas,0.0
+Order State_Artemisa,0.0
+Order State_Arusha,0.0
+Order State_Ash Sharqiyah,0.0
+Order State_Ashanti,0.0
+Order State_Asir,0.0
+Customer City_Milwaukee,0.0
+Order State_Asjabad,0.0
+Order State_Assam,0.0
+Order State_Astaná,0.0
+Order State_Astracán,0.0
+Order State_Arad,0.0
+Order State_Aragua,0.0
+Order State_Arauca,0.0
+Order State_Arbil,0.0
+Order State_Asiut,0.0
+Order State_Al Marqab,0.0
+Order State_Alger,0.0
+Order State_Alibori,0.0
+Order State_Almaty,0.0
+Order State_Alta Austria,0.0
+Order State_Amapá,0.0
+Order State_Amasya,0.0
+Order State_Andiján,0.0
+Order State_Adamawa,0.0
+Order State_Adana,0.0
+Order State_Adiyaman,0.0
+Customer City_National City,0.0
+Customer City_New Albany,0.0
+Customer City_New Bedford,0.0
+Customer City_New Braunfels,0.0
+Customer City_New Brunswick,0.0
+Order State_Amazonas,0.0
+Order State_Ankara,0.0
+Order State_Annaba,0.0
+Order State_Anseba,0.0
+Order State_Antalya,0.0
+Order State_Antioquía,0.0
+Order State_Antofagasta,0.0
+Order State_Anzoátegui,0.0
+Order State_Aomori,0.0
+Order State_Al Jawf,0.0
+Order State_Ar Raqa,0.0
+Order State_Ajmán,0.0
+Order State_Akmola,0.0
+Order State_Aksaray,0.0
+Order State_Akwa Ibom,0.0
+Order State_Al Asimah,0.0
+Order State_Al Buhayrah,0.0
+Order State_Al Hudayda,0.0
+Order State_Aquitania-Lemosín-Poitou-Charentes,0.0
+Order State_Borneo Meridional,0.0
+Order State_Bandundu,0.0
+Order State_Bangkok,0.0
+Order State_Bangui,0.0
+Order State_Bani Suwayf,0.0
+Order State_Banská Bystrica,0.0
+Order State_Barahona,0.0
+Order State_Arges,0.0
+Order State_Basilicata,0.0
+Order State_Basora,0.0
+Order State_Batman,0.0
+Order State_Batna,0.0
+Order State_Bauchi,0.0
+Order State_Bay of Plenty,0.0
+Order State_Beirut,0.0
+Order State_Benadir,0.0
+Order State_Basilea-Ciudad,0.0
+Customer City_Mcallen,0.0
+Customer City_Mchenry,0.0
+Customer City_Mechanicsburg,0.0
+Order State_Bengkulu,0.0
+Order State_Benue,0.0
+Order State_Berlín,0.0
+Order State_Berna,0.0
+Order State_Bihar,0.0
+Order State_Borgou,0.0
+Order State_Bingöl,0.0
+Order State_Bishkek,0.0
+Order State_Bistrita-Nasaud,0.0
+Order State_Bisáu,0.0
+Order State_Bitola,0.0
+Order State_Bié,0.0
+Order State_Boeny,0.0
+Order State_Bolu,0.0
+Order State_Bihor,0.0
+Order State_Atacama,0.0
+Order State_Atakora,0.0
+Order State_Atlántico,0.0
+Order State_Atsimo-Andrefana,0.0
+Order State_Atsinanana,0.0
+Order State_Attica,0.0
+Order State_Auckland,0.0
+Order State_Bengasi,0.0
+Customer City_Medford,0.0
+Customer City_Merced,0.0
+Customer City_Meridian,0.0
+Customer City_Mesa,0.0
+Customer City_Mesquite,0.0
+Customer City_Metairie,0.0
+Order State_Ardebil,0.0
+Order State_Arequipa,0.0
+Order State_Australia del Sur,0.0
+Customer City_Methuen,0.0
+Customer City_Mililani,0.0
+Customer City_Milpitas,0.0
+Order State_Auvernia,0.0
+Order State_Aveiro,0.0
+Order State_Ayacucho,0.0
+Order State_Aydin,0.0
+Order State_Babilonia,0.0
+Order State_Asunción,0.0
+Order State_Baja California,0.0
+Order State_Bajo Congo,0.0
+Order State_Baki,0.0
+Order State_Bali,0.0
+Order State_Balikesir,0.0
+Order State_Balti,0.0
+Order State_Bamako,0.0
+Order State_Asturias,0.0
+Order State_Bacau,0.0
+Order State_Junín,0.0
+Order State_Ishikawa,0.0
+Order State_Isla de la Juventud,0.0
+Order State_Islas Baleares,0.0
+Order State_Isparta,0.0
+Order State_Ivanovo,0.0
+Order State_Izmir,0.0
+Customer City_Laguna Hills,0.0
+Order State_Jambi,0.0
+Order State_Jammu y Cachemira,0.0
+Customer City_Folsom,0.0
+Customer City_Fond Du Lac,0.0
+Customer City_Fontana,0.0
+Customer City_Forest Hills,0.0
+Customer City_Fort Lauderdale,0.0
+Customer City_Fort Washington,0.0
+Order State_Jaiber Pajtunjuá,0.0
+Order State_Kanagawa,0.0
+Order State_Kandahar,0.0
+Order State_Kankan,0.0
+Customer City_Freehold,0.0
+Customer City_Freeport,0.0
+Customer City_Gaithersburg,0.0
+Order State_Jartum,0.0
+Order State_Java Central,0.0
+Order State_Jubbada Hoose,0.0
+Order State_Jersón,0.0
+Order State_Jharkhand,0.0
+Order State_Jiangxi,0.0
+Order State_Jinja,0.0
+Order State_Jizzakh,0.0
+Order State_Jizán,0.0
+Order State_Jorasán Razaví,0.0
+Order State_Jorasán del Sur,0.0
+Order State_Jeju,0.0
+Order State_Holguín,0.0
+Order State_Hong Kong,0.0
+Order State_Hordaland,0.0
+Order State_Hormozgán,0.0
+Order State_Hradec Králové,0.0
+Order State_Huambo,0.0
+Order State_Huehuetenango,0.0
+Customer City_Fountain Valley,0.0
+Customer City_Gilroy,0.0
+Customer City_Glen Burnie,0.0
+Customer City_Glenview,0.0
+Customer City_Goleta,0.0
+Customer City_Granite City,0.0
+Customer City_Greeley,0.0
+Customer City_Harlingen,0.0
+Order State_Hamadán,0.0
+Customer City_Germantown,0.0
+Order State_Hunedoara,0.0
+Order State_Hyogo,0.0
+Order State_Iasi,0.0
+Order State_Ibaraki,0.0
+Order State_Ibb,0.0
+Order State_Ica,0.0
+Order State_Igdir,0.0
+Order State_Ilam,0.0
+Order State_Holanda Septentrional,0.0
+Order State_Imo,0.0
+Order State_Indiana,0.0
+Order State_Inhambane,0.0
+Order State_Iowa,0.0
+Order State_Irbid,0.0
+Order State_Iringa,0.0
+Order State_Isfahán,0.0
+Order State_Holanda Meridional,0.0
+Order State_Imericia,0.0
+Customer City_Englewood,0.0
+Customer City_Eugene,0.0
+Customer City_Everett,0.0
+Customer City_Fargo,0.0
+Customer City_Federal Way,0.0
+Customer City_Findlay,0.0
+Customer City_Florissant,0.0
+Order State_Kampala,0.0
+Order State_Khatlon,0.0
+Order State_Khmelnytskyi,0.0
+Order State_Khomas,0.0
+Order State_Khorezm,0.0
+Order State_Khulna,0.0
+Order State_Khánh Hòa,0.0
+Order State_Kigali,0.0
+Order State_Kigoma,0.0
+Order State_Kerman,0.0
+Order State_La Rioja,0.0
+Order State_La Romana,0.0
+Order State_La Vega,0.0
+Order State_Lacio,0.0
+Order State_Lacs,0.0
+Order State_Laghouat,0.0
+Order State_Lambayeque,0.0
+Order State_Las Tunas,0.0
+Customer City_Enfield,0.0
+Order State_Klaip?da,0.0
+Order State_Kocaeli,0.0
+Order State_Konya,0.0
+Order State_Korçë,0.0
+Order State_Kostanái,0.0
+Order State_Kuala Lumpur,0.0
+Customer City_Elyria,0.0
+Customer City_Endicott,0.0
+Order State_Lebap,0.0
+Order State_Kaunas,0.0
+Order State_Kayes,0.0
+Order State_Kayseri,0.0
+Order State_Kerala,0.0
+Order State_Jutlandia Central,0.0
+Order State_Juzestán,0.0
+Order State_Járkov,0.0
+Order State_Kilimanjaro,0.0
+Order State_Kabarole,0.0
+Order State_Kabul,0.0
+Order State_Kaduna,0.0
+Order State_Kafr el Sheij,0.0
+Order State_Kagawa,0.0
+Order State_Kahramanmara?,0.0
+Order State_Kaliningrado,0.0
+Order State_Kaluga,0.0
+Order State_Kabardia-Balkaria,0.0
+Order State_Kilis,0.0
+Order State_Kindia,0.0
+Order State_Kinshasa,0.0
+Order State_Kirovohrad,0.0
+Order State_Kirsehir,0.0
+Order State_Kiên Giang,0.0
+Order State_Kano,0.0
+Order State_Kansas,0.0
+Order State_Katsina,0.0
+Order State_Karaman,0.0
+Order State_Karbala,0.0
+Order State_Kars,0.0
+Order State_Kasai Oriental,0.0
+Order State_Kasala,0.0
+Order State_Kashkadar,0.0
+Order State_Kastamonu,0.0
+Order State_Katanga,0.0
+Order State_Kara,0.0
+Order State_Flanders Occidental,0.0
+Order State_Francisco Morazán,0.0
+Order State_Französisch-Guayana,0.0
+Order State_Frisia,0.0
+Order State_Emilia-Romaña,0.0
+Order State_Entre Ríos,0.0
+Order State_Enugu,0.0
+Order State_Hamburgo,0.0
+Order State_Escania,0.0
+Order State_Eskisehir,0.0
+Order State_Espaillat,0.0
+Customer City_Humacao,0.0
+Customer City_Huntington Beach,0.0
+Customer City_Huntington Park,0.0
+Customer City_Huntington Station,0.0
+Customer City_Hyattsville,0.0
+Order State_Erzurum,0.0
+Order State_Gauteng,0.0
+Order State_Gaziantep,0.0
+Order State_Georgia,0.0
+Order State_Gezira,0.0
+Order State_Gisborne,0.0
+Order State_Giurgiu,0.0
+Customer City_Jacksonville,0.0
+Customer City_Jamaica,0.0
+Order State_Fez-Bulmán,0.0
+Order State_Espíritu Santo,0.0
+Order State_Estado Libre,0.0
+Order State_Estelí,0.0
+Order State_Estuaire,0.0
+Order State_Extremadura,0.0
+Order State_Extreme-Nord,0.0
+Order State_Fayún,0.0
+Order State_Federación de Bosnia y Herzegovina,0.0
+Customer City_Jersey City,0.0
+Order State_Elbasan,0.0
+Order State_Di Car,0.0
+Order State_Diala,0.0
+Order State_Diana,0.0
+Order State_Diffa,0.0
+Order State_Dinamarca Meridional,0.0
+Order State_Dire Dawa,0.0
+Customer City_Indianapolis,0.0
+Order State_Distrito de Cayo,0.0
+Order State_Distrito de Columbia,0.0
+Order State_Dix-Huit Montagnes,0.0
+Order State_Diyarbakir,0.0
+Order State_Djelfa,0.0
+Order State_Dnipropetrovsk,0.0
+Order State_Doha,0.0
+Order State_Dolj,0.0
+Order State_Distrito Capital,0.0
+Customer City_Indio,0.0
+Customer City_Irvington,0.0
+Customer City_Ithaca,0.0
+Order State_Donetsk,0.0
+Order State_Donga,0.0
+Order State_Drenthe,0.0
+Order State_Dublín,0.0
+Order State_Dublín del Sur,0.0
+Order State_Elazig,0.0
+Order State_Durrës,0.0
+Order State_Dà Nang,0.0
+Order State_Düzce,0.0
+Order State_Ebonyi,0.0
+Order State_Ecuatoria Central,0.0
+Order State_Edo,0.0
+Order State_El Aaiún,0.0
+Order State_El Beni,0.0
+Order State_Dukala-Abda,0.0
+Order State_Hajdú-Bihar,0.0
+Order State_Halland,0.0
+Customer City_Greenville,0.0
+Customer City_Grove City,0.0
+Customer City_Guayama,0.0
+Customer City_Guaynabo,0.0
+Customer City_Gwynn Oak,0.0
+Order State_Garb-Chrarda-Beni Hsen,0.0
+Customer City_Hamtramck,0.0
+Customer City_Hanford,0.0
+Customer City_Hanover,0.0
+Order State_Guantánamo,0.0
+Order State_Guayas,0.0
+Order State_Guelma,0.0
+Order State_Guelmim-Esmara,0.0
+Customer City_Hempstead,0.0
+Customer City_Hagerstown,0.0
+Order State_Haut-Sassandra,0.0
+Order State_Haute-Matsiatra,0.0
+Order State_Hawke's Bay,0.0
+Order State_Hebei,0.0
+Order State_Hedmark,0.0
+Order State_Henan,0.0
+Order State_Henao,0.0
+Order State_Herat,0.0
+Order State_Güeldres,0.0
+Order State_Hidalgo,0.0
+Order State_Hims,0.0
+Order State_Hiroshima,0.0
+Order State_Hokkaido,0.0
+Order State_Guilán,0.0
+Order State_Gulu,0.0
+Order State_Gunma,0.0
+Order State_Gyeongsangnam,0.0
+Order State_Hesse,0.0
+Order State_Granada,0.0
+Order State_Grand Gedeh,0.0
+Order State_Granma,0.0
+Order State_Grodno,0.0
+Order State_Guadalupe,0.0
+Order State_Guanacaste,0.0
+Order State_Guangdong,0.0
+Order State_Guangxi,0.0
+Customer City_Henderson,0.0
+Order State_Fujian,0.0
+Order State_Fukui,0.0
+Order State_Fukuoka,0.0
+Order State_Galati,0.0
+Order State_Gales,0.0
+Order State_Galicia,0.0
+Order State_Galway,0.0
+Order State_Gansu,0.0
+Order State_Friuli-Venecia Julia,0.0
+Customer City_Hendersonville,0.0
+Customer City_Henrico,0.0
+Customer City_Hesperia,0.0
+Customer City_Highland,0.0
+Customer City_Highland Park,0.0
+Customer City_Holland,0.0
+Customer City_Hollister,0.0
+Customer City_Hollywood,0.0
+Order State_Gran Valle del Rift,0.0
+Order State_Guerrero,0.0
+Order State_Gobolka Woqooyi Galbeed,0.0
+Order State_Goiás,0.0
+Order State_Golestán,0.0
+Order State_Gombe,0.0
+Order State_Gorj,0.0
+Order State_Grad Zagreb,0.0
+Order State_Gran Polonia,0.0
+Customer City_Howell,0.0
+Order City_Gien,0.0
+Order City_Gilbert,0.0
+Order City_Garanhuns,0.0
+Order City_Garches,0.0
+Order City_Gardanne,0.0
+Order City_Garden City,0.0
+Order City_Garforth,0.0
+Product Name_Field & Stream Sportsman 16 Gun Fire Safe,0.0
+Order City_Garoua,0.0
+Order City_Garza García,0.0
+Order City_Gaspar,0.0
+Order City_Gastonia,0.0
+Order City_Gateshead,0.0
+Order City_Gatineau,0.0
+Order City_Gaya,0.0
+Order City_Gaziantep,0.0
+Order City_Garland,0.0
+Order City_Baoding,0.0
+Order City_Baotou,0.0
+Order City_Baqubah,0.0
+Order City_Bar-le-Duc,0.0
+Order City_Gdynia,0.0
+Order City_Gebze,0.0
+Order City_Geelong,0.0
+Order City_Gela,0.0
+Order City_Ghaziabad,0.0
+Order City_Genk,0.0
+Order City_Genoa,0.0
+Order City_George,0.0
+Order City_Georgetown,0.0
+Order City_Gera,0.0
+Order City_Geraldton,0.0
+Order City_Getafe,0.0
+Order City_Getxo,0.0
+Order City_General Escobedo,0.0
+Order City_Fremont,0.0
+Order City_Fresnes,0.0
+Order City_Fresnillo de González Echeverría,0.0
+Order City_Fresno,0.0
+Order City_Friedberg,0.0
+Order City_Friedrichshafen,0.0
+Order City_Frisco,0.0
+Order City_Gaziemir,0.0
+Order City_Frontignan,0.0
+Order City_Fuengirola,0.0
+Order City_Fuenlabrada,0.0
+Order City_Fuji,0.0
+Order City_Fujisawa,0.0
+Order City_Fukui,0.0
+Order City_Fukuyama,0.0
+Order City_Forster,0.0
+Order City_Frontera,0.0
+Order City_Gdansk,0.0
+Order City_Fulda,0.0
+Order City_Funabashi,0.0
+Order City_Funtua,0.0
+Order City_Fushun,0.0
+Order City_Fuzhou,0.0
+Order City_Gaborone,0.0
+Order City_Gagny,0.0
+Order City_Freiburg,0.0
+Order City_Galati,0.0
+Order City_Gallarate,0.0
+Order City_Galway,0.0
+Order City_Gandia,0.0
+Order City_Ganganagar,0.0
+Order City_Gaomi,0.0
+Order City_Gaoyou,0.0
+Order City_Gap,0.0
+Order City_Gaithersburg,0.0
+Order City_Grevenbroich,0.0
+Order City_Grigny,0.0
+Order City_Gronau,0.0
+Order City_Groningen,0.0
+Order City_Grosseto,0.0
+Order City_Grove City,0.0
+Order City_Guacara,0.0
+Order City_Baní,0.0
+Order City_Gorgan,0.0
+Order City_Gorzow Wielkopolski,0.0
+Order City_Gosport,0.0
+Order City_Goulburn,0.0
+Order City_Goyang,0.0
+Order City_Gradignan,0.0
+Order City_Grajaú,0.0
+Order City_Granada,0.0
+Order City_Guamúchil,0.0
+Order City_Guaratinguetá,0.0
+Order City_Guarujá,0.0
+Order City_Guarulhos,0.0
+Order City_Guasave,0.0
+Order City_Guatemala City,0.0
+Order City_Guatire,0.0
+Order City_Guaymas,0.0
+Order City_Gubkin,0.0
+Order City_Gresham,0.0
+Order City_Guelmim,0.0
+Order City_Graz,0.0
+Order City_Great Yarmouth,0.0
+Order City_Green Bay,0.0
+Order City_Greensboro,0.0
+Order City_Greenwood,0.0
+Order City_Greifswald,0.0
+Order City_Grenoble,0.0
+Order City_Guelma,0.0
+Order City_Gloucester,0.0
+Order City_Goiânia,0.0
+Order City_Gombe,0.0
+Order City_Gonesse,0.0
+Order City_Gongzhuling,0.0
+Order City_Gillingham,0.0
+Order City_Girga,0.0
+Order City_Grand Island,0.0
+Order City_Bandirma,0.0
+Order City_Bandundu,0.0
+Order City_Bangalore,0.0
+Order City_Bangkok,0.0
+Order City_Bangor,0.0
+Order City_Bangui,0.0
+Order City_Banjarmasin,0.0
+Order City_Banska Bystrica,0.0
+Order City_Girona,0.0
+Order City_Grand Rapids,0.0
+Order City_Granollers,0.0
+Order City_Grapevine,0.0
+Order City_Grasse,0.0
+Order City_Gravataí,0.0
+Order City_Gravatá,0.0
+Order City_Gravesend,0.0
+Order City_Barakaldo,0.0
+Order City_Gliwice,0.0
+Order City_Girón,0.0
+Order City_Gisborne,0.0
+Order City_Giurgiu,0.0
+Order City_Givors,0.0
+Order City_Giyani,0.0
+Order City_Gladbeck,0.0
+Order City_Gladstone,0.0
+Order City_Glenview,0.0
+Order City_Baraki,0.0
+Order City_Eskisehir,0.0
+Order City_Espoo,0.0
+Order City_Esquina,0.0
+Order City_Estambul,0.0
+Order City_Estelí,0.0
+Order City_Estepona,0.0
+Order City_Elmhurst,0.0
+Order City_Fort Collins,0.0
+Order City_Elyria,0.0
+Order City_Emden,0.0
+Order City_Emmen,0.0
+Order City_Encinitas,0.0
+Order City_Englewood,0.0
+Order City_Ennigerloh,0.0
+Order City_Enschede,0.0
+Order City_Ensenada,0.0
+Order City_Elx,0.0
+Order City_Evreux,0.0
+Order City_Evry,0.0
+Order City_Exeter,0.0
+Order City_Ezhou,0.0
+Order City_Facatativá,0.0
+Order City_Faches-Thumesnil,0.0
+Order City_Faenza,0.0
+Order City_Falconara Marittima,0.0
+Order City_Eskilstuna,0.0
+Order City_Erftstadt,0.0
+Order City_Erfurt,0.0
+Order City_Erlangen,0.0
+Order City_Ermont,0.0
+Order City_Erzurum,0.0
+Order City_Esbjerg,0.0
+Order City_Escondido,0.0
+Order City_Esenyurt,0.0
+Order City_Erechim,0.0
+Order City_Elbeuf,0.0
+Order City_Elda,0.0
+Order City_Elkhart,0.0
+Order City_Eagan,0.0
+Order City_East Kilbride,0.0
+Order City_East Orange,0.0
+Order City_Eastbourne,0.0
+Order City_Enugu,0.0
+Order City_Ebolowa,0.0
+Order City_Echirolles,0.0
+Order City_Echuca,0.0
+Order City_Edea,0.0
+Order City_Edinburg,0.0
+Order City_Edinburgh,0.0
+Order City_Edmond,0.0
+Order City_Edmonds,0.0
+Order City_Eau Claire,0.0
+Order City_Envigado,0.0
+Order City_Epinal,0.0
+Order City_Epworth,0.0
+Order City_Eragny,0.0
+Order City_Ercolano,0.0
+Order City_Ekibastuz,0.0
+Order City_El Aaiún,0.0
+Order City_El Cajon,0.0
+Order City_Elbasan,0.0
+Order City_El Escorial,0.0
+Order City_El Jadida,0.0
+Order City_El Limón,0.0
+Order City_El Paso,0.0
+Order City_El Prat de Llobregat,0.0
+Order City_El Progreso,0.0
+Order City_El Tigre,0.0
+Order City_Elazig,0.0
+Order City_El Ejido,0.0
+Order City_Fleury-les-Aubrais,0.0
+Order City_Florencia,0.0
+Order City_Floridablanca,0.0
+Order City_Focsani,0.0
+Order City_Foligno,0.0
+Order City_Fontaine,0.0
+Order City_Fontainebleau,0.0
+Order City_Everett,0.0
+Order City_Fontenay-le-Comte,0.0
+Order City_Fontenay-sous-Bois,0.0
+Order City_Forbach,0.0
+Order City_Forst,0.0
+Order City_Ferrara,0.0
+Order City_Fes,0.0
+Order City_Baranagar,0.0
+Order City_Barasat,0.0
+Order City_Fontenay-aux-Roses,0.0
+Order City_Fort Portal,0.0
+Order City_Fort Worth,0.0
+Order City_Fort-de-France,0.0
+Order City_Fortaleza,0.0
+Order City_Foshan,0.0
+Order City_Foumban,0.0
+Order City_Franca,0.0
+Order City_Francisco Morato,0.0
+Order City_Flers,0.0
+Order City_Franconville,0.0
+Order City_Frankfurt,0.0
+Order City_Franklin,0.0
+Order City_Frederiksberg,0.0
+Order City_Freeport,0.0
+Order City_Firminy,0.0
+Order City_Firozabad,0.0
+Order City_Flensburg,0.0
+Order City_Franco da Rocha,0.0
+Order City_Fatehpur,0.0
+Order City_Fayetteville,0.0
+Order City_Fayún,0.0
+Order City_Feira,0.0
+Order City_Feira de Santana,0.0
+Order City_Felahiye,0.0
+Order City_Fengcheng,0.0
+Order City_Barbacena,0.0
+Order City_Ferndown,0.0
+Order City_Estocolmo,0.0
+Order City_Etawah,0.0
+Order City_Etimesgut,0.0
+Order City_Eugene,0.0
+Order City_Eunápolis,0.0
+Order City_Euskirchen,0.0
+Order City_Evanston,0.0
+Order City_Fernando de la Mora,0.0
+Order City_Barcelona,0.0
+Order City_Barddhaman,0.0
+Order City_Bareilly,0.0
+Order City_Barika,0.0
+Order City_Barletta,0.0
+Order City_Barneveld,0.0
+Order City_Barnsley,0.0
+Order City_Barra Mansa,0.0
+Order City_Fasa,0.0
+Order City_Barranca,0.0
+Order City_Fianarantsoa,0.0
+Order City_Fano,0.0
+Order City_Fargo,0.0
+Order City_Faridabad,0.0
+Order City_Farmington,0.0
+Order City_Farnborough,0.0
+Order City_Farroupilha,0.0
+Order City_Barra do Piraí,0.0
+Order City_Indaiatuba,0.0
+Order City_Independence,0.0
+Order City_Indianapolis,0.0
+Order City_Indore,0.0
+Order City_Inegol,0.0
+Order City_Inglewood,0.0
+Order City_Ingolstadt,0.0
+Order City_Guarapuava,0.0
+Order City_Ipiales,0.0
+Order City_Ipoh,0.0
+Order City_Ipswich,0.0
+Order City_Ibb,0.0
+Order City_Ibirité,0.0
+Order City_Ibiúna,0.0
+Order City_Ichalkaranji,0.0
+Order City_Ichikawa,0.0
+Order City_Innsbruck,0.0
+Order City_Irapuato,0.0
+Order City_Irbid,0.0
+Order City_Iringa,0.0
+Order City_Irkutsk,0.0
+Order City_Irun,0.0
+Order City_Irving,0.0
+Order City_Iserlohn,0.0
+Order City_Islamabad,0.0
+Order City_Indaial,0.0
+Order City_Issoire,0.0
+Order City_Issy-les-Moulineaux,0.0
+Order City_Istres,0.0
+Order City_Itaituba,0.0
+Order City_Ilopango,0.0
+Order City_Ilorin,0.0
+Order City_Imola,0.0
+Order City_Imphal,0.0
+Order City_Isparta,0.0
+Order City_Huizhou,0.0
+Order City_Huntington Beach,0.0
+Order City_Huntsville,0.0
+Order City_Huyton,0.0
+Order City_Huzhou,0.0
+Order City_Iasi,0.0
+Order City_Ibagué,0.0
+Order City_Idfu,0.0
+Order City_Huadian,0.0
+Order City_Huaibei,0.0
+Order City_Huaihua,0.0
+Order City_Bad Waldsee,0.0
+Order City_Badajoz,0.0
+Order City_Badalona,0.0
+Order City_Baden-Baden,0.0
+Order City_Bafoussam,0.0
+Order City_Ibaraki,0.0
+Order City_Igdir,0.0
+Order City_Iguala,0.0
+Order City_Igurusi,0.0
+Order City_Ijuí,0.0
+Order City_Ikot Ekpene,0.0
+Order City_Ilam,0.0
+Order City_Ilesha,0.0
+Order City_Ilhéus,0.0
+Order City_Huelva,0.0
+Order City_Ilo,0.0
+Order City_Huainan,0.0
+Order City_Huambo,0.0
+Order City_Huangshi,0.0
+Order City_Huaraz,0.0
+Order City_Hubli,0.0
+Order City_Huddersfield,0.0
+Order City_Huddinge,0.0
+Order City_Illkirch-Graffenstaden,0.0
+Order City_Jincheng,0.0
+Order City_Avellaneda,0.0
+Order City_Avellino,0.0
+Order City_Avignon,0.0
+Order City_Avion,0.0
+Order City_Avon,0.0
+Order City_Avondale,0.0
+Order City_Iranshahr,0.0
+Order City_Aydin,0.0
+Order City_Aylesbury,0.0
+Order City_Azcapotzalco,0.0
+Order City_Açu,0.0
+Order City_Babol,0.0
+Order City_Bacau,0.0
+Order City_Bacolod City,0.0
+Order City_Bacoor,0.0
+Order City_Ayacucho,0.0
+Order City_Jonesboro,0.0
+Order City_Jos,0.0
+Order City_José Bonifácio,0.0
+Order City_Jena,0.0
+Order City_Jequié,0.0
+Order City_Jerez de la Frontera,0.0
+Order City_Jersón,0.0
+Order City_Jhansi,0.0
+Order City_Jieyang,0.0
+Order City_Jiamusi,0.0
+Order City_Jiangdu,0.0
+Order City_Jiangmen,0.0
+Order City_Jiangyan,0.0
+Order City_Jiangyou,0.0
+Order City_Jiaozuo,0.0
+Order City_Jiaxing,0.0
+Order City_Jieshou,0.0
+Order City_Ji-Paraná,0.0
+Order City_Itapecerica da Serra,0.0
+Order City_Itapecuru Mirim,0.0
+Order City_Itapetininga,0.0
+Order City_Itapeva,0.0
+Order City_Itaúna,0.0
+Order City_Ituiutaba,0.0
+Order City_Ixtapaluca,0.0
+Order City_Jember,0.0
+Order City_Jabalpur,0.0
+Order City_Jaboticabal,0.0
+Order City_Jacareí,0.0
+Order City_Jackson,0.0
+Order City_Jacksonville,0.0
+Order City_Jaipur,0.0
+Order City_Iquique,0.0
+Order City_Iquitos,0.0
+Order City_Izmir,0.0
+Order City_Jalalabad,0.0
+Order City_Jalna,0.0
+Order City_Jambi,0.0
+Order City_Jamestown,0.0
+Order City_Jammu,0.0
+Order City_Jamnagar,0.0
+Order City_Jamshedpur,0.0
+Order City_Jamundí,0.0
+Order City_Itamaraju,0.0
+Order City_Jastrzebie Zdroj,0.0
+Order City_Jataí,0.0
+Order City_Javanrud,0.0
+Order City_Jayapura,0.0
+Order City_Jaú,0.0
+Order City_Jeddah,0.0
+Order City_Avadi,0.0
+Order City_Itajaí,0.0
+Order City_Jartum,0.0
+Order City_Haarlem,0.0
+Order City_Hachinohe,0.0
+Order City_Hackensack,0.0
+Order City_Hadera,0.0
+Order City_Hagen,0.0
+Order City_Haguenau,0.0
+Order City_Haifa,0.0
+Order City_Bafra,0.0
+Order City_Halesowen,0.0
+Order City_Halifax,0.0
+Order City_Halle,0.0
+Order City_Halluin,0.0
+Order City_Halmstad,0.0
+Order City_Haltom City,0.0
+Order City_Guilin,0.0
+Order City_Guimarães,0.0
+Order City_Hailin,0.0
+Order City_Hamadán,0.0
+Order City_Hamamatsu,0.0
+Order City_Hamar,0.0
+Order City_Hamburgo,0.0
+Order City_Hamilton,0.0
+Order City_Hamm,0.0
+Order City_Hamme,0.0
+Order City_Handa,0.0
+Order City_Gómez Palacio,0.0
+Order City_Hangu,0.0
+Order City_Hangzhou,0.0
+Order City_Haninge,0.0
+Order City_Hanoi,0.0
+Order City_Hanover,0.0
+Order City_Hapur,0.0
+Order City_Harbin,0.0
+Order City_Gómel,0.0
+Order City_Handan,0.0
+Order City_Balikesir,0.0
+Order City_Balmazujvaros,0.0
+Order City_Balneário Camboriú,0.0
+Order City_Balti,0.0
+Order City_Bamako,0.0
+Order City_Bamberg,0.0
+Order City_Bamenda,0.0
+Order City_Guiping,0.0
+Order City_Bandar Abbas,0.0
+Order City_Bandar-e Anzali,0.0
+Order City_Guildford,0.0
+Order City_Guanambi,0.0
+Order City_Guanare,0.0
+Order City_Guangshui,0.0
+Order City_Guangzhou,0.0
+Order City_Guarapari,0.0
+Order City_Banda Aceh,0.0
+Order City_Guiyang,0.0
+Order City_Gulbarga,0.0
+Order City_Gulfport,0.0
+Order City_Gulu,0.0
+Order City_Gummersbach,0.0
+Order City_Guntur,0.0
+Order City_Gurupi,0.0
+Order City_Gusau,0.0
+Order City_Baku,0.0
+Order City_Guyancourt,0.0
+Order City_Guzmán,0.0
+Order City_Gwalior,0.0
+Order City_Gyula,0.0
+Order City_Guelph,0.0
+Order City_Guidonia Montecelio,0.0
+Order City_Bajos de Haina,0.0
+Order City_Bakersfield,0.0
+Order City_Guwahati,0.0
+Order City_Hoover,0.0
+Order City_Horlivka,0.0
+Order City_Hot Springs,0.0
+Order City_Hove,0.0
+Order City_Hradec Králové,0.0
+Order City_Herten,0.0
+Order City_Hesperia,0.0
+Order City_Heerlen,0.0
+Order City_Heze,0.0
+Order City_Hialeah,0.0
+Order City_Hickory,0.0
+Order City_Hidalgo,0.0
+Order City_High Wycombe,0.0
+Order City_Highland Park,0.0
+Order City_Hilden,0.0
+Order City_Hildesheim,0.0
+Order City_Heyuan,0.0
+Order City_Bagamoyo,0.0
+Order City_Bagcilar,0.0
+Order City_Bagneux,0.0
+Order City_Baguio City,0.0
+Order City_Bahawalpur,0.0
+Order City_Bahía Blanca,0.0
+Order City_Baia Mare,0.0
+Order City_Hiratsuka,0.0
+Order City_Homs,0.0
+Order City_Hobart,0.0
+Order City_Hod HaSharon,0.0
+Order City_Hohhot,0.0
+Order City_Holguín,0.0
+Order City_Holland,0.0
+Order City_Holon,0.0
+Order City_Holyoke,0.0
+Order City_Homestead,0.0
+Order City_Hisar,0.0
+Order City_Herne,0.0
+Order City_Heroica Zitácuaro,0.0
+Order City_Hardenberg,0.0
+Order City_Harlingen,0.0
+Order City_Harlow,0.0
+Order City_Harrisonburg,0.0
+Order City_Harrogate,0.0
+Order City_Harrow,0.0
+Order City_Hillsboro,0.0
+Order City_Hasselt,0.0
+Order City_Hastings,0.0
+Order City_Hattiesburg,0.0
+Order City_Hattingen,0.0
+Order City_Hautmont,0.0
+Order City_Hayange,0.0
+Order City_Hazebrouck,0.0
+Order City_Hebi,0.0
+Order City_Hartlepool,0.0
+Order City_Hilversum,0.0
+Order City_Himeji,0.0
+Order City_Hinckley,0.0
+Order City_Hirakata,0.0
+Order City_Heidelberg,0.0
+Order City_Heilbronn,0.0
+Order City_Helena,0.0
+Order City_Helmond,0.0
+Order City_Hermosillo,0.0
+Order City_Helsinki,0.0
+Order City_Hemel Hempstead,0.0
+Order City_Henderson,0.0
+Order City_Hengelo,0.0
+Order City_Hengyang,0.0
+Order City_Herat,0.0
+Order City_Hereford,0.0
+Order City_Herford,0.0
+Order City_Helsingborg,0.0
+Order City_Carpentras,0.0
+Order City_Caluire-et-Cuire,0.0
+Order City_Camaragibe,0.0
+Order City_Camaçari,0.0
+Order City_Cambridge,0.0
+Order City_Cambé,0.0
+Order City_Camocim,0.0
+Order City_Edogawa-ku,0.0
+Order City_Campina Grande,0.0
+Order City_Campo Grande,0.0
+Order City_Campo Limpo Paulista,0.0
+Order City_Can Tho,0.0
+Order City_Canberra,0.0
+Order City_Cangzhou,0.0
+Order City_Cankaya,0.0
+Order City_Cannes,0.0
+Order City_Campeche,0.0
+Order City_Castanhal,0.0
+Order City_Castellammare di Stabia,0.0
+Order City_Castelldefels,0.0
+Order City_Canton,0.0
+Order City_Capannori,0.0
+Order City_Cape Coast,0.0
+Order City_Cape Town,0.0
+Order City_Capelle aan den IJssel,0.0
+Order City_Carora,0.0
+Order City_Caracas,0.0
+Order City_Caraguatatuba,0.0
+Order City_Carapicuíba,0.0
+Order City_Carcassonne,0.0
+Order City_Cardiff,0.0
+Order City_Carlisle,0.0
+Order City_Carlsbad,0.0
+Order City_Carol Stream,0.0
+Order City_Capua,0.0
+Order City_Buzau,0.0
+Order City_Béchar,0.0
+Order City_Cabimas,0.0
+Order City_Cabo de Santo Agostinho,0.0
+Order City_Cachan,0.0
+Order City_Berne,0.0
+Order City_Berrechid,0.0
+Order City_Canoas,0.0
+Order City_Beverly,0.0
+Order City_Beykoz,0.0
+Order City_Bezons,0.0
+Order City_Bharatpur,0.0
+Order City_Bhatinda,0.0
+Order City_Bhatpara,0.0
+Order City_Bullhead City,0.0
+Order City_Bunbury,0.0
+Order City_Bethlehem,0.0
+Order City_Bhilai,0.0
+Order City_Bhilwara,0.0
+Order City_Caen,0.0
+Order City_Cagliari,0.0
+Order City_Cagua,0.0
+Order City_Cainta,0.0
+Order City_Cairns,0.0
+Order City_Cajamarca,0.0
+Order City_Buyukcekmece,0.0
+Order City_Calabar,0.0
+Order City_Calabozo,0.0
+Order City_Calama,0.0
+Order City_Caldwell,0.0
+Order City_Calgary,0.0
+Order City_Callao,0.0
+Order City_Caloocan,0.0
+Order City_Butare,0.0
+Order City_Cajazeiras,0.0
+Order City_Chaumont,0.0
+Order City_Chaville,0.0
+Order City_Cheliábinsk,0.0
+Order City_Chelles,0.0
+Order City_Chelmsford,0.0
+Order City_Cheltenham,0.0
+Order City_Chemnitz,0.0
+Order City_Cassilândia,0.0
+Order City_Ceuta,0.0
+Order City_Ceyhan,0.0
+Order City_Chaguanas,0.0
+Order City_Chalinze,0.0
+Order City_Champaign,0.0
+Order City_Champigny-sur-Marne,0.0
+Order City_Chandler,0.0
+Order City_Changchun,0.0
+Order City_Cessnock,0.0
+Order City_Chernihiv,0.0
+Order City_Chesapeake,0.0
+Order City_Cheshunt,0.0
+Order City_Chester,0.0
+Order City_Chetumal,0.0
+Order City_Chiclana de la Frontera,0.0
+Order City_Chiclayo,0.0
+Order City_Chico,0.0
+Order City_Chattanooga,0.0
+Order City_Chapecó,0.0
+Order City_Chapel Allerton,0.0
+Order City_Charallave,0.0
+Order City_Charleroi,0.0
+Order City_Charlotte,0.0
+Order City_Charlottesville,0.0
+Order City_Chartres,0.0
+Order City_Chatou,0.0
+Order City_Chieti,0.0
+Order City_Celle,0.0
+Order City_Centurion,0.0
+Order City_Cergy,0.0
+Order City_Cesena,0.0
+Order City_Carpi,0.0
+Order City_Carquefou,0.0
+Order City_Carrara,0.0
+Order City_Changde,0.0
+Order City_Carrollton,0.0
+Order City_Cartagena,0.0
+Order City_Cartago,0.0
+Order City_Carvin,0.0
+Order City_Cary,0.0
+Order City_Casablanca,0.0
+Order City_Caserta,0.0
+Order City_Casoria,0.0
+Order City_Carrefour,0.0
+Order City_Changsha,0.0
+Order City_Changshu,0.0
+Order City_Changwon,0.0
+Order City_Changzhi,0.0
+Order City_Chaohu,0.0
+Order City_Chaozhou,0.0
+Order City_Castelnau-le-Lez,0.0
+Order City_Castres,0.0
+Order City_Celaya,0.0
+Order City_Catanduva,0.0
+Order City_Caucaia,0.0
+Order City_Cavaillon,0.0
+Order City_Caxias do Sul,0.0
+Order City_Cayenne,0.0
+Order City_Caçador,0.0
+Order City_Cedar Hill,0.0
+Order City_Cedar Rapids,0.0
+Order City_Catalão,0.0
+Order City_Botosani,0.0
+Order City_Botshabelo,0.0
+Order City_Bottrop,0.0
+Order City_Boulogne-Billancourt,0.0
+Order City_Boulogne-sur-Mer,0.0
+Order City_Bo,0.0
+Order City_Boa Esperança,0.0
+Order City_Bundaberg,0.0
+Order City_Bobigny,0.0
+Order City_Boca Raton,0.0
+Order City_Bochum,0.0
+Order City_Boghni,0.0
+Order City_Bognor Regis,0.0
+Order City_Boise,0.0
+Order City_Bokaro,0.0
+Order City_Boksburg,0.0
+Order City_Boa Vista,0.0
+Order City_Braga,0.0
+Order City_Bragança Paulista,0.0
+Order City_Brahmapur,0.0
+Order City_Braila,0.0
+Order City_Brampton,0.0
+Order City_Brantford,0.0
+Order City_Brasília,0.0
+Order City_Bom Jesus da Lapa,0.0
+Order City_Bossier City,0.0
+Order City_Bondy,0.0
+Order City_Bonn,0.0
+Order City_Bonneuil-sur-Marne,0.0
+Order City_Borazjan,0.0
+Order City_Bordeaux,0.0
+Order City_Bornova,0.0
+Order City_Borujerd,0.0
+Order City_Boscoreale,0.0
+Order City_Bonao,0.0
+Order City_Blois,0.0
+Product Name_ENO Atlas Hammock Straps,0.0
+Product Name_O'Brien Men's Neoprene Life Vest,0.0
+Product Name_Pelican Sunstream 100 Kayak,0.0
+Product Name_TYR Boys' Team Digi Jammer,0.0
+Product Name_Team Golf New England Patriots Putter Grip,0.0
+Product Name_Team Golf Pittsburgh Steelers Putter Grip,0.0
+Order City_Bolingbrook,0.0
+Product Name_Team Golf St. Louis Cardinals Putter Grip,0.0
+Product Name_Team Golf Tennessee Volunteers Putter Grip,0.0
+Product Name_Team Golf Texas Longhorns Putter Grip,0.0
+Product Name_Titleist Pro V1 High Numbers Personalized Gol,0.0
+Product Name_Titleist Pro V1x Golf Balls,0.0
+Product Name_Titleist Pro V1x High Numbers Golf Balls,0.0
+Product Name_Nike Women's Legend V-Neck T-Shirt,0.0
+Product Status,0.0
+Product Name_Team Golf San Francisco Giants Putter Grip,0.0
+Order City_Bolton,0.0
+Order City_Bolu,0.0
+Order City_Bolívar,0.0
+Order City_Birigui,0.0
+Order City_Birjand,0.0
+Order City_Birkenhead,0.0
+Order City_Birobidzhan,0.0
+Order City_Bisceglie,0.0
+Order City_Bloemfontein,0.0
+Order City_Bistrita,0.0
+Order City_Bisáu,0.0
+Order City_Bitola,0.0
+Order City_Bitonto,0.0
+Order City_Blackburn,0.0
+Order City_Blagoveshchensk,0.0
+Order City_Blanquefort,0.0
+Order City_Blenheim,0.0
+Order City_Bishkek,0.0
+Order City_Bryan,0.0
+Order City_Buca,0.0
+Order City_Bucaramanga,0.0
+Order City_Bucheon,0.0
+Order City_Budënnovsk,0.0
+Order City_Buffalo,0.0
+Order City_Buffalo Grove,0.0
+Order City_Bradford,0.0
+Order City_Bujumbura,0.0
+Order City_Bukavu,0.0
+Order City_Bulawayo,0.0
+Order City_Bilbeis,0.0
+Order City_Billings,0.0
+Order City_Bremerhaven,0.0
+Order City_Brentwood,0.0
+Order City_Bressuire,0.0
+Order City_Bugía,0.0
+Order City_Bur Sudan,0.0
+Order City_Burbank,0.0
+Order City_Burgas,0.0
+Order City_Burgos,0.0
+Order City_Buriticupu,0.0
+Order City_Burlington,0.0
+Order City_Burnaby,0.0
+Order City_Burnie,0.0
+Order City_Bry-sur-Marne,0.0
+Order City_Bursa,0.0
+Order City_Bury,0.0
+Order City_Busan,0.0
+Order City_Busto Arsizio,0.0
+Order City_Broomfield,0.0
+Order City_Brownsville,0.0
+Order City_Bruges,0.0
+Order City_Bruselas,0.0
+Order City_Burnley,0.0
+Order City_Bielefeld,0.0
+Order City_Bielsko-Biala,0.0
+Order City_Bihar Sharif,0.0
+Order City_Bijapur,0.0
+Order City_Bijie,0.0
+Order City_Bikaner,0.0
+Order City_Bilaspur,0.0
+Order City_Briansk,0.0
+Order City_Bourg-en-Bresse,0.0
+Order City_Bourges,0.0
+Order City_Bourgoin-Jallieu,0.0
+Order City_Bournemouth,0.0
+Order City_Bowling Green,0.0
+Order City_Boynton Beach,0.0
+Order City_Bozeman,0.0
+Order City_Bracknell,0.0
+Order City_Bilbao,0.0
+Order City_Bridgeton,0.0
+Order City_Bridgetown,0.0
+Order City_Brighton,0.0
+Order City_Brikama,0.0
+Order City_Bristol,0.0
+Order City_Briton Ferry,0.0
+Order City_Brive-la-Gaillarde,0.0
+Order City_Broken Arrow,0.0
+Order City_Bideford,0.0
+Order City_Bron,0.0
+Order City_Bratsk,0.0
+Order City_Breda,0.0
+Order City_Bremen,0.0
+Order City_Bhiwandi,0.0
+Order City_Bhubaneswar,0.0
+Order City_Bialystok,0.0
+Order City_Biarritz,0.0
+Order City_Broken Hill,0.0
+Order City_Daytona Beach,0.0
+Order City_Dearborn,0.0
+Order City_Dearborn Heights,0.0
+Order City_Decatur,0.0
+Order City_Deer Park,0.0
+Order City_Dehra Dun,0.0
+Order City_Delft,0.0
+Order City_Cherkasy,0.0
+Order City_Delicias,0.0
+Order City_Delmenhorst,0.0
+Order City_Cúa,0.0
+Order City_Cúcuta,0.0
+Order City_Da Nang,0.0
+Order City_Dabrowa Gornicza,0.0
+Order City_Daca,0.0
+Order City_Daegu,0.0
+Order City_Delgado,0.0
+Order City_Denizli,0.0
+Order City_Denpasar,0.0
+Order City_Derbent,0.0
+Order City_Des Moines,0.0
+Order City_Des Plaines,0.0
+Order City_Detmold,0.0
+Order City_Deuil-la-Barre,0.0
+Order City_Deva,0.0
+Order City_Dayr az Zawr,0.0
+Order City_Devonport,0.0
+Order City_Dewas,0.0
+Order City_Dewsbury,0.0
+Order City_Dartmouth,0.0
+Order City_Darwin,0.0
+Order City_Datong,0.0
+Order City_Davis,0.0
+Order City_Dax,0.0
+Order City_Deventer,0.0
+Order City_Bedford,0.0
+Order City_Behbahan,0.0
+Order City_Behshahr,0.0
+Order City_Beipiao,0.0
+Order City_Beira,0.0
+Order City_Beirut,0.0
+Order City_Cártama,0.0
+Order City_Daloa,0.0
+Order City_Cruzeiro,0.0
+Order City_Cruzeiro do Sul,0.0
+Order City_Cuautitlán,0.0
+Order City_Cubatão,0.0
+Order City_Cubuk,0.0
+Order City_Cuenca,0.0
+Order City_Cuiabá,0.0
+Order City_Culiacán,0.0
+Order City_Cruz das Almas,0.0
+Order City_Damanhur,0.0
+Order City_Damaturu,0.0
+Order City_Danville,0.0
+Order City_Daqing,0.0
+Order City_Dar Chioukh,0.0
+Order City_Darbhanga,0.0
+Order City_Darlington,0.0
+Order City_Darmstadt,0.0
+Order City_Bebington,0.0
+Order City_Czestochowa,0.0
+Order City_Bauchi,0.0
+Order City_Bayamo,0.0
+Order City_Bayeux,0.0
+Order City_Bayreuth,0.0
+Order City_Be'er Sheva,0.0
+Order City_Beaumont,0.0
+Order City_Beaune,0.0
+Order City_Dartford,0.0
+Order City_Dormagen,0.0
+Order City_Dorsten,0.0
+Order City_Dos Hermanas,0.0
+Order City_Dos Quebradas,0.0
+Order City_Douai,0.0
+Order City_Douarnenez,0.0
+Order City_Dourados,0.0
+Order City_Denain,0.0
+Order City_Drammen,0.0
+Order City_Drancy,0.0
+Order City_Draper,0.0
+Order City_Dresden,0.0
+Order City_Dreux,0.0
+Order City_Drobeta-Turnu Severin,0.0
+Order City_Drogobych,0.0
+Order City_Dronfield,0.0
+Order City_Draguignan,0.0
+Order City_Eggenstein-Leopoldshafen,0.0
+Order City_Eindhoven,0.0
+Order City_Dubbo,0.0
+Order City_Dublín,0.0
+Order City_Dubuque,0.0
+Order City_Dudley,0.0
+Order City_Duitama,0.0
+Order City_Dundee,0.0
+Order City_Dzhezkazgan,0.0
+Order City_Dunstable,0.0
+Order City_Duque de Caxias,0.0
+Order City_Durban,0.0
+Order City_Durg,0.0
+Order City_Durgapur,0.0
+Order City_Durham,0.0
+Order City_Durres,0.0
+Order City_Duzce,0.0
+Order City_Dunedin,0.0
+Order City_Barreiras,0.0
+Order City_Barreirinhas,0.0
+Order City_Barretos,0.0
+Order City_Barry,0.0
+Order City_Barueri,0.0
+Order City_Baruta,0.0
+Order City_Basel,0.0
+Order City_Batna,0.0
+Order City_Basra,0.0
+Order City_Bastia,0.0
+Order City_Bata,0.0
+Order City_Bath,0.0
+Order City_Batman,0.0
+Order City_Delray Beach,0.0
+Order City_Deltona,0.0
+Order City_Den Helder,0.0
+Order City_Basingstoke,0.0
+Order City_Battipaglia,0.0
+Order City_Dieppe,0.0
+Order City_Dinslaken,0.0
+Order City_Disuq,0.0
+Order City_Divinópolis,0.0
+Order City_Djougou,0.0
+Order City_Dnipropetrovsk,0.0
+Order City_Doetinchem,0.0
+Order City_Diadema,0.0
+Order City_Dole,0.0
+Order City_Domont,0.0
+Order City_Doncaster,0.0
+Order City_Donets'k,0.0
+Order City_Dongguan,0.0
+Order City_Donghai,0.0
+Order City_Deyang,0.0
+Order City_Dhule,0.0
+Order City_Doha,0.0
+Order City_Cidade Ocidental,0.0
+Order City_Ciego de Ávila,0.0
+Order City_Cienfuegos,0.0
+Order City_Cipolletti,0.0
+Order City_Cirebon,0.0
+Order City_Citrus Heights,0.0
+Order City_Ciudad del Carmen,0.0
+Order City_Cumaná,0.0
+Order City_Cizre,0.0
+Order City_Ciénaga,0.0
+Order City_Clacton-on-Sea,0.0
+Order City_Clamart,0.0
+Order City_Clermont-Ferrand,0.0
+Order City_Chigasaki,0.0
+Order City_Chililabombwe,0.0
+Order City_Chilly-Mazarin,0.0
+Order City_Civitavecchia,0.0
+Order City_Clichy-sous-Bois,0.0
+Order City_Clifton,0.0
+Order City_Clovis,0.0
+Order City_Bekasi,0.0
+Order City_Belfort,0.0
+Order City_Belgaum,0.0
+Order City_Belgrade,0.0
+Order City_Bellary,0.0
+Order City_Chula Vista,0.0
+Order City_Bellevue,0.0
+Order City_Bellingham,0.0
+Order City_Bene Beraq,0.0
+Order City_Bengbu,0.0
+Order City_Benghazi,0.0
+Order City_Bengkulu,0.0
+Order City_Choluteca,0.0
+Order City_Chorzow,0.0
+Order City_Belleville,0.0
+Order City_Bento Gonçalves,0.0
+Order City_Benxi,0.0
+Order City_Berck,0.0
+Order City_Berdyans'k,0.0
+Order City_Berdychiv,0.0
+Order City_Bergamo,0.0
+Order City_Bergen,0.0
+Order City_Chillán,0.0
+Order City_Bergheim,0.0
+Order City_Bergisch Gladbach,0.0
+Order City_Chengdu,0.0
+Order City_Chengjiang,0.0
+Order City_Chennai,0.0
+Order City_Chenzhou,0.0
+Order City_Cheonan,0.0
+Order City_Cherbourg-Octeville,0.0
+Order City_Bergen op Zoom,0.0
+Order City_Chilpancingo,0.0
+Order City_Chimaltenango,0.0
+Order City_Chinautla,0.0
+Order City_Chincha Alta,0.0
+Order City_Chingola,0.0
+Order City_Chioggia,0.0
+Order City_Chipata,0.0
+Order City_Chisináu,0.0
+Order City_Benoni,0.0
+Order City_Choisy-le-Roi,0.0
+Order City_Cholet,0.0
+Order City_Cholula,0.0
+Order City_Chifeng,0.0
+Order City_Beni Mellal,0.0
+Order City_Beni Suef,0.0
+Order City_Benidorm,0.0
+Order City_Benin City,0.0
+Order City_Chittagong,0.0
+Order City_Cremona,0.0
+Order City_Crewe,0.0
+Order City_Criciúma,0.0
+Order City_Crotone,0.0
+Order City_Coon Rapids,0.0
+Order City_Copenhagen,0.0
+Order City_Copiapó,0.0
+Order City_Clichy,0.0
+Order City_Coral Springs,0.0
+Order City_Corbeil-Essonnes,0.0
+Order City_Cork,0.0
+Order City_Corlu,0.0
+Order City_Cormeilles-en-Parisis,0.0
+Order City_Corpus Christi,0.0
+Order City_Corum,0.0
+Order City_Cosenza,0.0
+Order City_Coppell,0.0
+Order City_Cumbernauld,0.0
+Order City_Cuneo,0.0
+Order City_Curitiba,0.0
+Order City_Cuttack,0.0
+Order City_Cuxhaven,0.0
+Order City_Cuyahoga Falls,0.0
+Order City_Cottage Grove,0.0
+Order City_Coudekerque-Branche,0.0
+Order City_Creil,0.0
+Order City_Courbevoie,0.0
+Order City_Cournon-d'Auvergne,0.0
+Order City_Coventry,0.0
+Order City_Covington,0.0
+Order City_Coxs B?z?r,0.0
+Order City_Craiova,0.0
+Order City_Crato,0.0
+Order City_Crawley,0.0
+Order City_Coulommiers,0.0
+Order City_Conway,0.0
+Order City_Cluj-Napoca,0.0
+Order City_Cluses,0.0
+Order City_Clydach,0.0
+Order City_Coacalco,0.0
+Order City_Coachella,0.0
+Order City_Coari,0.0
+Order City_Cochabamba,0.0
+Order City_Coslada,0.0
+Order City_Cognac,0.0
+Order City_Coimbra,0.0
+Order City_Colchester,0.0
+Order City_Colima,0.0
+Order City_College Station,0.0
+Order City_Colmar,0.0
+Order City_Colombo,0.0
+Order City_Colomiers,0.0
+Order City_Coffs Harbour,0.0
+Order City_Costa Mesa,0.0
+Order City_Cotia,0.0
+Order City_Cotonou,0.0
+Order City_Colorado Springs,0.0
+Order City_Columbia,0.0
+Order City_Columbus,0.0
+Order City_Commerce City,0.0
+Order City_Como,0.0
+Order City_Contagem,0.0
+Order City_Concarneau,0.0
+Order City_Concepción del Uruguay,0.0
+Order City_Concord,0.0
+Order City_Conflans-Sainte-Honorine,0.0
+Order City_Conroe,0.0
+Order City_Consolación del Sur,0.0
+Order City_Constantina,0.0
+Order City_Constanza,0.0
+Order City_Comodoro Rivadavia,0.0
+Order City_Norderstedt,0.0
+Order City_Norfolk,0.0
+Order City_Normal,0.0
+Order City_Norman,0.0
+Order City_North Charleston,0.0
+Order City_North Las Vegas,0.0
+Order City_North Miami,0.0
+Order City_Johnson City,0.0
+Order City_Ngaoundere,0.0
+Order City_Nguigmi,0.0
+Order City_Nha Trang,0.0
+Order City_Niagara Falls,0.0
+Order City_Niamey,0.0
+Order City_Nicosia,0.0
+Order City_Nicoya,0.0
+Order City_Nigde,0.0
+Order City_Neyshabur,0.0
+Order City_Novara,0.0
+Order City_Novo Cruzeiro,0.0
+Order City_Novo Gama,0.0
+Order City_Nowra,0.0
+Order City_Nueva Gerona,0.0
+Order City_Nuevo Laredo,0.0
+Order City_Nuneaton,0.0
+Order City_Nysa,0.0
+Order City_Nom Pen,0.0
+Order City_Oak Park,0.0
+Order City_Nitra,0.0
+Order City_Nizamabad,0.0
+Order City_Nkongsamba,0.0
+Order City_Noblesville,0.0
+Order City_Noda,0.0
+Order City_Nogent-sur-Oise,0.0
+Order City_Noisy-le-Sec,0.0
+Order City_Nzerekore,0.0
+Order City_New Rochelle,0.0
+Order City_Newark,0.0
+Order City_Newcastle,0.0
+Order City_Newport News,0.0
+Order City_Anaheim,0.0
+Order City_Napier,0.0
+Order City_Nashua,0.0
+Order City_Nijmegen,0.0
+Order City_Nasik,0.0
+Order City_Natal,0.0
+Order City_Natitingou,0.0
+Order City_Naumburg,0.0
+Order City_Navegantes,0.0
+Order City_Nazilli,0.0
+Order City_Ndola,0.0
+Order City_Neijiang,0.0
+Order City_Nashville,0.0
+Order City_Nikopol,0.0
+Order City_Ningbo,0.0
+Order City_Ninghai,0.0
+Order City_Niort,0.0
+Order City_Nishinomiya,0.0
+Order City_Niterói,0.0
+Order City_Neuilly-Plaisance,0.0
+Order City_Neuilly-sur-Marne,0.0
+Order City_New Plymouth,0.0
+Order City_Neunkirchen,0.0
+Order City_Neuquén,0.0
+Order City_Neuwied,0.0
+Order City_Nevsehir,0.0
+Order City_New Albany,0.0
+Order City_New Bedford,0.0
+Order City_New Brunswick,0.0
+Order City_New Castle,0.0
+Order City_Neuilly-sur-Seine,0.0
+Order City_Aligarh,0.0
+Order City_Aligudarz,0.0
+Order City_Alkmaar,0.0
+Order City_Allahabad,0.0
+Order City_Allauch,0.0
+Order City_Allen,0.0
+Order City_Allentown,0.0
+Order City_Nova Serrana,0.0
+Order City_Alphen aan den Rijn,0.0
+Order City_Altamura,0.0
+Order City_Altoona,0.0
+Order City_Altotonga,0.0
+Order City_Amadora,0.0
+Order City_Amarillo,0.0
+Order City_Orán,0.0
+Order City_Olivet,0.0
+Order City_Almelo,0.0
+Order City_Palm Coast,0.0
+Order City_Osasco,0.0
+Order City_Osh,0.0
+Order City_Oshawa,0.0
+Order City_Osijek,0.0
+Order City_Osmaniye,0.0
+Order City_Osorno,0.0
+Order City_Oss,0.0
+Order City_Orsha,0.0
+Order City_Oswego,0.0
+Order City_Ottawa,0.0
+Order City_Ouagadougou,0.0
+Order City_Ouidah,0.0
+Order City_Oullins,0.0
+Order City_Outreau,0.0
+Order City_Overland Park,0.0
+Order City_Owensboro,0.0
+Order City_Ostrava,0.0
+Order City_Oceanside,0.0
+Order City_Ocotlán,0.0
+Order City_Odense,0.0
+Order City_Odessa,0.0
+Order City_Offenbach,0.0
+Order City_Offenburg,0.0
+Order City_Oklahoma City,0.0
+Order City_Olomouc,0.0
+Order City_Olathe,0.0
+Order City_Oldenburg,0.0
+Order City_Oldham,0.0
+Order City_Oleksandriya,0.0
+Order City_Northwich,0.0
+Order City_Norwich,0.0
+Order City_Nottingham,0.0
+Order City_Nouakchott,0.0
+Order City_Oktyabr'skiy,0.0
+Order City_Olympia,0.0
+Order City_Omaha,0.0
+Order City_Onitsha,0.0
+Order City_Ontario,0.0
+Order City_Oosterhout,0.0
+Order City_Opole,0.0
+Order City_Oradea,0.0
+Order City_Ordu,0.0
+Order City_Ocaña,0.0
+Order City_Orihuela,0.0
+Order City_Oriximiná,0.0
+Order City_Orland Park,0.0
+Order City_Ormond Beach,0.0
+Order City_Orsay,0.0
+Order City_Oakland,0.0
+Order City_Oakville,0.0
+Order City_Oberhausen,0.0
+Order City_Orem,0.0
+Order City_Andijon,0.0
+Order City_Andover,0.0
+Order City_Andradina,0.0
+Order City_Angeles City,0.0
+Order City_Angers,0.0
+Order City_Anjo,0.0
+Order City_Ankara,0.0
+Order City_Nellore,0.0
+Order City_Annaba,0.0
+Order City_Annecy,0.0
+Order City_Annemasse,0.0
+Order City_Moncalieri,0.0
+Order City_Monclova,0.0
+Order City_Monroe,0.0
+Order City_Monrovia,0.0
+Order City_Mont-Saint-Aignan,0.0
+Order City_Ann Arbor,0.0
+Order City_Montmorency,0.0
+Order City_Montreuil,0.0
+Order City_Montrouge,0.0
+Order City_Moorhead,0.0
+Order City_Mopti,0.0
+Order City_Moradabad,0.0
+Order City_Moreno Valley,0.0
+Order City_Morgan Hill,0.0
+Order City_Ancona,0.0
+Order City_Morogoro,0.0
+Order City_Morristown,0.0
+Order City_Morón,0.0
+Order City_Moshi,0.0
+Order City_Montfermeil,0.0
+Order City_Montgeron,0.0
+Order City_Ananindeua,0.0
+Order City_Anantapur,0.0
+Order City_Morley,0.0
+Order City_Modica,0.0
+Order City_Mogadishu,0.0
+Order City_Mogi das Cruzes,0.0
+Order City_Mohammedia,0.0
+Order City_Moissy-Cramayel,0.0
+Order City_Molfetta,0.0
+Order City_Molina de Segura,0.0
+Order City_Montargis,0.0
+Order City_Midland,0.0
+Order City_Midyat,0.0
+Order City_Miguel Hidalgo,0.0
+Order City_Mijas,0.0
+Order City_Mildura,0.0
+Order City_Milford,0.0
+Order City_Millau,0.0
+Order City_Milwaukee,0.0
+Order City_Mombasa,0.0
+Order City_Montbrison,0.0
+Order City_Montceau-les-Mines,0.0
+Order City_Montebello,0.0
+Order City_Montecatini Terme,0.0
+Order City_Montereau-Fault-Yonne,0.0
+Order City_Monterrey,0.0
+Order City_Montería,0.0
+Order City_Montes Claros,0.0
+Order City_Modesto,0.0
+Order City_Montevideo,0.0
+Order City_Misurata,0.0
+Order City_Mitry-Mory,0.0
+Order City_Moa,0.0
+Order City_Mobile,0.0
+Order City_Moca,0.0
+Order City_Mococa,0.0
+Order City_Modena,0.0
+Order City_Montesson,0.0
+Order City_An Nasiriyah,0.0
+Order City_Nagaoka,0.0
+Order City_Nagasaki,0.0
+Order City_Nagercoil,0.0
+Order City_Naihati,0.0
+Order City_Nairobi,0.0
+Order City_Najafabad,0.0
+Order City_Montigny-le-Bretonneux,0.0
+Order City_Nakuru,0.0
+Order City_Nal'chik,0.0
+Order City_Namangán,0.0
+Order City_Namibe,0.0
+Order City_Nampula,0.0
+Order City_Namur,0.0
+Order City_Nanchang,0.0
+Order City_Nanchong,0.0
+Order City_Nakhon Ratchasima,0.0
+Order City_Nelson,0.0
+Order City_Neu-Ulm,0.0
+Order City_Neubrandenburg,0.0
+Order City_Nanning,0.0
+Order City_Nanterre,0.0
+Order City_Nantong,0.0
+Order City_Amasya,0.0
+Order City_Ambattur,0.0
+Order City_Amsterdam,0.0
+Order City_Americana,0.0
+Order City_Amersfoort,0.0
+Order City_Amiens,0.0
+Order City_Amman,0.0
+Order City_Amol,0.0
+Order City_Amravati,0.0
+Order City_Amritsar,0.0
+Order City_Amstelveen,0.0
+Order City_Ambon,0.0
+Order City_Mostaganem,0.0
+Order City_Mosul,0.0
+Order City_Mougins,0.0
+Order City_Moulins,0.0
+Order City_Mount Gambier,0.0
+Order City_Mount Isa,0.0
+Order City_Mount Pleasant,0.0
+Order City_Nancy,0.0
+Order City_Mouscron,0.0
+Order City_Mpumalanga,0.0
+Order City_Mtwara,0.0
+Order City_Mubi,0.0
+Order City_Mudanjiang,0.0
+Order City_Mufulira,0.0
+Order City_Annonay,0.0
+Order City_Montgomery,0.0
+Order City_Mount Vernon,0.0
+Order City_Multan,0.0
+Order City_Munster,0.0
+Order City_Murcia,0.0
+Order City_Muret,0.0
+Order City_Murfreesboro,0.0
+Order City_Murray,0.0
+Order City_Murrieta,0.0
+Order City_Muskogee,0.0
+Order City_Mossoró,0.0
+Order City_Mutare,0.0
+Order City_Muzaffarpur,0.0
+Order City_Mwanza,0.0
+Order City_Mykolayiv,0.0
+Order City_Myslowice,0.0
+Order City_Mysore,0.0
+Order City_Mâcon,0.0
+Order City_Mosquera,0.0
+Order City_Musoma,0.0
+Order City_Al Hillah,0.0
+Order City_Al Hudayda,0.0
+Order City_Praia Grande,0.0
+Order City_Presidencia Roque Sáenz Peña,0.0
+Order City_Presidente Dutra,0.0
+Order City_Presidente Prudente,0.0
+Order City_Preston,0.0
+Order City_Palhoça,0.0
+Order City_Progreso,0.0
+Order City_Providence,0.0
+Order City_Provo,0.0
+Order City_Pucallpa,0.0
+Order City_Puducherry,0.0
+Order City_Puebla,0.0
+Order City_Pueblo,0.0
+Order City_Puente Alto,0.0
+Order City_Pretoria,0.0
+Order City_Qom,0.0
+Order City_Quanzhou,0.0
+Order City_Quartu Sant'Elena,0.0
+Order City_Quchan,0.0
+Order City_Puerto Padre,0.0
+Order City_Puerto Vallarta,0.0
+Order City_Puertollano,0.0
+Order City_Pulheim,0.0
+Order City_Al Amarah,0.0
+Order City_Ajman,0.0
+Order City_Ajmer,0.0
+Order City_Akhisar,0.0
+Order City_Akola,0.0
+Order City_Akron,0.0
+Order City_Aksaray,0.0
+Order City_Aksu,0.0
+Order City_Akure,0.0
+Order City_Ajaccio,0.0
+Order City_Ponte Nova,0.0
+Order City_Ponteareas,0.0
+Order City_Pontes e Lacerda,0.0
+Order City_Pontevedra,0.0
+Order City_Pontianak,0.0
+Order City_Pontivy,0.0
+Order City_Poole,0.0
+Order City_Puerto La Cruz,0.0
+Order City_Port Arthur,0.0
+Order City_Port Elizabeth,0.0
+Order City_Port Harcourt,0.0
+Order City_Port Moresby,0.0
+Order City_Port Said,0.0
+Order City_Port Saint Lucie,0.0
+Order City_Portage,0.0
+Order City_Plock,0.0
+Order City_Porirua,0.0
+Order City_Puerto Montt,0.0
+Order City_Portici,0.0
+Order City_Portmore,0.0
+Order City_Porto Alegre,0.0
+Order City_Porto-Novo,0.0
+Order City_Portoviejo,0.0
+Order City_Portsmouth,0.0
+Order City_Posadas,0.0
+Order City_Pontault-Combault,0.0
+Order City_Potenza,0.0
+Order City_Potosí,0.0
+Order City_Potsdam,0.0
+Order City_Pouso Alegre,0.0
+Order City_Poznan,0.0
+Order City_Pozzuoli,0.0
+Order City_Poços de Caldas,0.0
+Order City_Praga,0.0
+Order City_Potchefstroom,0.0
+Order City_Redwood City,0.0
+Order City_Regensburg,0.0
+Order City_Reggio nell'Emilia,0.0
+Order City_Registro,0.0
+Order City_Reims,0.0
+Order City_Remscheid,0.0
+Order City_Rennes,0.0
+Order City_Qitaihe,0.0
+Order City_Raipur,0.0
+Order City_Rajkot,0.0
+Order City_Rajshahi,0.0
+Order City_Raleigh,0.0
+Order City_Ramat Aviv,0.0
+Order City_Ramat Gan,0.0
+Order City_Rambouillet,0.0
+Order City_Ramnicu Valcea,0.0
+Order City_Reno,0.0
+Order City_Revere,0.0
+Order City_Rheine,0.0
+Order City_Rhondda,0.0
+Order City_Ribeirão Preto,0.0
+Order City_Riberalta,0.0
+Order City_Richardson,0.0
+Order City_Richmond Hill,0.0
+Order City_Rijeka,0.0
+Order City_Redondo Beach,0.0
+Order City_Rio Branco,0.0
+Order City_Ratlam,0.0
+Order City_Ravenna,0.0
+Order City_Reading,0.0
+Order City_Redding,0.0
+Order City_Redditch,0.0
+Order City_Redlands,0.0
+Order City_Redmond,0.0
+Order City_Rillieux-la-Pape,0.0
+Order City_Rabat,0.0
+Order City_Rach Gia,0.0
+Order City_Radom,0.0
+Order City_Rafsanjan,0.0
+Order City_Ragusa,0.0
+Order City_Al Hufuf,0.0
+Order City_Al Khums,0.0
+Order City_Rancagua,0.0
+Order City_Purmerend,0.0
+Order City_Purwokerto,0.0
+Order City_Puteaux,0.0
+Order City_Puyang,0.0
+Order City_Qarshi,0.0
+Order City_Qidong,0.0
+Order City_Qingdao,0.0
+Order City_Qiqihar,0.0
+Order City_Al Manaqil,0.0
+Order City_Rancho Cucamonga,0.0
+Order City_Randers,0.0
+Order City_Randfontein,0.0
+Order City_Rapid City,0.0
+Order City_Ras al Khaymah,0.0
+Order City_Rasht,0.0
+Order City_Ratingen,0.0
+Order City_Quebec,0.0
+Order City_Quixadá,0.0
+Order City_Querétaro,0.0
+Order City_Quetzaltenango,0.0
+Order City_Quevedo,0.0
+Order City_Quibdó,0.0
+Order City_Quilmes,0.0
+Order City_Quimper,0.0
+Order City_Quincy,0.0
+Order City_Quito,0.0
+Order City_Quelimane,0.0
+Order City_Paço do Lumiar,0.0
+Order City_Pearland,0.0
+Order City_Peer,0.0
+Order City_Pekalongan,0.0
+Order City_Pekanbaru,0.0
+Order City_Paramaribo,0.0
+Order City_Paranaguá,0.0
+Order City_Ploemeur,0.0
+Order City_Paraparaumu,0.0
+Order City_Parbhani,0.0
+Order City_Parintins,0.0
+Order City_Park Ridge,0.0
+Order City_Parker,0.0
+Order City_Parla,0.0
+Order City_Pasadena,0.0
+Order City_Pasco,0.0
+Order City_Paraná,0.0
+Order City_Perth Amboy,0.0
+Order City_Pertuis,0.0
+Order City_Perugia,0.0
+Order City_Pesaro,0.0
+Order City_Pescara,0.0
+Order City_Peshawar,0.0
+Order City_Pessac,0.0
+Order City_Pasto,0.0
+Order City_Pazardzhik,0.0
+Order City_Patiala,0.0
+Order City_Patna,0.0
+Order City_Pato Branco,0.0
+Order City_Patrocínio,0.0
+Order City_Pau,0.0
+Order City_Paulista,0.0
+Order City_Pavlodar,0.0
+Order City_Paysandú,0.0
+Order City_Paterson,0.0
+Order City_Paracatu,0.0
+Order City_Parakou,0.0
+Order City_Owerri,0.0
+Order City_Owo,0.0
+Order City_Oxford,0.0
+Order City_Oxnard,0.0
+Order City_Oyama,0.0
+Order City_Pasig,0.0
+Order City_Padang,0.0
+Order City_Paderborn,0.0
+Order City_Paisley,0.0
+Order City_Paita,0.0
+Order City_Palaiseau,0.0
+Order City_Palembang,0.0
+Order City_Palencia,0.0
+Order City_Palermo,0.0
+Order City_Oyonnax,0.0
+Order City_Passaic,0.0
+Order City_Passau,0.0
+Order City_Passo Fundo,0.0
+Order City_Passos,0.0
+Order City_Palma de Mallorca,0.0
+Order City_Palmares,0.0
+Order City_Palmerston,0.0
+Order City_Palmerston North,0.0
+Order City_Papakura,0.0
+Order City_Palo Negro,0.0
+Order City_Palu,0.0
+Order City_Pamiers,0.0
+Order City_Pamplona,0.0
+Order City_Panevezys,0.0
+Order City_Panihati,0.0
+Order City_Panipat,0.0
+Order City_Pantin,0.0
+Order City_Palmira,0.0
+Order City_Pinsk,0.0
+Order City_Piotrkow Trybunalski,0.0
+Order City_Pisa,0.0
+Order City_Pistoia,0.0
+Order City_Pitalito,0.0
+Order City_Pitesti,0.0
+Order City_Piura,0.0
+Order City_Perpignan,0.0
+Order City_Plaisir,0.0
+Order City_Plano,0.0
+Order City_Plantation,0.0
+Order City_Pleasant Grove,0.0
+Order City_Alice Springs,0.0
+Order City_Pharr,0.0
+Order City_Phuntsholing,0.0
+Order City_Piatra-Neamt,0.0
+Order City_Plaisance-du-Touch,0.0
+Order City_Ploiesti,0.0
+Order City_Plovdiv,0.0
+Order City_Plymouth,0.0
+Order City_Pocatello,0.0
+Order City_Podgorica,0.0
+Order City_Poissy,0.0
+Order City_Poitiers,0.0
+Order City_Polatli,0.0
+Order City_Pinheiro,0.0
+Order City_Poltava,0.0
+Order City_Pomezia,0.0
+Order City_Pomona,0.0
+Order City_Pompano Beach,0.0
+Order City_Ponferrada,0.0
+Order City_Pingdingshan,0.0
+Order City_Pingnan,0.0
+Order City_Pingxiang,0.0
+Order City_Polatsk,0.0
+Order City_Albany,0.0
+Order City_Albertville,0.0
+Order City_Albuquerque,0.0
+Order City_Albury,0.0
+Order City_Alcobendas,0.0
+Order City_Alessandria,0.0
+Order City_Alfortville,0.0
+Order City_Algiers,0.0
+Order City_Pickering,0.0
+Order City_Pelotas,0.0
+Order City_Pematangsiantar,0.0
+Order City_Pemba,0.0
+Order City_Pembroke Pines,0.0
+Order City_Penedo,0.0
+Order City_Pensacola,0.0
+Order City_Pereira,0.0
+Order City_Pernik,0.0
+Order City_Alicante,0.0
+Order City_Pico Rivera,0.0
+Order City_Piedecuesta,0.0
+Order City_Piedras Negras,0.0
+Order City_Pierrefitte-sur-Seine,0.0
+Order City_Pietermaritzburg,0.0
+Order City_Pila,0.0
+Order City_Pilar,0.0
+Order City_Pimpri,0.0
+Order City_Alanya,0.0
+Order City_Pindamonhangaba,0.0
+Order City_Pine Bluff,0.0
+Order City_Pestovo,0.0
+Order City_Petapa,0.0
+Order City_Petare,0.0
+Order City_Peterborough,0.0
+Order City_Al Mubarraz,0.0
+Order City_Al Muharraq,0.0
+Order City_Pinar del Río,0.0
+Order City_Lagny-sur-Marne,0.0
+Order City_Lagos de Moreno,0.0
+Order City_Laguna Niguel,0.0
+Order City_Lahore,0.0
+Order City_Lajeado,0.0
+Order City_Kumba,0.0
+Order City_Kunming,0.0
+Order City_Minden,0.0
+Order City_Kurashiki,0.0
+Order City_Kure,0.0
+Order City_Kuwait City,0.0
+Order City_Kwangju,0.0
+Order City_Kütahya,0.0
+Order City_La Baule-Escoublac,0.0
+Order City_La Celle-Saint-Cloud,0.0
+Order City_La Chapelle-sur-Erdre,0.0
+Order City_Kupang,0.0
+Order City_Landskrona,0.0
+Order City_Lanester,0.0
+Order City_Langen,0.0
+Order City_Langenhagen,0.0
+Order City_Langfang,0.0
+Order City_Lannion,0.0
+Order City_Lansing,0.0
+Order City_La Mesa,0.0
+Order City_Laghouat,0.0
+Order City_La Porte,0.0
+Order City_La Rioja,0.0
+Order City_La Roche-sur-Yon,0.0
+Order City_La Rochelle,0.0
+Order City_La Romana,0.0
+Order City_La Spezia,0.0
+Order City_La Vega,0.0
+Order City_Lafayette,0.0
+Order City_La Pintana,0.0
+Order City_Atakpame,0.0
+Order City_Kumasi,0.0
+Order City_Koumra,0.0
+Order City_Kowloon,0.0
+Order City_Kozan,0.0
+Order City_Kozhikode,0.0
+Order City_Kramators'k,0.0
+Order City_La Chorrera,0.0
+Order City_Kremenchuk,0.0
+Order City_Kristiansand,0.0
+Order City_Krugersdorp,0.0
+Order City_Kuala Terengganu,0.0
+Order City_Kuantan,0.0
+Order City_Kuito,0.0
+Order City_Kukatpalli,0.0
+Order City_Kulob,0.0
+Order City_Krasnyy Luch,0.0
+Order City_La Ciotat,0.0
+Order City_La Crau,0.0
+Order City_La Crosse,0.0
+Order City_La Madeleine,0.0
+Order City_Asahikawa,0.0
+Order City_Asansol,0.0
+Order City_Aschaffenburg,0.0
+Order City_Ashdod,0.0
+Order City_Asunción,0.0
+Order City_Ashford,0.0
+Order City_Ashqelon,0.0
+Order City_Asiut,0.0
+Order City_Asjabad,0.0
+Order City_Assen,0.0
+Order City_Astaná,0.0
+Order City_Asti,0.0
+Order City_Astracán,0.0
+Order City_Asheville,0.0
+Order City_Le Plessis-Robinson,0.0
+Order City_Le Pré-Saint-Gervais,0.0
+Order City_League City,0.0
+Order City_Lecce,0.0
+Order City_Leeds,0.0
+Order City_Leeuwarden,0.0
+Order City_Legnano,0.0
+Order City_Landerneau,0.0
+Order City_Leicester,0.0
+Order City_Leipzig,0.0
+Order City_Lençóis Paulista,0.0
+Order City_Layton,0.0
+Order City_Ariquemes,0.0
+Order City_Arkhangelsk,0.0
+Order City_Arles,0.0
+Order City_Arlington Heights,0.0
+Order City_Lehi,0.0
+Order City_Les Clayes-sous-Bois,0.0
+Order City_Les Herbiers,0.0
+Order City_Les Lilas,0.0
+Order City_Les Mureaux,0.0
+Order City_Les Pavillons-sous-Bois,0.0
+Order City_Les Ulis,0.0
+Order City_Leshan,0.0
+Order City_Letchworth,0.0
+Order City_Le Petit-Quevilly,0.0
+Order City_Levallois-Perret,0.0
+Order City_Levin,0.0
+Order City_Lewiston,0.0
+Order City_Lianyuan,0.0
+Order City_Le Blanc-Mesnil,0.0
+Order City_Le Bouscat,0.0
+Order City_Le Cannet,0.0
+Order City_Le Creusot,0.0
+Order City_Leuven,0.0
+Order City_Las Rozas de Madrid,0.0
+Order City_Las Vegas,0.0
+Order City_Latina,0.0
+Order City_Lattes,0.0
+Order City_Latur,0.0
+Order City_Launceston,0.0
+Order City_Laurel,0.0
+Order City_Armenia,0.0
+Order City_Lake Charles,0.0
+Order City_Lake Elsinore,0.0
+Order City_Lake Forest,0.0
+Order City_Lakeland,0.0
+Order City_Lakeville,0.0
+Order City_Lakewood,0.0
+Order City_Lambaré,0.0
+Order City_Lancaster,0.0
+Order City_Lausanne,0.0
+Order City_Armidale,0.0
+Order City_Arnhem,0.0
+Order City_Arnsberg,0.0
+Order City_Arraiján,0.0
+Order City_Arras,0.0
+Order City_Arrentela,0.0
+Order City_Artemisa,0.0
+Order City_Arusha,0.0
+Order City_Las Pinas,0.0
+Order City_Arzgir,0.0
+Order City_Lanxi,0.0
+Order City_Lanzhou,0.0
+Order City_Laohekou,0.0
+Order City_Laon,0.0
+Order City_Larache,0.0
+Order City_Las Cruces,0.0
+Order City_Las Piedras,0.0
+Order City_Arvada,0.0
+Order City_Karagandá,0.0
+Order City_Karaman,0.0
+Order City_Karbala,0.0
+Order City_Karimnagar,0.0
+Order City_Karliova,0.0
+Order City_Karlsruhe,0.0
+Order City_Karlstad,0.0
+Order City_Kulti,0.0
+Order City_Kaiserslautern,0.0
+Order City_Kaiyuan,0.0
+Order City_Kakinada,0.0
+Order City_Kaliningrado,0.0
+Order City_Kalisz,0.0
+Order City_Athis-Mons,0.0
+Order City_Atlanta,0.0
+Order City_Atlantic City,0.0
+Order City_Kaifeng,0.0
+Order City_Kaspiysk,0.0
+Order City_Kassel,0.0
+Order City_Kastamonu,0.0
+Order City_Kasugai,0.0
+Order City_Kathmandu,0.0
+Order City_Katowice,0.0
+Order City_Katsina,0.0
+Order City_Katsushika-ku,0.0
+Order City_Kara,0.0
+Order City_Kalundborg,0.0
+Order City_Kalyan,0.0
+Order City_Kamarhati,0.0
+Order City_Kamina,0.0
+Order City_Kampala,0.0
+Order City_Kandahar,0.0
+Order City_Kandi,0.0
+Order City_Kankan,0.0
+Order City_Kaunas,0.0
+Order City_Kabwe,0.0
+Order City_Kadoma,0.0
+Order City_Kafr ad Dawwar,0.0
+Order City_Kahramanmara?,0.0
+Order City_Jingdezhen,0.0
+Order City_Jingmen,0.0
+Order City_Jinhua,0.0
+Order City_Atsugacho,0.0
+Order City_Jinja,0.0
+Order City_Jinjiang,0.0
+Order City_Jiutai,0.0
+Order City_Jiutepec,0.0
+Order City_Jixi,0.0
+Order City_Jizzakh,0.0
+Order City_Jodhpur,0.0
+Order City_Johannesburg,0.0
+Order City_Jining,0.0
+Order City_Aubervilliers,0.0
+Order City_Auch,0.0
+Order City_Auckland,0.0
+Order City_Augsburg,0.0
+Order City_Aulnay-sous-Bois,0.0
+Order City_Auxerre,0.0
+Order City_João Pessoa,0.0
+Order City_Juba,0.0
+Order City_Kabul,0.0
+Order City_Juliaca,0.0
+Order City_Jundiaí,0.0
+Order City_Junín,0.0
+Order City_Jupiter,0.0
+Order City_Jurema,0.0
+Order City_Juárez,0.0
+Order City_Járkov,0.0
+Order City_K'ut'aisi,0.0
+Order City_Juiz de Fora,0.0
+Order City_Kirovohrad,0.0
+Order City_Kirsehir,0.0
+Order City_Kisangani,0.0
+Order City_Kismaayo,0.0
+Order City_Kissimmee,0.0
+Order City_Kisumu,0.0
+Order City_Kita-ku,0.0
+Order City_Kashira,0.0
+Order City_Kiziltepe,0.0
+Order City_Klagenfurt,0.0
+Order City_Klaip?da,0.0
+Order City_Knoxville,0.0
+Order City_Koblenz,0.0
+Order City_Kocaeli,0.0
+Order City_Khasavyurt,0.0
+Order City_Khemisset,0.0
+Order City_Kitchener,0.0
+Order City_Kumanovo,0.0
+Order City_Kochi,0.0
+Order City_Koidu,0.0
+Order City_Kokshetau,0.0
+Order City_Kolhapur,0.0
+Order City_Kollam,0.0
+Order City_Kopeysk,0.0
+Order City_Korba,0.0
+Order City_Kirkwood,0.0
+Order City_Korhogo,0.0
+Order City_Korla,0.0
+Order City_Kortrijk,0.0
+Order City_Koshigaya,0.0
+Order City_Kostanái,0.0
+Order City_Kota Kinabalu,0.0
+Order City_Kotka,0.0
+Order City_Kingston,0.0
+Order City_Korce,0.0
+Order City_Kazerun,0.0
+Order City_Kediri,0.0
+Order City_Kendari,0.0
+Order City_Kenitra,0.0
+Order City_Kenner,0.0
+Order City_Kenosha,0.0
+Order City_Kent,0.0
+Order City_Keren,0.0
+Order City_Khenifra,0.0
+Order City_Kerpen,0.0
+Order City_Kettering,0.0
+Order City_Karnal,0.0
+Order City_Kars,0.0
+Order City_Kartal,0.0
+Order City_Kasala,0.0
+Order City_Kasama,0.0
+Order City_Kashan,0.0
+Order City_Kerman,0.0
+Order City_Khmelnytskyi,0.0
+Order City_Khomeynishahr,0.0
+Order City_Khorramabad,0.0
+Order City_Khorramshahr,0.0
+Order City_Khouribga,0.0
+Order City_Kidderminster,0.0
+Order City_Kiel,0.0
+Order City_Kigali,0.0
+Order City_Kayseri,0.0
+Order City_Kikwit,0.0
+Order City_Kilis,0.0
+Order City_Kilwinning,0.0
+Order City_Kindia,0.0
+Order City_Kawagoe,0.0
+Order City_Kawaguchi,0.0
+Order City_Kawasaki,0.0
+Order City_Kayes,0.0
+Order City_Kigoma,0.0
+Order City_Marrakech,0.0
+Order City_Marsa Matruh,0.0
+Order City_Marsabit,0.0
+Order City_Marsala,0.0
+Order City_Marseille,0.0
+Order City_Martigues,0.0
+Order City_Mary,0.0
+Order City_Les Abymes,0.0
+Order City_Masaya,0.0
+Order City_Mascate,0.0
+Order City_Maseru,0.0
+Order City_Mashhad,0.0
+Order City_Masjed Soleyman,0.0
+Order City_Mason,0.0
+Order City_Maple Grove,0.0
+Order City_Maputo,0.0
+Order City_Marysville,0.0
+Order City_Massa,0.0
+Order City_Massy,0.0
+Order City_Apartadó,0.0
+Order City_Apatzingán de la Constitución,0.0
+Order City_Apeldoorn,0.0
+Order City_Apodaca,0.0
+Order City_Apple Valley,0.0
+Order City_Appleton,0.0
+Order City_Maroua,0.0
+Order City_Apucarana,0.0
+Order City_Ar Raqa,0.0
+Order City_Aracaju,0.0
+Order City_Aracati,0.0
+Order City_Arad,0.0
+Order City_Araguaína,0.0
+Order City_Arak,0.0
+Order City_Marly-le-Roi,0.0
+Order City_Aprilia,0.0
+Order City_Manila,0.0
+Order City_Manisa,0.0
+Order City_Manizales,0.0
+Order City_Mannheim,0.0
+Order City_Manresa,0.0
+Order City_Mansfield,0.0
+Order City_Manteca,0.0
+Order City_Maradi,0.0
+Order City_Manukau City,0.0
+Order City_Manzanillo,0.0
+Order City_Manzini,0.0
+Order City_Makhachkala,0.0
+Order City_Makurdi,0.0
+Order City_Malakoff,0.0
+Order City_Malambo,0.0
+Order City_Malang,0.0
+Order City_Mantes-la-Ville,0.0
+Order City_Marano di Napoli,0.0
+Order City_Marbella,0.0
+Order City_Mardin,0.0
+Order City_Margate,0.0
+Order City_Marignane,0.0
+Order City_Marikina,0.0
+Order City_Marina di Carrara,0.0
+Order City_Maringá,0.0
+Order City_Mangalore,0.0
+Order City_Mariupol,0.0
+Order City_Markham,0.0
+Order City_Marl,0.0
+Order City_Marlborough,0.0
+Order City_Manaus,0.0
+Order City_Manchester,0.0
+Order City_Mandurah,0.0
+Order City_Manfredonia,0.0
+Order City_Marion,0.0
+Order City_Mezitli,0.0
+Order City_Mianyang,0.0
+Order City_Middlesbrough,0.0
+Order City_Middletown,0.0
+Order City_Menden,0.0
+Order City_Mendoza,0.0
+Order City_Menia,0.0
+Order City_Mazyr,0.0
+Order City_Mentor,0.0
+Order City_Mentougou,0.0
+Order City_Anqing,0.0
+Order City_Anshun,0.0
+Order City_Antakya,0.0
+Order City_Antalya,0.0
+Order City_Antananarivo,0.0
+Order City_Antibes,0.0
+Order City_Menton,0.0
+Order City_Minna,0.0
+Order City_Mirzapur,0.0
+Order City_Mishawaka,0.0
+Order City_Mission Viejo,0.0
+Order City_Missoula,0.0
+Order City_Missouri City,0.0
+Order City_Antsiranana,0.0
+Order City_Anyang,0.0
+Order City_Meyzieu,0.0
+Order City_Aoba-ku,0.0
+Order City_Meriden,0.0
+Order City_Meridian,0.0
+Order City_Mesquite,0.0
+Order City_Messaad,0.0
+Order City_Messina,0.0
+Order City_Metz,0.0
+Order City_Meudon,0.0
+Order City_Anápolis,0.0
+Order City_Melun,0.0
+Order City_Masterton,0.0
+Order City_Matadi,0.0
+Order City_Matagalpa,0.0
+Order City_Matanzas,0.0
+Order City_Matehuala,0.0
+Order City_Mathura,0.0
+Order City_Antiguo Cuscatlán,0.0
+Order City_Matsudo,0.0
+Order City_Matsumoto,0.0
+Order City_Maturín,0.0
+Order City_Mau,0.0
+Order City_Maubeuge,0.0
+Order City_Mauguio,0.0
+Order City_Mauá,0.0
+Order City_Maxixe,0.0
+Order City_Matola,0.0
+Order City_Antioch,0.0
+Order City_Antofagasta,0.0
+Order City_Antony,0.0
+Order City_Mbandaka,0.0
+Order City_Mbeya,0.0
+Order City_Mbinga,0.0
+Order City_Mbuji-mayi,0.0
+Order City_Meaux,0.0
+Order City_Melton,0.0
+Order City_Mechelen,0.0
+Order City_Medford,0.0
+Order City_Meerut,0.0
+Order City_Meizhou,0.0
+Order City_Meknes,0.0
+Order City_Melchor Ocampo,0.0
+Order City_Melilla,0.0
+Order City_Melitopol,0.0
+Order City_Mecca,0.0
+Order City_Loures,0.0
+Order City_Liuyang,0.0
+Order City_Liverpool,0.0
+Order City_Livingston,0.0
+Order City_Livingstone,0.0
+Order City_Livry-Gargan,0.0
+Order City_Lodi,0.0
+Order City_Malanje,0.0
+Order City_Logan,0.0
+Order City_Lohne,0.0
+Order City_Lokossa,0.0
+Order City_Lomme,0.0
+Order City_London,0.0
+Order City_Londrina,0.0
+Order City_Long Beach,0.0
+Order City_Longjumeau,0.0
+Order City_Lodz,0.0
+Order City_Argentan,0.0
+Order City_Arica,0.0
+Order City_Loveland,0.0
+Order City_Longueuil,0.0
+Order City_Lons-le-Saunier,0.0
+Order City_Loos,0.0
+Order City_Lora del Río,0.0
+Order City_Lorain,0.0
+Order City_Loum,0.0
+Order City_Lorena,0.0
+Order City_Lorient,0.0
+Order City_Lormont,0.0
+Order City_Los Patios,0.0
+Order City_Los Ángeles,0.0
+Order City_Loubomo,0.0
+Order City_Loudi,0.0
+Order City_Loughborough,0.0
+Order City_Lorca,0.0
+Order City_Liaoyang,0.0
+Order City_Liaoyuan,0.0
+Order City_Liberec,0.0
+Order City_Libreville,0.0
+Order City_Licheng,0.0
+Order City_Lichinga,0.0
+Order City_Lida,0.0
+Order City_Longmont,0.0
+Order City_Limay,0.0
+Order City_Limbe,0.0
+Order City_Limeira,0.0
+Order City_Limoeiro do Norte,0.0
+Order City_Limoges,0.0
+Order City_Linares,0.0
+Order City_Leoben,0.0
+Order City_Leominster,0.0
+Order City_Lille,0.0
+Order City_Lincoln,0.0
+Order City_Lincoln Park,0.0
+Order City_Linden,0.0
+Order City_Lindenhurst,0.0
+Order City_Linhai,0.0
+Order City_Linhares,0.0
+Order City_Lins,0.0
+Order City_Linyi,0.0
+Order City_Liaocheng,0.0
+Order City_Lisbon,0.0
+Order City_Lisichansk,0.0
+Order City_Lisieux,0.0
+Order City_Lismore,0.0
+Order City_Little Rock,0.0
+Order City_Littlehampton,0.0
+Order City_Liubliana,0.0
+Order City_Lianzhou,0.0
+Order City_Linz,0.0
+Order City_Maidstone,0.0
+Order City_Maiduguri,0.0
+Order City_Mainz,0.0
+Order City_Maisons-Alfort,0.0
+Order City_Maisons-Laffitte,0.0
+Order City_Majadahonda,0.0
+Order City_Makati,0.0
+Order City_Arezzo,0.0
+Order City_Lund,0.0
+Order City_Lunel,0.0
+Order City_Luohe,0.0
+Order City_Luoyang,0.0
+Order City_Luton,0.0
+Order City_Luts'k,0.0
+Order City_Luxemburgo,0.0
+Order City_Lviv,0.0
+Order City_Makeni,0.0
+Order City_Malatya,0.0
+Order City_Malayer,0.0
+Order City_Malden,0.0
+Order City_Malegaon,0.0
+Order City_Mallawi,0.0
+Order City_Maltepe,0.0
+Order City_Mamak,0.0
+Order City_Man,0.0
+Order City_Maidenhead,0.0
+Order City_Manado,0.0
+Order City_Madero,0.0
+Order City_Madison,0.0
+Order City_Madrid,0.0
+Order City_Madurai,0.0
+Order City_Magdeburg,0.0
+Order City_Magnitogorsk,0.0
+Order City_Mahajanga,0.0
+Order City_Manacapuru,0.0
+Order City_Ludwigsburg,0.0
+Order City_Ludwigshafen am Rhein,0.0
+Order City_Lugansk,0.0
+Order City_Lugo,0.0
+Order City_Lugoj,0.0
+Order City_Louviers,0.0
+Order City_Arapiraca,0.0
+Order City_Arapongas,0.0
+Order City_Lázaro Cárdenas,0.0
+Order City_Arauca,0.0
+Order City_Araucária,0.0
+Order City_Araçatuba,0.0
+Order City_Arbil,0.0
+Order City_Arcoverde,0.0
+Order City_Ardahan,0.0
+Order City_Ardebil,0.0
+Order City_Arequipa,0.0
+Order City_Araraquara,0.0
+Order City_Líbano,0.0
+Order City_Maastricht,0.0
+Order City_Mabopane,0.0
+Order City_Macapá,0.0
+Order City_Maceió,0.0
+Order City_Macheng,0.0
+Order City_Macon,0.0
+Order City_Lowell,0.0
+Order City_Ludhiana,0.0
+Order City_Luanda,0.0
+Order City_Luanshya,0.0
+Order City_Lubango,0.0
+Order City_Lubbock,0.0
+Order City_Lublin,0.0
+Order City_Lucca,0.0
+Order City_Lucerna,0.0
+Order City_Lucknow,0.0
+Order City_Lower Hutt,0.0

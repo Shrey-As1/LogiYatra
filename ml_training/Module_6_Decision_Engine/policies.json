@@ -1,0 +1,13 @@
+{
+    "delay_high": 0.70,
+    "delay_critical": 0.85,
+
+    "congestion_high": 0.60,
+    "congestion_critical": 0.85,
+
+    "route_high": 0.60,
+    "route_critical": 0.85,
+
+    "inventory_replenish": "REPLENISH",
+    "inventory_critical": "CRITICAL_REPLENISH"
+}

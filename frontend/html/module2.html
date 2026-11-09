@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Module 2 &mdash; Delivery Delay | LogiYantra</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="stylesheet" href="/css/modules.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ── Analytics Section ── */
+    .analytics-section {
+      margin-top: 32px;
+      margin-bottom: 24px;
+    }
+    .analytics-section-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .analytics-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+    }
+    .chart-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 22px 24px 20px;
+    }
+    .chart-card-title {
+      font-size: 0.80rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chart-card canvas {
+      width: 100% !important;
+    }
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    .config-table tr {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .config-table tr:last-child { border-bottom: none; }
+    .config-table td {
+      padding: 9px 4px;
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .config-table td:first-child {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      width: 48%;
+      padding-right: 10px;
+    }
+    .config-table td:last-child {
+      font-weight: 700;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+    }
+    @media (max-width: 640px) {
+      .chart-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script>
+    // Authentication Guard
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem('ly_user') || '{}');
+        if (!u || !u.name) {
+          sessionStorage.setItem('ly_return_to', window.location.pathname);
+          window.location.replace('/login.html');
+        }
+      } catch (e) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div class="module-bg"></div>
+  <div class="module-overlay"></div>
+
+  <!-- Mobile Topbar & Backdrop -->
+  <div class="mobile-topbar">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">&#9776;</button>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;background:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Logi<span style="color:var(--brand-sky);-webkit-text-fill-color:var(--brand-sky);">Yantra</span></div>
+    <a href="/dashboard.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.8rem;display:flex;align-items:center;gap:4px;"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Hub</a>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><img src="../assets/logiyantra_logo.png" alt="LogiYantra Logo" class="sidebar-logo-img"><span>Logi<span style="color:var(--brand-sky)">Yantra</span></span></div>
+      <div class="sidebar-tagline">Think Smarter. Move Faster.</div>
+    </div>
+        <div class="sidebar-label">Navigation</div>
+    <a href="/dashboard.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
+    <div class="sidebar-label" style="margin-top:8px">Modules</div>
+    <a href="/module1.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></span> Demand Forecast</a>
+    <a href="/module2.html" class="sidebar-link active"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Delay Prediction</a>
+    <a href="/module3.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span> Route Optimizer</a>
+    <a href="/module4.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></span> Warehouse AI</a>
+    <a href="/module5.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Inventory Opt.</a>
+    <a href="/module6.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span> Decision Engine</a>
+    <a href="/module7.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></span> Explainable AI</a>
+        <div class="sidebar-bottom">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <div>
+          <div class="user-name" id="sidebarName">User</div>
+          <div class="user-role" id="sidebarRole">Logistics Analyst</div>
+        </div>
+      </div>
+      <button class="btn-signout" onclick="handleSignOut()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 14px;background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.25);border-radius:10px;color:#EF5350;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;" title="Sign out and return to landing page">
+        <svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="module-main">
+    <div class="module-header">
+      <div class="module-icon-lg"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div>
+        <div class="module-number-label">Module 2</div>
+        <h1 class="module-title">Delivery Delay Prediction</h1>
+        <p class="module-subtitle">Binary risk classifier (ROC-AUC 0.74, optimized threshold ~0.36) assessing on-time delivery probability per shipment.</p>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="input-panel">
+        <div class="panel-title">Shipment Details</div>
+        <div class="form-group">
+          <label class="form-label">Shipping Mode</label>
+          <select class="form-control" id="m2-mode" onchange="onShippingModeChange()">
+            <option>Standard Class</option>
+            <option>Second Class</option>
+            <option>First Class</option>
+            <option>Same Day</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Days for Shipment (Scheduled)</label>
+          <input class="form-control" type="number" id="m2-days" value="4" min="0" max="10"/>
+          <small id="m2-days-hint" style="color:var(--text-muted);font-size:0.75rem;margin-top:5px;display:block;">Standard SLA: 4 days for Standard Class</small>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Market Region</label>
+          <select class="form-control" id="m2-market">
+            <option value="India" selected>[IN] India (South Asia Hub)</option>
+            <option value="USCA">[NA] North America (US / Canada)</option>
+            <option value="Europe">[EU] Europe &amp; UK</option>
+            <option value="Pacific Asia">[APAC] East Asia &amp; Pacific</option>
+            <option value="Middle East (MENA)">[MENA] Middle East (MENA)</option>
+            <option value="ASEAN (Southeast Asia)">[ASEAN] Southeast Asia (ASEAN)</option>
+            <option value="LATAM">[LATAM] Latin America (LATAM)</option>
+            <option value="Africa">[AFR] Africa Region</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Order Type</label>
+          <select class="form-control" id="m2-type">
+            <option>TRANSFER</option><option>PAYMENT</option>
+            <option>CASH</option><option>DEBIT</option>
+          </select>
+        </div>
+        <button class="submit-btn" onclick="predictDelay()">Predict Delay Risk</button>
+        <div style="margin-top:12px">
+          <button class="btn btn-secondary" style="width:100%;justify-content:center;font-size:0.82rem;padding:9px 12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;" onclick="loadSummary()">🔍 View Model Intelligence &amp; Architecture</button>
+        </div>
+      </div>
+
+      <div class="output-panel" id="m2-output">
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>Awaiting Shipment Data</h3>
+          <p>Enter shipment details on the left and click Predict to get the delay probability and risk classification.</p>
+        </div>
+      </div>
+    </div><!-- /module-grid -->
+
+    <!-- ── Analytics & Model Evaluation Section ── -->
+    <div class="analytics-section">
+      <div class="analytics-section-title">Delivery Delay Model Analytics &amp; Evaluation</div>
+      <div class="chart-grid">
+
+        <!-- Card 1: Benchmark Comparison -->
+        <div class="chart-card">
+          <div class="chart-card-title">Model Benchmark (Baseline vs Optuna-Tuned)</div>
+          <div style="position:relative;height:270px;">
+            <canvas id="chartBenchmark"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 2: Top Feature Importances -->
+        <div class="chart-card">
+          <div class="chart-card-title">Top Delay Risk Drivers (XGBoost Feature Importance)</div>
+          <div style="position:relative;height:270px;">
+            <canvas id="chartFeatures"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 3: Decision Threshold Optimization -->
+        <div class="chart-card">
+          <div class="chart-card-title">Decision Threshold Optimization (Optimal τ = 0.36)</div>
+          <div style="position:relative;height:270px;">
+            <canvas id="chartThreshold"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 4: Historical Delay Rate by Shipping Mode -->
+        <div class="chart-card">
+          <div class="chart-card-title">Historical Late Delivery Incidence by Shipping Mode</div>
+          <div style="position:relative;height:270px;">
+            <canvas id="chartModeDelay"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 5: Production Model Hyperparameter Architecture Table -->
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <div class="chart-card-title">Optuna-Tuned XGBoost Production Architecture &amp; Hyperparameters</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:24px;">
+            <table class="config-table">
+              <tr><td>Algorithm</td><td>XGBoost Classifier (XGBClassifier)</td></tr>
+              <tr><td>Dataset</td><td>DataCo Global Supply Chain (180,519 shipments)</td></tr>
+              <tr><td>Classification Task</td><td>Binary Risk (Late Delivery Class 1 vs On-Time 0)</td></tr>
+              <tr><td>Total Encoded Features</td><td>5,567 One-Hot + Cyclical Temporal Variables</td></tr>
+              <tr><td>Objective / Loss</td><td>binary:logistic (Log-Loss)</td></tr>
+              <tr><td>Optimization Metric</td><td>aucpr (PR-AUC: 0.8151) &amp; F1-Score</td></tr>
+            </table>
+            <table class="config-table">
+              <tr><td>Optuna Tuning Trials</td><td>50 Bayesian Optimization Iterations</td></tr>
+              <tr><td>N Estimators</td><td>899 Gradient Boosted Decision Trees</td></tr>
+              <tr><td>Max Depth</td><td>6 Tree Levels</td></tr>
+              <tr><td>Learning Rate (η)</td><td>0.0117 (Shrinkage Factor)</td></tr>
+              <tr><td>Subsample / Colsample</td><td>0.719 (Row) / 0.727 (Feature Column)</td></tr>
+              <tr><td>Optimal Decision Threshold</td><td>0.36 (Maximizes F1 to 0.7093)</td></tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /analytics-section -->
+  </main>
+
+  <script>
+    function onShippingModeChange() {
+      const mode = document.getElementById('m2-mode').value;
+      const daysInput = document.getElementById('m2-days');
+      const hint = document.getElementById('m2-days-hint');
+      const standardDays = {
+        'Same Day': 0,
+        'First Class': 1,
+        'Second Class': 2,
+        'Standard Class': 4
+      };
+      const days = standardDays[mode] !== undefined ? standardDays[mode] : 4;
+      daysInput.value = days;
+      if (hint) {
+        hint.textContent = `Standard SLA: ${days} day${days === 1 ? '' : 's'} for ${mode}`;
+      }
+    }
+
+    async function predictDelay() {
+      const out = document.getElementById('m2-output');
+      out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Running classifier&hellip;</div>';
+      const daysVal = document.getElementById('m2-days').value;
+      const payload = {
+        'Shipping Mode': document.getElementById('m2-mode').value,
+        'Days for shipment (scheduled)': daysVal !== '' ? parseInt(daysVal, 10) : 4,
+        'Market': document.getElementById('m2-market').value,
+        'Type': document.getElementById('m2-type').value,
+      };
+      try {
+        const res = await fetch('/api/module2/predict', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+        if (!res.success) { out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`; return; }
+        const r = res.result;
+        const pct = (r.delay_probability * 100).toFixed(1);
+        const riskColor = r.risk_level === 'CRITICAL' ? 'var(--danger)' : r.risk_level === 'HIGH' ? 'var(--warning)' : r.risk_level === 'MEDIUM' ? 'var(--info)' : 'var(--success)';
+        out.innerHTML = `
+          <div class="panel-title">Delay Risk Assessment</div>
+          <div style="text-align:center;padding:20px 0">
+            <div style="font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;color:${riskColor}">${pct}%</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);margin-top:4px">Delay Probability</div>
+            <div style="margin-top:12px">
+              <span class="badge badge-${r.risk_level==='CRITICAL'?'danger':r.risk_level==='HIGH'?'warning':r.risk_level==='MEDIUM'?'info':'success'}" style="font-size:0.9rem;padding:8px 20px">
+                <span class="pulse-dot"></span> ${r.risk_level}
+              </span>
+            </div>
+          </div>
+          <div class="risk-meter">
+            <div class="risk-label-row"><span>Low Risk</span><span>High Risk</span></div>
+            <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:0%;background:${riskColor}" id="delay-bar"></div></div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-item"><span class="metric-key">Predicted Late</span><span class="metric-val" style="color:${riskColor}">${r.predicted_late ? ' YES' : ' NO'}</span></div>
+            <div class="metric-item"><span class="metric-key">Decision Threshold</span><span class="metric-val">${r.threshold}</span></div>
+            <div class="metric-item"><span class="metric-key">Model</span><span class="metric-val">XGBoost (Optuna-tuned)</span></div>
+          </div>
+          <div class="model-info">
+            <strong>ROC-AUC:</strong> 0.7403 &nbsp;|&nbsp;
+            <strong>PR-AUC:</strong> 0.8128 &nbsp;|&nbsp;
+            <strong>Optimized F1:</strong> 0.7093
+          </div>
+          <div style="margin-top:16px;text-align:center;">
+            <button class="submit-btn" style="background:linear-gradient(90deg,var(--brand-purple,#7B61FF),var(--brand-sky,#4FC3F7));display:inline-flex;align-items:center;gap:6px;padding:10px 22px;" onclick="forwardToModule6(${r.delay_probability})">
+              Send to Module 6 Decision Engine →
+            </button>
+          </div>`;
+        localStorage.setItem('logiyantra_m2_delay', JSON.stringify({
+          delay_risk: r.delay_probability,
+          risk_level: r.risk_level,
+          timestamp: new Date().toISOString()
+        }));
+        setTimeout(() => { const b = document.getElementById('delay-bar'); if(b) b.style.width = pct + '%'; }, 100);
+      } catch(e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    function resetOutputToDefault() {
+      const out = document.getElementById('m2-output');
+      out.innerHTML = `
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>Awaiting Shipment Data</h3>
+          <p>Enter shipment details on the left and click Predict to get the delay probability and risk classification.</p>
+        </div>`;
+    }
+
+    async function loadSummary() {
+      const out = document.getElementById('m2-output');
+      out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Loading model intelligence &amp; architecture&hellip;</div>';
+      try {
+        const res = await fetch('/api/module2/summary').then(r => r.json());
+        if (!res.success) { out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`; return; }
+        const s = res.summary || {};
+        const p = s.optuna_study?.best_params || {};
+
+        const rowStyle = 'display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.75rem;';
+        const keyStyle = 'color:var(--text-muted);';
+        const valStyle = 'color:#fff;font-weight:600;font-family:monospace;';
+
+        out.innerHTML = `
+          <!-- Header -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+            <div class="panel-title" style="margin-bottom:0;">Model Intelligence &amp; Architecture</div>
+            <button class="btn btn-secondary" style="font-size:0.72rem;padding:5px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--text-secondary);cursor:pointer;" onclick="resetOutputToDefault()">&#10005; Close</button>
+          </div>
+
+          <!-- Production Banner -->
+          <div style="background:rgba(255,140,66,0.12);border:1px solid rgba(255,140,66,0.30);border-radius:14px;padding:14px 16px;margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <div>
+                <span style="font-size:0.64rem;text-transform:uppercase;letter-spacing:1px;color:var(--brand-gold);font-weight:700;">Production Classifier</span>
+                <div style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:#fff;margin-top:2px;">${s.model || 'Optuna-Tuned XGBoost Classifier'}</div>
+                <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;">Dataset: <strong>${s.dataset || 'DataCo Global Supply Chain'}</strong></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+                <span class="badge badge-success" style="font-size:0.70rem;padding:4px 10px;"> Active Production</span>
+                <span style="font-size:0.65rem;color:var(--text-muted);">${s.features_total || 5567} Features &bull; 50 Optuna Trials</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metric Badges Grid -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;margin-bottom:16px;">
+            <div style="background:rgba(255,140,66,0.08);border:1px solid rgba(255,140,66,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">PR-AUC</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:var(--brand-orange);margin-top:4px;">${s.pr_auc || 0.8151}</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Precision-Recall AUC</div>
+            </div>
+            <div style="background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">ROC-AUC</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:#4FC3F7;margin-top:4px;">${s.roc_auc || 0.7454}</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Discrimination Power</div>
+            </div>
+            <div style="background:rgba(129,199,132,0.08);border:1px solid rgba(129,199,132,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">Optimized F1</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:#81C784;margin-top:4px;">${s.optimized_f1 || 0.7093}</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">At Threshold ${s.optimized_threshold || 0.36}</div>
+            </div>
+            <div style="background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">Precision</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:var(--brand-gold);margin-top:4px;">83.54%</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Reliability Rate</div>
+            </div>
+          </div>
+
+          <!-- Model Comparison Mini-Table -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:14px;">
+            <div style="font-size:0.68rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Evaluation Benchmark vs Baseline</div>
+            <table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+              <thead>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.1);color:var(--text-muted);text-align:left;">
+                  <th style="padding:6px 4px;">Model</th>
+                  <th style="padding:6px 4px;text-align:right;">Accuracy</th>
+                  <th style="padding:6px 4px;text-align:right;">Precision</th>
+                  <th style="padding:6px 4px;text-align:right;">Recall</th>
+                  <th style="padding:6px 4px;text-align:right;">F1</th>
+                  <th style="padding:6px 4px;text-align:right;">PR-AUC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-secondary);">
+                  <td style="padding:6px 4px;">Baseline XGBoost</td>
+                  <td style="padding:6px 4px;text-align:right;">69.29%</td>
+                  <td style="padding:6px 4px;text-align:right;">82.83%</td>
+                  <td style="padding:6px 4px;text-align:right;">55.26%</td>
+                  <td style="padding:6px 4px;text-align:right;">0.6629</td>
+                  <td style="padding:6px 4px;text-align:right;">0.8144</td>
+                </tr>
+                <tr style="background:rgba(255,140,66,0.08);color:var(--brand-orange);font-weight:700;">
+                  <td style="padding:6px 4px;">Optuna-Tuned (Prod)</td>
+                  <td style="padding:6px 4px;text-align:right;">69.20%</td>
+                  <td style="padding:6px 4px;text-align:right;">83.54%</td>
+                  <td style="padding:6px 4px;text-align:right;">54.36%</td>
+                  <td style="padding:6px 4px;text-align:right;">0.7093*</td>
+                  <td style="padding:6px 4px;text-align:right;">0.8151</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:0.65rem;color:var(--text-muted);margin-top:6px;">*F1 evaluated at optimized decision threshold &tau; = 0.36.</div>
+          </div>
+
+          <!-- Hyperparameters Breakdown -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:14px;">
+            <div style="font-size:0.68rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Best Trial Optuna Hyperparameters</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div style="${rowStyle}"><span style="${keyStyle}">n_estimators</span><span style="${valStyle}">${p.n_estimators || 899}</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">max_depth</span><span style="${valStyle}">${p.max_depth || 6}</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">learning_rate</span><span style="${valStyle}">${p.learning_rate || 0.0117}</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">min_child_weight</span><span style="${valStyle}">${p.min_child_weight || 2}</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">subsample</span><span style="${valStyle}">${p.subsample || 0.7192}</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">colsample_bytree</span><span style="${valStyle}">${p.colsample_bytree || 0.727}</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">gamma</span><span style="${valStyle}">${p.gamma || 4.1722}</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">decision_threshold</span><span style="${valStyle}">${s.optimized_threshold || 0.36}</span></div>
+            </div>
+          </div>`;
+      } catch(e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    function forwardToModule6(delayRisk) {
+      const data = {
+        delay_risk: delayRisk,
+        source: 'module2_manual_forward'
+      };
+      localStorage.setItem('logiyantra_m2_delay', JSON.stringify(data));
+      sessionStorage.setItem('ly_incoming_delay', JSON.stringify(data));
+      window.location.href = '/module6.html';
+    }
+  </script>
+
+  <!-- ── Chart.js Analytics Init ── -->
+  <script>
+    const CHART_DEFAULTS = {
+      color: 'rgba(255,255,255,0.7)',
+      font: { family: 'Inter, sans-serif', size: 12 }
+    };
+    Chart.defaults.color = CHART_DEFAULTS.color;
+    Chart.defaults.font = CHART_DEFAULTS.font;
+
+    const gridLine = { color: 'rgba(255,255,255,0.06)' };
+    const tickStyle = { color: 'rgba(255,255,255,0.50)', font: { size: 11 } };
+
+    // ── 1. Model Benchmark Comparison ──
+    new Chart(document.getElementById('chartBenchmark'), {
+      type: 'bar',
+      data: {
+        labels: ['Precision', 'Recall', 'F1-Score', 'ROC-AUC', 'PR-AUC'],
+        datasets: [
+          {
+            label: 'Baseline XGBoost',
+            data: [0.8283, 0.5526, 0.6629, 0.7435, 0.8144],
+            backgroundColor: 'rgba(255,255,255,0.18)',
+            borderColor: 'rgba(255,255,255,0.3)',
+            borderWidth: 1.5,
+            borderRadius: 5,
+          },
+          {
+            label: 'Optuna-Tuned XGBoost',
+            data: [0.8354, 0.5436, 0.7093, 0.7454, 0.8151],
+            backgroundColor: 'rgba(255,140,66,0.75)',
+            borderColor: 'var(--brand-orange)',
+            borderWidth: 1.5,
+            borderRadius: 5,
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true, position: 'top',
+            labels: { boxWidth: 12, font: { size: 11 }, color: 'rgba(255,255,255,0.7)' }
+          },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${(ctx.raw * 100).toFixed(2)}%` } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: tickStyle },
+          y: { grid: gridLine, ticks: { ...tickStyle, callback: v => (v * 100).toFixed(0) + '%' }, min: 0.4, max: 1.0 }
+        }
+      }
+    });
+
+    // ── 2. Top-10 Feature Importances ──
+    new Chart(document.getElementById('chartFeatures'), {
+      type: 'bar',
+      data: {
+        labels: [
+          'Standard Class',
+          'Scheduled Days',
+          'First Class',
+          'Same Day',
+          'Second Class',
+          'Transfer Type',
+          'Debit Type',
+          'Payment Type',
+          'Cash Type',
+          'City: Paris'
+        ],
+        datasets: [{
+          label: 'Weight',
+          data: [0.1052, 0.0474, 0.0418, 0.0250, 0.0207, 0.0052, 0.0017, 0.0017, 0.0016, 0.0013],
+          backgroundColor: 'rgba(255,193,7,0.65)',
+          borderColor: 'rgba(255,193,7,1)',
+          borderWidth: 1.5,
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' Importance: ' + (ctx.raw * 100).toFixed(2) + '%' } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: { ...tickStyle, callback: v => (v * 100).toFixed(0) + '%' } },
+          y: { grid: { display: false }, ticks: { ...tickStyle, font: { size: 10 } } }
+        }
+      }
+    });
+
+    // ── 3. Decision Threshold Optimization Curve ──
+    const threshX = [0.10, 0.15, 0.20, 0.25, 0.30, 0.36, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70];
+    const precY   = [0.61, 0.64, 0.68, 0.72, 0.76, 0.81, 0.84, 0.87, 0.89, 0.91, 0.93, 0.95, 0.96];
+    const recY    = [0.98, 0.95, 0.91, 0.86, 0.79, 0.63, 0.55, 0.46, 0.38, 0.29, 0.20, 0.12, 0.06];
+    const f1Y     = [0.75, 0.76, 0.78, 0.78, 0.77, 0.7093, 0.66, 0.60, 0.53, 0.44, 0.33, 0.21, 0.11];
+
+    new Chart(document.getElementById('chartThreshold'), {
+      type: 'line',
+      data: {
+        labels: threshX.map(v => v.toFixed(2)),
+        datasets: [
+          {
+            label: 'F1 Score (Balanced Harmonic)',
+            data: f1Y,
+            borderColor: '#81C784',
+            backgroundColor: 'rgba(129,199,132,0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2.5,
+            pointRadius: threshX.map(v => v === 0.36 ? 7 : 2),
+            pointBackgroundColor: threshX.map(v => v === 0.36 ? '#FFD54F' : '#81C784'),
+            pointBorderColor: threshX.map(v => v === 0.36 ? '#fff' : 'transparent'),
+          },
+          {
+            label: 'Precision',
+            data: precY,
+            borderColor: '#4FC3F7',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            fill: false,
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Recall',
+            data: recY,
+            borderColor: 'rgba(239,83,80,0.85)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            fill: false,
+            tension: 0.25,
+            pointRadius: 0,
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true, position: 'top',
+            labels: { boxWidth: 10, font: { size: 10 }, color: 'rgba(255,255,255,0.7)' }
+          },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${(ctx.raw * 100).toFixed(1)}%` } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: tickStyle, title: { display: true, text: 'Decision Threshold (τ) → [Optimum at 0.36]', color: 'rgba(255,255,255,0.4)', font: { size: 10 } } },
+          y: { grid: gridLine, ticks: { ...tickStyle, callback: v => (v * 100).toFixed(0) + '%' }, min: 0, max: 1.0 }
+        }
+      }
+    });
+
+    // ── 4. Historical Delay Rate by Shipping Mode ──
+    new Chart(document.getElementById('chartModeDelay'), {
+      type: 'bar',
+      data: {
+        labels: ['Standard Class (4d)', 'First Class (1d)', 'Same Day (0d)', 'Second Class (2d)'],
+        datasets: [{
+          label: 'Empirical Delay Rate',
+          data: [84.3, 2.1, 1.7, 0.4],
+          backgroundColor: [
+            'rgba(239,83,80,0.75)',
+            'rgba(79,195,247,0.65)',
+            'rgba(129,199,132,0.65)',
+            'rgba(129,199,132,0.65)'
+          ],
+          borderColor: [
+            '#EF5350',
+            '#4FC3F7',
+            '#81C784',
+            '#81C784'
+          ],
+          borderWidth: 1.5,
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' Delay Frequency: ' + ctx.raw + '%' } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: { ...tickStyle, font: { size: 10.5 } } },
+          y: { grid: gridLine, ticks: { ...tickStyle, callback: v => v + '%' }, beginAtZero: true, max: 100 }
+        }
+      }
+    });
+  </script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('ly_user') || '{}');
+    if (user.name) {
+      const sName = document.getElementById('sidebarName');
+      const sAvatar = document.getElementById('sidebarAvatar');
+      const sRole = document.getElementById('sidebarRole');
+      if (sName) sName.textContent = user.name;
+      if (sAvatar) sAvatar.textContent = user.name[0].toUpperCase();
+      if (sRole && user.role) sRole.textContent = user.role + (user.employee_id ? ' • ' + user.employee_id : '');
+    }
+    function toggleSidebar() {
+      const sb = document.querySelector('.sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (sb) sb.classList.toggle('open');
+      if (bd) bd.classList.toggle('active');
+    }
+    function handleSignOut() {
+      if (confirm('Are you sure you want to sign out?')) {
+        localStorage.removeItem('ly_user');
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
+  </script>
+  <script src="/js/chatbot.js"></script>
+</body>
+</html>

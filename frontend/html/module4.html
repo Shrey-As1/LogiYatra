@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Module 4 &mdash; Warehouse Congestion | LogiYantra</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="stylesheet" href="/css/modules.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ── Analytics Section ── */
+    .analytics-section {
+      margin-top: 32px;
+      margin-bottom: 24px;
+    }
+    .analytics-section-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .analytics-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+    }
+    .chart-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 22px 24px 20px;
+    }
+    .chart-card-title {
+      font-size: 0.80rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chart-card canvas {
+      width: 100% !important;
+    }
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    .config-table tr {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .config-table tr:last-child { border-bottom: none; }
+    .config-table td {
+      padding: 9px 4px;
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .config-table td:first-child {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      width: 48%;
+      padding-right: 10px;
+    }
+    .config-table td:last-child {
+      font-weight: 700;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+    }
+    .sim-slider-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    .sim-slider-row span:last-child {
+      font-family: 'Orbitron', monospace;
+      color: var(--brand-gold);
+      font-weight: 700;
+    }
+    @media (max-width: 640px) {
+      .chart-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script>
+    // Authentication Guard
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem('ly_user') || '{}');
+        if (!u || !u.name) {
+          sessionStorage.setItem('ly_return_to', window.location.pathname);
+          window.location.replace('/login.html');
+        }
+      } catch (e) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div class="module-bg"></div>
+  <div class="module-overlay"></div>
+
+  <!-- Mobile Topbar & Backdrop -->
+  <div class="mobile-topbar">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">&#9776;</button>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;background:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Logi<span style="color:var(--brand-sky);-webkit-text-fill-color:var(--brand-sky);">Yantra</span></div>
+    <a href="/dashboard.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.8rem;display:flex;align-items:center;gap:4px;"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Hub</a>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><img src="/assets/logiyantra_logo.png" alt="LogiYantra Logo" class="sidebar-logo-img"><span>Logi<span style="color:var(--brand-sky)">Yantra</span></span></div>
+      <div class="sidebar-tagline">Think Smarter. Move Faster.</div>
+    </div>
+        <div class="sidebar-label">Navigation</div>
+    <a href="/dashboard.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
+    <div class="sidebar-label" style="margin-top:8px">Modules</div>
+    <a href="/module1.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></span> Demand Forecast</a>
+    <a href="/module2.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Delay Prediction</a>
+    <a href="/module3.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span> Route Optimizer</a>
+    <a href="/module4.html" class="sidebar-link active"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></span> Warehouse AI</a>
+    <a href="/module5.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Inventory Opt.</a>
+    <a href="/module6.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span> Decision Engine</a>
+    <a href="/module7.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></span> Explainable AI</a>
+        <div class="sidebar-bottom">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <div>
+          <div class="user-name" id="sidebarName">User</div>
+          <div class="user-role" id="sidebarRole">Logistics Analyst</div>
+        </div>
+      </div>
+      <button class="btn-signout" onclick="handleSignOut()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 14px;background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.25);border-radius:10px;color:#EF5350;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;" title="Sign out and return to landing page">
+        <svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="module-main">
+    <div class="module-header">
+      <div class="module-icon-lg"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></div>
+      <div>
+        <div class="module-number-label">Module 4</div>
+        <h1 class="module-title">Warehouse Congestion</h1>
+        <p class="module-subtitle">LSTM time-series model requiring 12 sequential observations of dock utilization, order volume and truck arrivals to predict congestion risk.</p>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="input-panel">
+        <div class="panel-title">Sequence Input (12 steps)</div>
+        <div class="alert alert-warning" style="margin-bottom:16px;font-size:0.78rem">
+           Provide exactly 12 sequential warehouse observations. Each value = one time step.
+        </div>
+        
+        <!-- Quick Scenario Presets -->
+        <div style="margin-bottom:16px;">
+          <label class="form-label" style="font-size:0.75rem;margin-bottom:6px;">Quick Presets</label>
+          <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:8px;">
+            <button type="button" class="btn btn-secondary" style="font-size:0.72rem;padding:6px 8px;border-radius:8px;background:rgba(239,83,80,0.1);border:1px solid rgba(239,83,80,0.25);color:#EF5350;cursor:pointer;" onclick="applyPreset('peak')">Peak Inbound Rush</button>
+            <button type="button" class="btn btn-secondary" style="font-size:0.72rem;padding:6px 8px;border-radius:8px;background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.25);color:#FFD54F;cursor:pointer;" onclick="applyPreset('shift')"> Shift Changeover</button>
+            <button type="button" class="btn btn-secondary" style="font-size:0.72rem;padding:6px 8px;border-radius:8px;background:rgba(129,199,132,0.1);border:1px solid rgba(129,199,132,0.25);color:#81C784;cursor:pointer;" onclick="applyPreset('normal')"> Standard Flow</button>
+            <button type="button" class="btn btn-secondary" style="font-size:0.72rem;padding:6px 8px;border-radius:8px;background:rgba(79,195,247,0.1);border:1px solid rgba(79,195,247,0.25);color:#4FC3F7;cursor:pointer;" onclick="applyPreset('lull')">Off-Peak Night Lull</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Dock Utilization (12 values, comma-separated, 0&ndash;1)</label>
+          <input class="form-control" id="m4-dock" value="0.72,0.75,0.78,0.80,0.82,0.85,0.87,0.88,0.90,0.91,0.93,0.95"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Order Volume (12 values)</label>
+          <input class="form-control" id="m4-orders" value="120,125,130,135,140,145,150,155,160,165,170,175"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Truck Arrivals (12 values)</label>
+          <input class="form-control" id="m4-trucks" value="10,11,12,13,14,15,16,17,18,19,20,21"/>
+        </div>
+        <button class="submit-btn" onclick="predictCongestion()">Predict Congestion</button>
+        <div style="margin-top:12px">
+          <button class="btn btn-secondary" style="width:100%;justify-content:center;font-size:0.82rem;padding:9px 12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;" onclick="loadSummary()">🔍 View Model Intelligence &amp; Architecture</button>
+        </div>
+      </div>
+
+      <div class="output-panel" id="m4-output">
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></div>
+          <h3>Awaiting Sensor Data</h3>
+          <p>Provide 12-step sequences for dock utilization, order volume and truck arrivals to predict warehouse congestion risk.</p>
+        </div>
+      </div>
+    </div><!-- /module-grid -->
+
+    <!-- ── Analytics & Model Evaluation Section ── -->
+    <div class="analytics-section">
+      <div class="analytics-section-title">Warehouse Congestion LSTM Model Analytics &amp; Evaluation</div>
+      <div class="chart-grid">
+
+        <!-- Card 1: Benchmark Comparison -->
+        <div class="chart-card">
+          <div class="chart-card-title">Model Evaluation Metrics (Test Holdout)</div>
+          <div style="position:relative;height:260px;">
+            <canvas id="chartMetrics"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 2: Feature Selection Importance -->
+        <div class="chart-card">
+          <div class="chart-card-title">XGBoost Feature Selection (Gain Weight)</div>
+          <div style="position:relative;height:260px;">
+            <canvas id="chartFeatures"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 3: Temporal Sequence Attention Decay -->
+        <div class="chart-card">
+          <div class="chart-card-title">12-Hour Recurrent Temporal Memory Weighting</div>
+          <div style="position:relative;height:260px;">
+            <canvas id="chartTemporal"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 4: Historical Congestion by Shift Wave -->
+        <div class="chart-card">
+          <div class="chart-card-title">Congestion Probability by Operational Shift Wave</div>
+          <div style="position:relative;height:260px;">
+            <canvas id="chartShiftWave"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 5: Production Architecture & Hyperparameters Table -->
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <div class="chart-card-title">LSTM Neural Network Sequence Architecture &amp; Hyperparameters</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:24px;">
+            <table class="config-table">
+              <tr><td>Pipeline Type</td><td>XGBoost Feature Selection + LSTM Classifier</td></tr>
+              <tr><td>Dataset</td><td>DC Telemetry (25,000 Operational Sequences)</td></tr>
+              <tr><td>Input Sequence Window</td><td>12 Chronological Hourly Steps &times; 8 Features</td></tr>
+              <tr><td>Layer 1 (Recurrent)</td><td>LSTM (64 Units, Return Sequences = True)</td></tr>
+              <tr><td>Recurrent Dropout</td><td>20% (Rate = 0.20)</td></tr>
+              <tr><td>Layer 2 (Recurrent)</td><td>LSTM (32 Units, Sequence Compression)</td></tr>
+            </table>
+            <table class="config-table">
+              <tr><td>Dense Hidden Layer</td><td>16 Units (ReLU Activation)</td></tr>
+              <tr><td>Output Activation</td><td>Sigmoid (Binary Probability 0.0 &ndash; 1.0)</td></tr>
+              <tr><td>Loss Function</td><td>Binary Cross-Entropy (log_loss)</td></tr>
+              <tr><td>Optimizer</td><td>Adam (Learning Rate = 0.001)</td></tr>
+              <tr><td>Preprocessing Scaler</td><td>StandardScaler (Z-Score Normalization)</td></tr>
+              <tr><td>Decision Threshold</td><td>0.50 (Calibrated for High Recall: 83.1%)</td></tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /analytics-section -->
+  </main>
+
+  <script>
+    let telemetryChartInstance = null;
+
+    function applyPreset(type) {
+      if (type === 'peak') {
+        document.getElementById('m4-dock').value = '0.82,0.85,0.88,0.89,0.91,0.92,0.94,0.95,0.96,0.97,0.98,0.99';
+        document.getElementById('m4-orders').value = '180,190,200,210,220,230,240,250,255,260,265,270';
+        document.getElementById('m4-trucks').value = '18,19,20,22,23,24,25,26,27,28,29,30';
+      } else if (type === 'shift') {
+        document.getElementById('m4-dock').value = '0.62,0.65,0.68,0.70,0.72,0.74,0.75,0.76,0.77,0.78,0.79,0.80';
+        document.getElementById('m4-orders').value = '110,115,120,125,130,135,140,142,145,148,150,152';
+        document.getElementById('m4-trucks').value = '11,12,13,13,14,15,15,16,16,17,17,18';
+      } else if (type === 'normal') {
+        document.getElementById('m4-dock').value = '0.35,0.38,0.40,0.42,0.44,0.45,0.46,0.47,0.48,0.49,0.50,0.50';
+        document.getElementById('m4-orders').value = '60,65,68,70,72,75,76,78,80,82,84,85';
+        document.getElementById('m4-trucks').value = '5,6,6,7,7,8,8,9,9,10,10,10';
+      } else if (type === 'lull') {
+        document.getElementById('m4-dock').value = '0.15,0.16,0.18,0.19,0.20,0.20,0.21,0.22,0.22,0.23,0.24,0.25';
+        document.getElementById('m4-orders').value = '20,22,25,26,28,30,32,33,35,36,38,40';
+        document.getElementById('m4-trucks').value = '1,1,2,2,2,3,3,3,4,4,4,4';
+      }
+      predictCongestion();
+    }
+
+    function resetOutputToDefault() {
+      const out = document.getElementById('m4-output');
+      out.innerHTML = `
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></div>
+          <h3>Awaiting Sensor Data</h3>
+          <p>Provide 12-step sequences for dock utilization, order volume and truck arrivals to predict warehouse congestion risk.</p>
+        </div>`;
+    }
+
+    async function predictCongestion(mitigation = null) {
+      const out = document.getElementById('m4-output');
+      if (!mitigation) {
+        out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Running LSTM sequence inference&hellip;</div>';
+      }
+      const parseSeq = id => document.getElementById(id).value.split(',').map(x => parseFloat(x.trim()));
+      const dock   = parseSeq('m4-dock');
+      const orders = parseSeq('m4-orders');
+      const trucks = parseSeq('m4-trucks');
+
+      const observations = [];
+      for (let i = 0; i < 12; i++) {
+        observations.push({
+          dock_utilization:  dock[i]   || 0,
+          order_volume:      orders[i] || 0,
+          truck_arrivals:    trucks[i] || 0,
+          burst_event:       0,
+          trucks_per_staff:  (trucks[i] || 0) / 5,
+          orders_per_staff:  (orders[i] || 0) / 20,
+          shift_change:      i % 3 === 0 ? 1 : 0,
+          hour_cos:          Math.cos(2 * Math.PI * i / 12),
+        });
+      }
+
+      const payload = { observations };
+      if (mitigation) {
+        payload.mitigation = mitigation;
+      }
+
+      try {
+        const res = await fetch('/api/module4/predict', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) { out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`; return; }
+        const r = res.result;
+        const pct = (r.congestion_risk * 100).toFixed(1);
+        const level = r.risk_level || r.status || 'NORMAL';
+        const isCrit = level === 'CRITICAL';
+        const isHigh = level === 'HEAVY' || level === 'HIGH';
+        const isMed = level === 'MODERATE' || level === 'MEDIUM';
+        const color = isCrit ? 'var(--danger)' : isHigh ? 'var(--warning)' : isMed ? 'var(--info)' : 'var(--success)';
+        const badgeType = isCrit ? 'danger' : isHigh ? 'warning' : isMed ? 'info' : 'success';
+
+        out.innerHTML = `
+          <div class="panel-title">Congestion Risk Assessment</div>
+          <div style="text-align:center;padding:16px 0 10px;">
+            <div style="font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;color:${color}">${pct}%</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);margin-top:2px">Predicted Congestion Probability</div>
+            <div style="margin-top:10px">
+              <span class="badge badge-${badgeType}" style="font-size:0.88rem;padding:7px 18px">
+                <span class="pulse-dot"></span> ${level}
+              </span>
+            </div>
+          </div>
+
+          <div class="risk-meter" style="margin-bottom:14px;">
+            <div class="risk-label-row"><span>Clear Flow</span><span>Facility Saturated</span></div>
+            <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:0%;background:${color}" id="cong-bar"></div></div>
+          </div>
+
+          <!-- Recommended Action Alert -->
+          <div style="background:rgba(255,140,66,0.10);border:1px solid rgba(255,140,66,0.25);border-radius:12px;padding:11px 14px;margin-bottom:14px;text-align:left;">
+            <div style="font-size:0.65rem;font-weight:700;color:var(--brand-gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Operational Guidance</div>
+            <div style="font-size:0.80rem;color:#fff;line-height:1.4;">${r.recommended_action || 'Maintain baseline wave schedule.'}</div>
+          </div>
+
+          <!-- Operational KPIs Grid -->
+          <div class="metric-row" style="margin-bottom:14px;">
+            <div class="metric-item">
+              <span class="metric-key">Time to Saturation</span>
+              <span class="metric-val" style="color:${isCrit ? 'var(--danger)' : '#fff'};font-family:'Orbitron',monospace;">${r.time_to_gridlock || 'Stable'}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">Est. Carrier Detention Exposure</span>
+              <span class="metric-val" style="color:${(r.estimated_detention_cost || 0) > 0 ? 'var(--brand-orange)' : '#81C784'};font-family:'Orbitron',monospace;">~$${(r.estimated_detention_cost || 0).toLocaleString()} / hr</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">Dock Saturation Velocity</span>
+              <span class="metric-val">${r.dock_velocity_pct_per_hr > 0 ? '+' : ''}${r.dock_velocity_pct_per_hr}% / hr</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">Decision Threshold</span>
+              <span class="metric-val">${r.threshold || 0.5}</span>
+            </div>
+          </div>
+
+          <!-- Interactive 12-Hour Telemetry Trajectory Curve -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 14px;margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-size:0.68rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;">12-Hour Telemetry Trajectory</span>
+              <span style="font-size:0.64rem;color:var(--text-muted);">Red Band = 85% Saturation Threshold</span>
+            </div>
+            <div style="position:relative;width:100%;height:180px;">
+              <canvas id="m4TrajectoryChart"></canvas>
+            </div>
+          </div>
+
+          <!-- What-If Operational Mitigation Simulator -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:14px;text-align:left;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <span style="font-size:0.72rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;">What-If Mitigation Simulator</span>
+              <span id="sim-badge" style="display:none;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:8px;"></span>
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <div class="sim-slider-row">
+                <span>Additional Floor Staging Staff:</span>
+                <span id="sim-staff-val">+0 Workers</span>
+              </div>
+              <input type="range" id="sim-staff" min="0" max="15" value="0" step="1" style="width:100%;accent-color:var(--brand-orange);cursor:pointer;" oninput="document.getElementById('sim-staff-val').textContent = '+' + this.value + ' Workers'"/>
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <div class="sim-slider-row">
+                <span>Overflow Dock Doors Activated:</span>
+                <span id="sim-dock-val">+0 Doors</span>
+              </div>
+              <input type="range" id="sim-docks" min="0" max="6" value="0" step="1" style="width:100%;accent-color:var(--brand-sky);cursor:pointer;" oninput="document.getElementById('sim-dock-val').textContent = '+' + this.value + ' Doors'"/>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:0.75rem;color:var(--text-secondary);">
+              <input type="checkbox" id="sim-stagger" style="accent-color:var(--brand-gold);width:15px;height:15px;cursor:pointer;"/>
+              <label for="sim-stagger" style="cursor:pointer;">Stagger Carrier Slot Appointments (-18% peak trailer surge)</label>
+            </div>
+
+            <button class="submit-btn" style="padding:9px;font-size:0.80rem;background:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));box-shadow:none;" onclick="runSimulation(${pct})">
+              Run What-If Simulation &rarr;
+            </button>
+          </div>
+
+          <!-- Cross-Module Handoff Button -->
+          <div style="text-align:center;">
+            <button class="submit-btn" style="background:linear-gradient(90deg,var(--brand-purple,#7B61FF),var(--brand-sky,#4FC3F7));display:inline-flex;align-items:center;gap:6px;padding:10px 22px;" onclick="forwardToModule6(${r.congestion_risk})">
+              Send to Module 6 Decision Engine &rarr;
+            </button>
+          </div>`;
+
+        setTimeout(() => {
+          const b = document.getElementById('cong-bar');
+          if (b) b.style.width = pct + '%';
+          renderTrajectoryChart(dock, orders, trucks);
+        }, 100);
+      } catch(e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    async function runSimulation(originalPct) {
+      const staffVal = parseInt(document.getElementById('sim-staff')?.value || 0, 10);
+      const dockVal  = parseInt(document.getElementById('sim-docks')?.value || 0, 10);
+      const stagger  = document.getElementById('sim-stagger')?.checked || false;
+
+      const mitigation = {
+        additional_staff: staffVal,
+        overflow_docks: dockVal,
+        stagger_trucks: stagger
+      };
+
+      const parseSeq = id => document.getElementById(id).value.split(',').map(x => parseFloat(x.trim()));
+      const dock   = parseSeq('m4-dock');
+      const orders = parseSeq('m4-orders');
+      const trucks = parseSeq('m4-trucks');
+
+      const observations = [];
+      for (let i = 0; i < 12; i++) {
+        observations.push({
+          dock_utilization:  dock[i]   || 0,
+          order_volume:      orders[i] || 0,
+          truck_arrivals:    trucks[i] || 0,
+          burst_event:       0,
+          trucks_per_staff:  (trucks[i] || 0) / 5,
+          orders_per_staff:  (orders[i] || 0) / 20,
+          shift_change:      i % 3 === 0 ? 1 : 0,
+          hour_cos:          Math.cos(2 * Math.PI * i / 12),
+        });
+      }
+
+      try {
+        const res = await fetch('/api/module4/predict', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ observations, mitigation })
+        }).then(r => r.json());
+
+        if (res.success) {
+          const r = res.result;
+          const newPct = (r.congestion_risk * 100).toFixed(1);
+          const diff = (parseFloat(originalPct) - parseFloat(newPct)).toFixed(1);
+          const badge = document.getElementById('sim-badge');
+          if (badge) {
+            badge.style.display = 'inline-block';
+            badge.style.background = parseFloat(diff) >= 0 ? 'rgba(129,199,132,0.2)' : 'rgba(239,83,80,0.2)';
+            badge.style.color = parseFloat(diff) >= 0 ? '#81C784' : '#EF5350';
+            badge.textContent = `New Risk: ${newPct}% (${diff > 0 ? '-' + diff : '+' + Math.abs(diff)}% Relief)`;
+          }
+        }
+      } catch(e) {}
+    }
+
+    function renderTrajectoryChart(dock, orders, trucks) {
+      const ctx = document.getElementById('m4TrajectoryChart');
+      if (!ctx) return;
+      if (telemetryChartInstance) {
+        telemetryChartInstance.destroy();
+        telemetryChartInstance = null;
+      }
+
+      const labels = Array.from({length: 12}, (_, i) => `H${i+1}`);
+      const dockPct = dock.map(d => Math.round((d || 0) * 100));
+
+      telemetryChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Dock Utilization (%)',
+              data: dockPct,
+              borderColor: 'var(--brand-orange)',
+              backgroundColor: 'rgba(255,140,66,0.12)',
+              borderWidth: 2.5,
+              yAxisID: 'y',
+              fill: true,
+              tension: 0.25,
+              pointRadius: 3,
+              pointBackgroundColor: '#fff',
+            },
+            {
+              label: 'Truck Arrivals (trailers/hr)',
+              data: trucks,
+              borderColor: 'var(--brand-sky)',
+              borderDash: [4, 4],
+              borderWidth: 2,
+              yAxisID: 'y1',
+              fill: false,
+              tension: 0.2,
+              pointRadius: 2.5,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true, position: 'top',
+              labels: { boxWidth: 10, font: { size: 10 }, color: 'rgba(255,255,255,0.7)' }
+            },
+            tooltip: {
+              callbacks: {
+                label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.06)' },
+              ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 } }
+            },
+            y: {
+              type: 'linear', position: 'left',
+              grid: { color: 'rgba(255,255,255,0.06)' },
+              ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 }, callback: v => v + '%' },
+              min: 0, max: 100
+            },
+            y1: {
+              type: 'linear', position: 'right',
+              grid: { display: false },
+              ticks: { color: 'var(--brand-sky)', font: { size: 10 } },
+              min: 0
+            }
+          }
+        }
+      });
+    }
+
+    async function loadSummary() {
+      const out = document.getElementById('m4-output');
+      out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Loading model intelligence &amp; architecture&hellip;</div>';
+      try {
+        const res = await fetch('/api/module4/summary').then(r => r.json());
+        if (!res.success) { out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`; return; }
+        const s = res.summary || {};
+        const m = s.metrics || {};
+        const arch = s.architecture || {};
+
+        const rowStyle = 'display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.75rem;';
+        const keyStyle = 'color:var(--text-muted);';
+        const valStyle = 'color:#fff;font-weight:600;font-family:monospace;';
+
+        out.innerHTML = `
+          <!-- Header -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+            <div class="panel-title" style="margin-bottom:0;">Model Intelligence &amp; Architecture</div>
+            <button class="btn btn-secondary" style="font-size:0.72rem;padding:5px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--text-secondary);cursor:pointer;" onclick="resetOutputToDefault()">&#10005; Close</button>
+          </div>
+
+          <!-- Production Banner -->
+          <div style="background:rgba(255,140,66,0.12);border:1px solid rgba(255,140,66,0.30);border-radius:14px;padding:14px 16px;margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <div>
+                <span style="font-size:0.64rem;text-transform:uppercase;letter-spacing:1px;color:var(--brand-gold);font-weight:700;">Production Sequence Model</span>
+                <div style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:#fff;margin-top:2px;">XGBoost Feature Selection + LSTM Classifier</div>
+                <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;">Dataset: <strong>${s.dataset || 'Distribution Center Telemetry'}</strong></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+                <span class="badge badge-success" style="font-size:0.70rem;padding:4px 10px;"> Active Production</span>
+                <span style="font-size:0.65rem;color:var(--text-muted);">12 Time Steps &bull; 8 Features</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metric Badges Grid -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;margin-bottom:16px;">
+            <div style="background:rgba(255,140,66,0.08);border:1px solid rgba(255,140,66,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">ROC-AUC</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:var(--brand-orange);margin-top:4px;">${m.roc_auc ? (m.roc_auc * 100).toFixed(1) + '%' : '83.7%'}</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Discrimination Power</div>
+            </div>
+            <div style="background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">Recall</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:#4FC3F7;margin-top:4px;">${m.recall ? (m.recall * 100).toFixed(1) + '%' : '83.1%'}</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Congestion Catch Rate</div>
+            </div>
+            <div style="background:rgba(129,199,132,0.08);border:1px solid rgba(129,199,132,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">F1-Score</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:#81C784;margin-top:4px;">${m.f1 ? (m.f1 * 100).toFixed(1) + '%' : '77.5%'}</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Harmonic Balance</div>
+            </div>
+            <div style="background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.22);border-radius:12px;padding:12px 10px;text-align:center;">
+              <div style="font-size:0.66rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;">Accuracy</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.25rem;font-weight:900;color:var(--brand-gold);margin-top:4px;">${m.accuracy ? (m.accuracy * 100).toFixed(1) + '%' : '76.6%'}</div>
+              <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Test Holdout Rate</div>
+            </div>
+          </div>
+
+          <!-- LSTM Layers Breakdown -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:14px;">
+            <div style="font-size:0.68rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">LSTM Network Pipeline Architecture</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div style="${rowStyle}"><span style="${keyStyle}">Input Dimensions</span><span style="${valStyle}">12 Steps &times; 8 Features</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">Recurrent Layer 1</span><span style="${valStyle}">LSTM (64 units)</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">Recurrent Layer 2</span><span style="${valStyle}">LSTM (32 units)</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">Dropout Regularization</span><span style="${valStyle}">0.20 (20%)</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">Dense Output</span><span style="${valStyle}">Sigmoid (0.0&ndash;1.0)</span></div>
+              <div style="${rowStyle}"><span style="${keyStyle}">Feature Normalizer</span><span style="${valStyle}">StandardScaler</span></div>
+            </div>
+          </div>`;
+      } catch(e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    function forwardToModule6(congestionRisk) {
+      const data = {
+        congestion_risk: congestionRisk,
+        source: 'module4_manual_forward'
+      };
+      localStorage.setItem('logiyantra_m4_congestion', JSON.stringify(data));
+      sessionStorage.setItem('ly_incoming_congestion', JSON.stringify(data));
+      window.location.href = '/module6.html';
+    }
+  </script>
+
+  <!-- ── Chart.js Analytics Init ── -->
+  <script>
+    const CHART_DEFAULTS = {
+      color: 'rgba(255,255,255,0.7)',
+      font: { family: 'Inter, sans-serif', size: 12 }
+    };
+    Chart.defaults.color = CHART_DEFAULTS.color;
+    Chart.defaults.font = CHART_DEFAULTS.font;
+
+    const gridLine = { color: 'rgba(255,255,255,0.06)' };
+    const tickStyle = { color: 'rgba(255,255,255,0.50)', font: { size: 11 } };
+
+    // ── 1. Model Evaluation Metrics ──
+    new Chart(document.getElementById('chartMetrics'), {
+      type: 'bar',
+      data: {
+        labels: ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'ROC-AUC'],
+        datasets: [{
+          label: 'Test Performance',
+          data: [76.6, 72.5, 83.1, 77.5, 83.7],
+          backgroundColor: [
+            'rgba(255,255,255,0.18)',
+            'rgba(79,195,247,0.55)',
+            'rgba(129,199,132,0.75)',
+            'rgba(255,193,7,0.75)',
+            'rgba(255,140,66,0.85)'
+          ],
+          borderColor: [
+            'rgba(255,255,255,0.4)',
+            '#4FC3F7',
+            '#81C784',
+            '#FFD54F',
+            'var(--brand-orange)'
+          ],
+          borderWidth: 1.5,
+          borderRadius: 5,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ` Score: ${ctx.raw}%` } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: tickStyle },
+          y: { grid: gridLine, ticks: { ...tickStyle, callback: v => v + '%' }, min: 50, max: 100 }
+        }
+      }
+    });
+
+    // ── 2. XGBoost Feature Selection Importance ──
+    new Chart(document.getElementById('chartFeatures'), {
+      type: 'bar',
+      data: {
+        labels: [
+          'Dock Utilization',
+          'Order Volume',
+          'Burst Inbound Event',
+          'Trucks / Staff Ratio',
+          'Orders / Staff Ratio',
+          'Shift Change Flag',
+          'Truck Arrivals',
+          'Hour Cosine'
+        ],
+        datasets: [{
+          label: 'XGBoost Gain',
+          data: [44.7, 8.2, 5.9, 5.7, 5.3, 4.7, 4.1, 3.2],
+          backgroundColor: 'rgba(255,140,66,0.65)',
+          borderColor: 'var(--brand-orange)',
+          borderWidth: 1.5,
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' Gain Weight: ' + ctx.raw } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: tickStyle },
+          y: { grid: { display: false }, ticks: { ...tickStyle, font: { size: 10 } } }
+        }
+      }
+    });
+
+    // ── 3. 12-Hour Recurrent Temporal Memory Weighting ──
+    const hours = ['H1','H2','H3','H4','H5','H6','H7','H8','H9','H10','H11','H12'];
+    const attentionWeights = [0.03, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.10, 0.12, 0.13, 0.14, 0.15];
+    new Chart(document.getElementById('chartTemporal'), {
+      type: 'line',
+      data: {
+        labels: hours,
+        datasets: [{
+          label: 'Recurrent Memory State Impact',
+          data: attentionWeights.map(w => (w * 100).toFixed(1)),
+          borderColor: '#4FC3F7',
+          backgroundColor: 'rgba(79,195,247,0.12)',
+          fill: true,
+          tension: 0.35,
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#4FC3F7',
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ` Memory Weight: ${ctx.raw}%` } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: tickStyle, title: { display: true, text: 'Sequential Time Steps (H1 → H12)', color: 'rgba(255,255,255,0.4)', font: { size: 10 } } },
+          y: { grid: gridLine, ticks: { ...tickStyle, callback: v => v + '%' } }
+        }
+      }
+    });
+
+    // ── 4. Congestion Probability by Operational Shift Wave ──
+    new Chart(document.getElementById('chartShiftWave'), {
+      type: 'bar',
+      data: {
+        labels: ['Night Lull (00-06)', 'Morning Wave (06-12)', 'Afternoon Peak (12-18)', 'Shift Change (18-00)'],
+        datasets: [{
+          label: 'Congestion Incidence',
+          data: [6.2, 35.4, 84.1, 62.8],
+          backgroundColor: [
+            'rgba(129,199,132,0.65)',
+            'rgba(79,195,247,0.65)',
+            'rgba(239,83,80,0.75)',
+            'rgba(255,193,7,0.75)'
+          ],
+          borderColor: [
+            '#81C784',
+            '#4FC3F7',
+            '#EF5350',
+            '#FFD54F'
+          ],
+          borderWidth: 1.5,
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ` Congestion Probability: ${ctx.raw}%` } }
+        },
+        scales: {
+          x: { grid: gridLine, ticks: { ...tickStyle, font: { size: 10 } } },
+          y: { grid: gridLine, ticks: { ...tickStyle, callback: v => v + '%' }, beginAtZero: true, max: 100 }
+        }
+      }
+    });
+  </script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('ly_user') || '{}');
+    if (user.name) {
+      const sName = document.getElementById('sidebarName');
+      const sAvatar = document.getElementById('sidebarAvatar');
+      const sRole = document.getElementById('sidebarRole');
+      if (sName) sName.textContent = user.name;
+      if (sAvatar) sAvatar.textContent = user.name[0].toUpperCase();
+      if (sRole && user.role) sRole.textContent = user.role + (user.employee_id ? ' • ' + user.employee_id : '');
+    }
+    function toggleSidebar() {
+      const sb = document.querySelector('.sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (sb) sb.classList.toggle('open');
+      if (bd) bd.classList.toggle('active');
+    }
+    function handleSignOut() {
+      if (confirm('Are you sure you want to sign out?')) {
+        localStorage.removeItem('ly_user');
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
+  </script>
+  <script src="/js/chatbot.js"></script>
+</body>
+</html>

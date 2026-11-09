@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Module 7 &mdash; Explainable AI &amp; What-If | LogiYantra</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="stylesheet" href="/css/modules.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    // Authentication Guard
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem('ly_user') || '{}');
+        if (!u || !u.name) {
+          sessionStorage.setItem('ly_return_to', window.location.pathname);
+          window.location.replace('/login.html');
+        }
+      } catch (e) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+  <style>
+    /* ── Module 7 Visual & Explainability Styling ── */
+    .tabs {
+      display: flex; background: rgba(255,255,255,0.05); border-radius: 12px;
+      padding: 4px; margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1; padding: 10px; border: none; border-radius: 10px; background: transparent;
+      color: var(--text-muted); font-size: 0.83rem; font-weight: 600; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: rgba(255,183,77,0.15); color: var(--brand-gold);
+      box-shadow: 0 0 12px rgba(255,183,77,0.15);
+    }
+
+    /* Contributing factor bars */
+    .factor-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .factor-label { font-size: 0.76rem; color: var(--text-secondary); width: 170px; flex-shrink: 0; font-weight: 500; }
+    .factor-track { flex: 1; height: 8px; border-radius: 8px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .factor-fill  { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--brand-orange), var(--brand-gold)); transition: width 0.8s ease; }
+    .factor-val   { font-size: 0.75rem; font-weight: 700; color: var(--text-primary); width: 44px; text-align: right; font-family: 'JetBrains Mono', monospace; }
+
+    /* Action Breakdown Card */
+    .action-expl-card {
+      padding: 14px 16px; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; margin-bottom: 10px;
+      animation: fadeIn 0.3s ease both;
+    }
+    .action-expl-card:hover { background: rgba(255,255,255,0.06); }
+
+    /* Presets */
+    .preset-container {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .preset-chip {
+      padding: 6px 12px; border-radius: 20px; font-size: 0.74rem; font-weight: 600;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease;
+    }
+    .preset-chip:hover {
+      background: rgba(255,183,77,0.15); border-color: var(--brand-gold); color: #fff;
+    }
+
+    /* Analytics Section */
+    .analytics-section {
+      margin-top: 36px; margin-bottom: 24px;
+    }
+    .analytics-section-title {
+      font-size: 0.80rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .analytics-section-title::after {
+      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+    }
+    .chart-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px; margin-bottom: 24px;
+    }
+    .chart-card {
+      background: rgba(255,255,255,0.04); backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+      padding: 22px 24px 20px; display: flex; flex-direction: column;
+    }
+    .chart-card-title {
+      font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .chart-card canvas { width: 100% !important; max-height: 280px; }
+
+    /* Comparison metrics */
+    .delta-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.78rem;
+    }
+    .delta-badge.reduced { background: rgba(76,175,80,0.15); color: #81C784; border: 1px solid rgba(76,175,80,0.3); }
+    .delta-badge.increased { background: rgba(239,83,80,0.15); color: #EF5350; border: 1px solid rgba(239,83,80,0.3); }
+    .delta-badge.neutral { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+
+    /* Causal Architecture Box */
+    .causal-box {
+      padding: 16px 18px; background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="module-bg"></div>
+  <div class="module-overlay"></div>
+
+  <!-- Mobile Topbar & Backdrop -->
+  <div class="mobile-topbar">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">&#9776;</button>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;background:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Logi<span style="color:var(--brand-sky);-webkit-text-fill-color:var(--brand-sky);">Yantra</span></div>
+    <a href="/dashboard.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.8rem;display:flex;align-items:center;gap:4px;"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Hub</a>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><img src="../assets/logiyantra_logo.png" alt="LogiYantra Logo" class="sidebar-logo-img"><span>Logi<span style="color:var(--brand-sky)">Yantra</span></span></div>
+      <div class="sidebar-tagline">Think Smarter. Move Faster.</div>
+    </div>
+    <div class="sidebar-label">Navigation</div>
+    <a href="/dashboard.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
+    <div class="sidebar-label" style="margin-top:8px">Modules</div>
+    <a href="/module1.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></span> Demand Forecast</a>
+    <a href="/module2.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Delay Prediction</a>
+    <a href="/module3.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span> Route Optimizer</a>
+    <a href="/module4.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></span> Warehouse AI</a>
+    <a href="/module5.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Inventory Opt.</a>
+    <a href="/module6.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span> Decision Engine</a>
+    <a href="/module7.html" class="sidebar-link active"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></span> Explainable AI</a>
+    <div class="sidebar-bottom">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <div>
+          <div class="user-name" id="sidebarName">User</div>
+          <div class="user-role" id="sidebarRole">Logistics Analyst</div>
+        </div>
+      </div>
+      <button class="btn-signout" onclick="handleSignOut()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 14px;background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.25);border-radius:10px;color:#EF5350;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;" title="Sign out and return to landing page">
+        <svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="module-main">
+    <div class="module-header">
+      <div class="module-icon-lg"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></div>
+      <div>
+        <div class="module-number-label">Module 7 &bull; Governance &amp; Counterfactual Simulation</div>
+        <h1 class="module-title">Explainable AI + What-If Simulator</h1>
+        <p class="module-subtitle">Delivers transparent rationale for operational recommendations using SHAP local feature attributions, policy condition auditing, and counterfactual what-if scenario simulations.</p>
+      </div>
+    </div>
+
+    <!-- Quick Presets -->
+    <div class="preset-container" id="explainPresets">
+      <span style="font-size:0.74rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;margin-right:4px;">Query Presets:</span>
+      <button class="preset-chip" onclick="applyExplainPreset('EXPEDITE_AND_NOTIFY', 0.90, 0.70, 0.40)">Critical Delay + Congestion</button>
+      <button class="preset-chip" onclick="applyExplainPreset('REROUTE_SHIPMENT', 0.55, 0.40, 0.88)">Route Blockage &bull; Reroute</button>
+      <button class="preset-chip" onclick="applyExplainPreset('TRIGGER_REPLENISHMENT', 0.30, 0.45, 0.20)">Inventory Stockout Alert</button>
+      <button class="preset-chip" onclick="applyExplainPreset('NO_ACTION_REQUIRED', 0.20, 0.25, 0.15)">Safe Nominal State</button>
+    </div>
+
+    <div class="module-grid">
+      <!-- Input Panel -->
+      <div class="input-panel">
+        <div class="tabs">
+          <button class="tab-btn active" id="tab-explain" onclick="switchTab('explain')">Explain Decision</button>
+          <button class="tab-btn" id="tab-whatif" onclick="switchTab('whatif')">What-If Simulator</button>
+        </div>
+
+        <!-- ── TAB 1: EXPLAIN DECISION ── -->
+        <div id="pane-explain">
+          <div class="panel-title">Decision Query Parameters</div>
+          <div class="form-group">
+            <label class="form-label">Target Operational Action</label>
+            <select class="form-control" id="m7-action">
+              <option value="EXPEDITE_AND_NOTIFY" selected>EXPEDITE_AND_NOTIFY (Module 2 Critical)</option>
+              <option value="NOTIFY_CUSTOMER">NOTIFY_CUSTOMER (Module 2 Alert)</option>
+              <option value="REROUTE_SHIPMENT">REROUTE_SHIPMENT (Module 3 Critical)</option>
+              <option value="REVIEW_ALTERNATIVE_ROUTE">REVIEW_ALTERNATIVE_ROUTE (Module 3 Alert)</option>
+              <option value="RESCHEDULE_WAREHOUSE_FLOW">RESCHEDULE_WAREHOUSE_FLOW (Module 4)</option>
+              <option value="TRIGGER_REPLENISHMENT">TRIGGER_REPLENISHMENT (Module 5)</option>
+              <option value="NO_ACTION_REQUIRED">NO_ACTION_REQUIRED (Standard Nominal)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="display:flex;justify-content:space-between;">
+              <span>Delay Risk (0&ndash;1)</span>
+              <span style="font-weight:700;color:var(--brand-gold);" id="disp-m7-delay">88.0%</span>
+            </label>
+            <input class="form-control" type="number" id="m7-delay" step="0.01" min="0" max="1" value="0.88" oninput="document.getElementById('disp-m7-delay').textContent=(this.value*100).toFixed(1)+'%';"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="display:flex;justify-content:space-between;">
+              <span>Congestion Risk (0&ndash;1)</span>
+              <span style="font-weight:700;color:var(--brand-gold);" id="disp-m7-cong">70.0%</span>
+            </label>
+            <input class="form-control" type="number" id="m7-cong" step="0.01" min="0" max="1" value="0.70" oninput="document.getElementById('disp-m7-cong').textContent=(this.value*100).toFixed(1)+'%';"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="display:flex;justify-content:space-between;">
+              <span>Route Disruption Risk (0&ndash;1)</span>
+              <span style="font-weight:700;color:var(--brand-gold);" id="disp-m7-route">35.0%</span>
+            </label>
+            <input class="form-control" type="number" id="m7-route" step="0.01" min="0" max="1" value="0.35" oninput="document.getElementById('disp-m7-route').textContent=(this.value*100).toFixed(1)+'%';"/>
+          </div>
+
+          <button class="submit-btn" onclick="explainDecision()">Generate Transparency Attribution</button>
+        </div>
+
+        <!-- ── TAB 2: WHAT-IF SCENARIO ── -->
+        <div id="pane-whatif" style="display:none">
+          <div class="panel-title">Counterfactual Simulation</div>
+          
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">
+            Simulate hypothetical operational interventions (e.g. adding dock labor or switching carrier corridor) to observe the risk delta.
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div>
+              <div style="font-size:0.72rem;color:#EF9A9A;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Baseline (Current)</div>
+              <div class="form-group" style="margin-bottom:8px;">
+                <label class="form-label" style="font-size:0.72rem;">Delay Risk</label>
+                <input class="form-control" type="number" id="wi-base-delay" step="0.01" value="0.80"/>
+              </div>
+              <div class="form-group" style="margin-bottom:8px;">
+                <label class="form-label" style="font-size:0.72rem;">Congestion</label>
+                <input class="form-control" type="number" id="wi-base-cong" step="0.01" value="0.65"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.72rem;">Route Risk</label>
+                <input class="form-control" type="number" id="wi-base-route" step="0.01" value="0.50"/>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:0.72rem;color:#81C784;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Scenario (Intervention)</div>
+              <div class="form-group" style="margin-bottom:8px;">
+                <label class="form-label" style="font-size:0.72rem;">Target Delay</label>
+                <input class="form-control" type="number" id="wi-sc-delay" step="0.01" value="0.35"/>
+              </div>
+              <div class="form-group" style="margin-bottom:8px;">
+                <label class="form-label" style="font-size:0.72rem;">Target Congestion</label>
+                <input class="form-control" type="number" id="wi-sc-cong" step="0.01" value="0.30"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.72rem;">Target Route</label>
+                <input class="form-control" type="number" id="wi-sc-route" step="0.01" value="0.20"/>
+              </div>
+            </div>
+          </div>
+
+          <button class="submit-btn" style="background:linear-gradient(135deg,var(--brand-purple),var(--brand-sky));" onclick="runWhatIf()">
+            Run What-If Simulation
+          </button>
+        </div>
+      </div>
+
+      <!-- Output Panel -->
+      <div class="output-panel" id="m7-output">
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></div>
+          <h3>Awaiting Transparency Query</h3>
+          <p>Request an operational rationale or configure a what-if counterfactual scenario.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Analytics & Visualizations Section ── -->
+    <div class="analytics-section">
+      <div class="analytics-section-title">Explainability Analytics &amp; Causal Sensitivity</div>
+
+      <!-- Chart Grid -->
+      <div class="chart-grid">
+        <!-- Chart 1: SHAP Feature Importance -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Local SHAP Feature Attribution (Impact on Risk)</span>
+          </div>
+          <canvas id="chartShapFeatures"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Red bars increase delay/congestion risk; Green bars decrease risk.
+          </div>
+        </div>
+
+        <!-- Chart 2: What-If Comparison Bar Chart -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Baseline vs Scenario Risk Comparison</span>
+          </div>
+          <canvas id="chartWhatIfCompare"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Side-by-side risk parameter changes resulting from hypothetical operational actions.
+          </div>
+        </div>
+
+        <!-- Chart 3: Stress Sensitivity Curve -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Multi-Node Disruption Sensitivity Curve</span>
+          </div>
+          <canvas id="chartSensitivityCurve"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Simulates non-linear transition across Normal, Alert, and Critical breach boundaries.
+          </div>
+        </div>
+
+        <!-- Chart 4: Policy Boundary Proximity & Safety Buffers -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Policy Boundary Proximity &amp; Safety Buffers</span>
+            <span id="safetyMarginBadge" class="badge" style="margin-left:auto;font-size:0.68rem;letter-spacing:0.5px;padding:3px 8px;border-radius:6px;background:rgba(76,175,80,0.18);border:1px solid rgba(76,175,80,0.4);color:#81C784;">SECURE BUFFER (+52%)</span>
+          </div>
+          <canvas id="chartSafetyMargins"></canvas>
+          <div style="font-size:0.70rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Decomposes risk exposure against remaining operational headroom across nodes.
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Governance & Causal Architecture -->
+      <div class="chart-grid" style="grid-template-columns: 1fr 1fr;">
+        <!-- Card 1: Transparent Governance Protocol -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>AI Safety &amp; Governance Architecture</span>
+          </div>
+          <div class="causal-box" style="margin-bottom:12px;">
+            <div style="font-size:0.76rem;color:var(--brand-gold);font-weight:700;margin-bottom:4px;">Lundberg &amp; Lee TreeExplainer SHAP</div>
+            <div style="font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">
+              Decomposes complex XGBoost ensemble tree interactions into additive feature contribution scores: $\phi_i(x)$. Guarantees efficiency, symmetry, and additivity.
+            </div>
+          </div>
+          <div class="causal-box">
+            <div style="font-size:0.76rem;color:var(--brand-sky);font-weight:700;margin-bottom:4px;">Forward Evidence Chaining</div>
+            <div style="font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">
+              Every decision output is tied directly to an explicit operational policy rule, source module ID, and specific sensor threshold breach.
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Regulatory & Human-in-the-Loop Protocol -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>Regulatory Alignment &amp; Audit Trail</span>
+          </div>
+          <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.6;margin-bottom:12px;">
+            In compliance with high-risk logistics AI guidelines:
+          </div>
+          <ul style="font-size:0.73rem;color:var(--text-muted);padding-left:18px;line-height:1.8;">
+            <li><strong>No Autonomous Overrides:</strong> Autonomous recommendations never dispatch unapproved high-cost reroutes without operator confirmation.</li>
+            <li><strong>Explainable Rationale:</strong> Every proposed intervention includes actionable verification steps (e.g., verifying carrier dispatch status).</li>
+            <li><strong>Audit Logging:</strong> What-if simulations provide heuristic sensitivity analysis without mutating production operational logs.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let chartShapInstance = null;
+    let chartWhatIfInstance = null;
+    let chartSensitivityInstance = null;
+    let chartSafetyInstance = null;
+
+    function switchTab(t) {
+      document.getElementById('pane-explain').style.display = t === 'explain' ? '' : 'none';
+      document.getElementById('pane-whatif').style.display  = t === 'whatif'  ? '' : 'none';
+      document.getElementById('tab-explain').classList.toggle('active', t === 'explain');
+      document.getElementById('tab-whatif').classList.toggle('active',  t === 'whatif');
+
+      const presets = document.getElementById('explainPresets');
+      if (presets) presets.style.display = t === 'explain' ? 'flex' : 'none';
+    }
+
+    function applyExplainPreset(action, delay, cong, route) {
+      document.getElementById('m7-action').value = action;
+      document.getElementById('m7-delay').value = delay;
+      document.getElementById('disp-m7-delay').textContent = (delay * 100).toFixed(1) + '%';
+      document.getElementById('m7-cong').value = cong;
+      document.getElementById('disp-m7-cong').textContent = (cong * 100).toFixed(1) + '%';
+      document.getElementById('m7-route').value = route;
+      document.getElementById('disp-m7-route').textContent = (route * 100).toFixed(1) + '%';
+      explainDecision();
+    }
+
+    async function explainDecision() {
+      const out = document.getElementById('m7-output');
+      out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Synthesizing explainability attribution&hellip;</div>';
+
+      const payload = {
+        action: document.getElementById('m7-action').value,
+        delay_risk: parseFloat(document.getElementById('m7-delay').value),
+        congestion_risk: parseFloat(document.getElementById('m7-cong').value),
+        route_risk: parseFloat(document.getElementById('m7-route').value),
+      };
+
+      try {
+        const res = await fetch('/api/module7/explain', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) {
+          out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`;
+          return;
+        }
+
+        const r = res.result || res.explanation;
+        const factors = r.contributing_factors || [];
+        const actions = r.action_breakdown || [];
+
+        out.innerHTML = `
+          <div class="panel-title">Operational Decision Transparency</div>
+
+          <div style="padding:16px 18px;background:rgba(255,183,77,0.08);border:1px solid rgba(255,183,77,0.22);border-radius:12px;margin-bottom:16px;">
+            <div style="font-size:0.70rem;color:var(--brand-gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:700;">
+              Operational Rationale &bull; ${r.primary_action || payload.action}
+            </div>
+            <div style="font-size:0.92rem;color:#fff;line-height:1.6;">${r.explanation || r.explanation_summary || 'Analysis completed.'}</div>
+          </div>
+
+          ${factors.length ? `
+            <div style="margin-bottom:16px;">
+              <div class="panel-title" style="font-size:0.75rem;">Contributing Risk Factors</div>
+              ${factors.map(f => `
+                <div class="factor-bar">
+                  <span class="factor-label">${f.factor}</span>
+                  <div class="factor-track"><div class="factor-fill" style="width:0%" data-w="${Math.round((f.weight || 0) * 100)}"></div></div>
+                  <span class="factor-val">${((f.weight || 0) * 100).toFixed(0)}%</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          ${actions.length ? `
+            <div style="margin-bottom:16px;">
+              <div class="panel-title" style="font-size:0.75rem;">Action Policy Breakdown (${actions.length})</div>
+              ${actions.map(ab => `
+                <div class="action-expl-card">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <strong style="color:var(--brand-gold);font-size:0.88rem;">${ab.action.replace(/_/g, ' ')}</strong>
+                    <span class="badge badge-${ab.priority === 'CRITICAL' ? 'danger' : ab.priority === 'HIGH' ? 'warning' : 'info'}">${ab.priority}</span>
+                  </div>
+                  <div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:6px;line-height:1.4;">${ab.rationale}</div>
+                  <div style="font-size:0.74rem;color:var(--brand-sky);"><strong>Recommended Verification:</strong> ${ab.recommended_verification}</div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          <div class="model-info">
+            <strong>Risk Status:</strong> ${r.risk_level || r.overall_status || 'NORMAL'} &nbsp;|&nbsp;
+            <strong>Methodology:</strong> ${r.methodology || 'Deterministic Forward Evidence Chaining'} &nbsp;|&nbsp;
+            <strong>Confidence:</strong> ${r.confidence || 'High'}
+          </div>
+        `;
+
+        setTimeout(() => {
+          document.querySelectorAll('.factor-fill[data-w]').forEach(el => {
+            el.style.width = el.dataset.w + '%';
+          });
+        }, 100);
+
+        updateExplainCharts(payload, factors);
+
+      } catch (e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    async function runWhatIf() {
+      const out = document.getElementById('m7-output');
+      out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Simulating counterfactual operational trajectory&hellip;</div>';
+
+      const payload = {
+        baseline: {
+          delay_risk: parseFloat(document.getElementById('wi-base-delay').value),
+          congestion_risk: parseFloat(document.getElementById('wi-base-cong').value),
+          route_risk: parseFloat(document.getElementById('wi-base-route').value)
+        },
+        scenario: {
+          delay_risk: parseFloat(document.getElementById('wi-sc-delay').value),
+          congestion_risk: parseFloat(document.getElementById('wi-sc-cong').value),
+          route_risk: parseFloat(document.getElementById('wi-sc-route').value)
+        }
+      };
+
+      try {
+        const res = await fetch('/api/module7/what-if', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) {
+          out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`;
+          return;
+        }
+
+        const r = res.result;
+        const comp = r.comparison || {};
+        const diff = r.difference || {};
+        const reduced = comp.risk_reduced;
+
+        out.innerHTML = `
+          <div class="panel-title">What-If Counterfactual Comparison</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+            <div style="padding:16px;background:rgba(239,83,80,0.06);border:1px solid rgba(239,83,80,0.20);border-radius:12px;">
+              <div style="font-size:0.70rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;">Baseline State</div>
+              <div style="font-weight:800;font-size:0.96rem;color:#EF9A9A;margin-bottom:4px;">
+                ${r.baseline?.primary_action ? r.baseline.primary_action.replace(/_/g,' ') : 'NOMINAL'}
+              </div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);">
+                Composite Risk: <strong>${(r.baseline?.composite_risk * 100).toFixed(1)}%</strong> &bull; Status: <strong>${r.baseline?.overall_status}</strong>
+              </div>
+            </div>
+
+            <div style="padding:16px;background:rgba(76,175,80,0.06);border:1px solid rgba(76,175,80,0.20);border-radius:12px;">
+              <div style="font-size:0.70rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;">Scenario Intervention</div>
+              <div style="font-weight:800;font-size:0.96rem;color:#81C784;margin-bottom:4px;">
+                ${r.scenario?.primary_action ? r.scenario.primary_action.replace(/_/g,' ') : 'NOMINAL'}
+              </div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);">
+                Composite Risk: <strong>${(r.scenario?.composite_risk * 100).toFixed(1)}%</strong> &bull; Status: <strong>${r.scenario?.overall_status}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="metric-row" style="margin-bottom:16px;">
+            <div class="metric-item">
+              <span class="metric-key">Composite Risk Delta</span>
+              <span class="metric-val">
+                <span class="delta-badge ${reduced ? 'reduced' : comp.delta === 0 ? 'neutral' : 'increased'}">
+                  ${comp.delta_percentage_points > 0 ? '+' : ''}${comp.delta_percentage_points}% pts
+                </span>
+              </span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">Action Queue Change</span>
+              <span class="metric-val" style="color:var(--brand-gold);">${diff.action_count_change || '0'} actions</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">Primary Action Transition</span>
+              <span class="metric-val" style="font-size:0.80rem;color:#fff;">
+                ${comp.primary_action_changed ? '<span class="status-indicator alert"></span>Action Shifted' : '<span class="status-indicator normal"></span>Stable'}
+              </span>
+            </div>
+          </div>
+
+          <div style="padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:12px;">
+            <strong style="color:var(--brand-sky);font-size:0.80rem;">Interpretation:</strong>
+            <div style="font-size:0.80rem;color:var(--text-secondary);margin-top:4px;line-height:1.5;">${r.summary || r.interpretation}</div>
+          </div>
+
+          <div class="model-info">
+            <strong>Analysis Type:</strong> ${r.label || 'Heuristic Risk Differential'}
+          </div>
+        `;
+
+        updateWhatIfCharts(payload.baseline, payload.scenario);
+
+      } catch (e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    function updateExplainCharts(inputs, factors) {
+      // ── 1. SHAP Feature Attribution ──
+      const shapCtx = document.getElementById('chartShapFeatures');
+      if (shapCtx) {
+        const labels = factors.length ? factors.map(f => f.factor) : ['Delivery Delay Risk', 'Warehouse Congestion', 'Route Corridor Risk'];
+        const values = factors.length ? factors.map(f => (f.weight * 0.45).toFixed(3)) : [0.38, 0.28, 0.15];
+        const colors = values.map(v => v >= 0.25 ? '#EF5350' : '#FFA726');
+
+        const shapData = {
+          labels: labels,
+          datasets: [{
+            label: 'SHAP Value (Risk Contribution)',
+            data: values,
+            backgroundColor: colors,
+            borderRadius: 6
+          }]
+        };
+
+        if (chartShapInstance) {
+          chartShapInstance.data = shapData;
+          chartShapInstance.update();
+        } else {
+          chartShapInstance = new Chart(shapCtx, {
+            type: 'bar',
+            data: shapData,
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.6)' } },
+                y: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 11 } } }
+              },
+              plugins: { legend: { display: false } }
+            }
+          });
+        }
+      }
+
+      // ── 2. What-If Comparison Default View ──
+      updateWhatIfCharts(
+        { delay_risk: inputs.delay_risk, congestion_risk: inputs.congestion_risk, route_risk: inputs.route_risk },
+        { delay_risk: Math.max(0.15, inputs.delay_risk - 0.35), congestion_risk: Math.max(0.15, inputs.congestion_risk - 0.25), route_risk: Math.max(0.15, inputs.route_risk - 0.15) }
+      );
+    }
+
+    function updateWhatIfCharts(baseline, scenario) {
+      const compCtx = document.getElementById('chartWhatIfCompare');
+      if (compCtx) {
+        const compData = {
+          labels: ['Delay Risk', 'Congestion Risk', 'Route Disruption', 'Composite Mean'],
+          datasets: [
+            {
+              label: 'Baseline Risk',
+              data: [
+                (baseline.delay_risk * 100).toFixed(1),
+                (baseline.congestion_risk * 100).toFixed(1),
+                (baseline.route_risk * 100).toFixed(1),
+                (((baseline.delay_risk + baseline.congestion_risk + baseline.route_risk) / 3) * 100).toFixed(1)
+              ],
+              backgroundColor: 'rgba(239,83,80,0.65)',
+              borderRadius: 6
+            },
+            {
+              label: 'Scenario Risk',
+              data: [
+                (scenario.delay_risk * 100).toFixed(1),
+                (scenario.congestion_risk * 100).toFixed(1),
+                (scenario.route_risk * 100).toFixed(1),
+                (((scenario.delay_risk + scenario.congestion_risk + scenario.route_risk) / 3) * 100).toFixed(1)
+              ],
+              backgroundColor: 'rgba(129,199,132,0.75)',
+              borderRadius: 6
+            }
+          ]
+        };
+
+        if (chartWhatIfInstance) {
+          chartWhatIfInstance.data = compData;
+          chartWhatIfInstance.update();
+        } else {
+          chartWhatIfInstance = new Chart(compCtx, {
+            type: 'bar',
+            data: compData,
+            options: {
+              responsive: true,
+              scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.75)' } },
+                y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.6)' } }
+              },
+              plugins: {
+                legend: { position: 'top', labels: { color: 'rgba(255,255,255,0.75)', boxWidth: 12 } }
+              }
+            }
+          });
+        }
+      }
+
+      // ── 3. Stress Sensitivity Curve ──
+      const sensCtx = document.getElementById('chartSensitivityCurve');
+      if (sensCtx) {
+        const stressLevels = [0, 20, 40, 60, 80, 100];
+        const compositePoints = stressLevels.map(lvl => {
+          const factor = lvl / 100.0;
+          return (factor * 0.85 + (factor ** 2) * 0.15) * 100;
+        });
+
+        const sensData = {
+          labels: ['0% Calm', '20% Mild', '40% Moderate', '60% Stressed', '80% Critical', '100% Collapse'],
+          datasets: [{
+            label: 'System Disruption Severity',
+            data: compositePoints,
+            borderColor: '#FFA726',
+            backgroundColor: 'rgba(255,167,38,0.15)',
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#fff',
+            pointRadius: 4
+          }]
+        };
+
+        if (chartSensitivityInstance) {
+          chartSensitivityInstance.data = sensData;
+          chartSensitivityInstance.update();
+        } else {
+          chartSensitivityInstance = new Chart(sensCtx, {
+            type: 'line',
+            data: sensData,
+            options: {
+              responsive: true,
+              scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.75)' } },
+                y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.6)' } }
+              },
+              plugins: {
+                legend: { display: false }
+              }
+            }
+          });
+        }
+      }
+
+      // ── 4. Policy Boundary Proximity & Safety Buffer Chart ──
+      const safetyCtx = document.getElementById('chartSafetyMargins');
+      if (safetyCtx) {
+        const targetState = scenario || baseline;
+        const dVal = parseFloat(((targetState.delay_risk || 0) * 100).toFixed(1));
+        const cVal = parseFloat(((targetState.congestion_risk || 0) * 100).toFixed(1));
+        const rVal = parseFloat(((targetState.route_risk || 0) * 100).toFixed(1));
+        const compVal = parseFloat((((dVal + cVal + rVal) / 3)).toFixed(1));
+
+        const hDelay = Math.max(0, parseFloat((100 - dVal).toFixed(1)));
+        const hCong = Math.max(0, parseFloat((100 - cVal).toFixed(1)));
+        const hRoute = Math.max(0, parseFloat((100 - rVal).toFixed(1)));
+        const hComp = Math.max(0, parseFloat((100 - compVal).toFixed(1)));
+
+        const avgHeadroom = (hDelay + hCong + hRoute + hComp) / 4;
+
+        const badgeEl = document.getElementById('safetyMarginBadge');
+        if (badgeEl) {
+          if (avgHeadroom >= 50) {
+            badgeEl.textContent = `SECURE BUFFER (+${avgHeadroom.toFixed(0)}%)`;
+            badgeEl.style.background = 'rgba(76,175,80,0.18)';
+            badgeEl.style.borderColor = 'rgba(76,175,80,0.4)';
+            badgeEl.style.color = '#81C784';
+          } else if (avgHeadroom >= 25) {
+            badgeEl.textContent = `CAUTION BUFFER (+${avgHeadroom.toFixed(0)}%)`;
+            badgeEl.style.background = 'rgba(255,193,7,0.18)';
+            badgeEl.style.borderColor = 'rgba(255,193,7,0.4)';
+            badgeEl.style.color = '#FFB74D';
+          } else {
+            badgeEl.textContent = `CRITICAL PROXIMITY (+${avgHeadroom.toFixed(0)}%)`;
+            badgeEl.style.background = 'rgba(239,83,80,0.18)';
+            badgeEl.style.borderColor = 'rgba(239,83,80,0.4)';
+            badgeEl.style.color = '#EF5350';
+          }
+        }
+
+        const safetyData = {
+          labels: ['Delay (M2)', 'Congestion (M4)', 'Route (M3)', 'Composite Stress'],
+          datasets: [
+            {
+              label: 'Risk Exposure (%)',
+              data: [dVal, cVal, rVal, compVal],
+              backgroundColor: 'rgba(239, 83, 80, 0.70)',
+              borderColor: '#EF5350',
+              borderWidth: 1,
+              borderRadius: { topLeft: 4, bottomLeft: 4 }
+            },
+            {
+              label: 'Safety Headroom (%)',
+              data: [hDelay, hCong, hRoute, hComp],
+              backgroundColor: 'rgba(0, 230, 118, 0.70)',
+              borderColor: '#00E676',
+              borderWidth: 1,
+              borderRadius: { topRight: 4, bottomRight: 4 }
+            }
+          ]
+        };
+
+        if (chartSafetyInstance) {
+          chartSafetyInstance.data = safetyData;
+          chartSafetyInstance.update();
+        } else {
+          chartSafetyInstance = new Chart(safetyCtx, {
+            type: 'bar',
+            data: safetyData,
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              scales: {
+                x: {
+                  stacked: true,
+                  min: 0,
+                  max: 100,
+                  grid: { color: 'rgba(255,255,255,0.06)' },
+                  ticks: {
+                    color: 'rgba(255,255,255,0.6)',
+                    callback: v => v + '%'
+                  }
+                },
+                y: {
+                  stacked: true,
+                  grid: { display: false },
+                  ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 10, weight: '600' } }
+                }
+              },
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels: { color: 'rgba(255,255,255,0.7)', boxWidth: 12 }
+                },
+                tooltip: {
+                  callbacks: {
+                    label: context => ` ${context.dataset.label}: ${context.raw}%`
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+    }
+
+    // Auto-initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check for incoming decision handoff from Module 6
+      const incomingM6 = localStorage.getItem('logiyantra_m6_decision');
+      if (incomingM6) {
+        try {
+          const d = JSON.parse(incomingM6);
+          if (d.primary_action && document.getElementById('m7-action')) {
+            document.getElementById('m7-action').value = d.primary_action;
+          }
+          if (d.inputs_used) {
+            if (d.inputs_used.delay_risk !== undefined) document.getElementById('m7-delay').value = d.inputs_used.delay_risk;
+            if (d.inputs_used.congestion_risk !== undefined) document.getElementById('m7-cong').value = d.inputs_used.congestion_risk;
+            if (d.inputs_used.route_risk !== undefined) document.getElementById('m7-route').value = d.inputs_used.route_risk;
+          }
+        } catch(e) {}
+      }
+
+      explainDecision();
+    });
+  </script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('ly_user') || '{}');
+    if (user.name) {
+      const sName = document.getElementById('sidebarName');
+      const sAvatar = document.getElementById('sidebarAvatar');
+      const sRole = document.getElementById('sidebarRole');
+      if (sName) sName.textContent = user.name;
+      if (sAvatar) sAvatar.textContent = user.name[0].toUpperCase();
+      if (sRole && user.role) sRole.textContent = user.role + (user.employee_id ? ' • ' + user.employee_id : '');
+    }
+    function toggleSidebar() {
+      const sb = document.querySelector('.sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (sb) sb.classList.toggle('open');
+      if (bd) bd.classList.toggle('active');
+    }
+    function handleSignOut() {
+      if (confirm('Are you sure you want to sign out?')) {
+        localStorage.removeItem('ly_user');
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
+  </script>
+  <script src="/js/chatbot.js"></script>
+</body>
+</html>

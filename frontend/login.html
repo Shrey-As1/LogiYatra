@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login & Registration — LogiYantra</title>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <style>
+    /* Full-screen background */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 30px 16px;
+    }
+
+    .login-bg {
+      position: fixed; inset: 0; z-index: -2;
+      background-image: url('../assets/bg1.jpg');
+      background-size: cover;
+      background-position: center 35%;
+      animation: kenBurns 20s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurns {
+      0%   { transform: scale(1.04) translate(0, 0); }
+      100% { transform: scale(1.10) translate(1%, -1%); }
+    }
+    .login-overlay {
+      position: fixed; inset: 0; z-index: -1;
+      background: linear-gradient(135deg,
+        rgba(5,8,20,0.72) 0%,
+        rgba(10,15,30,0.80) 50%,
+        rgba(5,8,20,0.88) 100%
+      );
+    }
+
+    /* Particle canvas */
+    #net-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* Login card container */
+    .login-wrapper {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      animation: fadeInUp 0.8s ease both;
+    }
+    .login-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 28px;
+      padding: 40px 36px 36px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.60);
+    }
+
+    /* Brand header */
+    .login-brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .login-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--brand-orange), var(--brand-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+    .login-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Tab switcher */
+    .tab-group {
+      display: flex;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50px;
+      padding: 4px;
+      margin-bottom: 26px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 50px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--brand-orange), #c45200);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(255,140,66,0.40);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.3px;
+    }
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-wrapper .form-control {
+      padding-right: 44px;
+    }
+    .toggle-pwd-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+      padding: 4px;
+    }
+    .toggle-pwd-btn:hover {
+      color: var(--brand-gold);
+    }
+
+    /* Company Authorization Key Card (exact match with user image specification) */
+    .company-auth-box {
+      background: rgba(25, 20, 10, 0.45);
+      border: 1px dashed rgba(255, 179, 71, 0.45);
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      margin: 18px 0 22px;
+      backdrop-filter: blur(10px);
+    }
+    .company-auth-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .company-auth-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--brand-gold);
+      letter-spacing: 0.3px;
+    }
+    .company-auth-badge {
+      font-size: 0.72rem;
+      color: rgba(255, 179, 71, 0.85);
+      font-weight: 500;
+    }
+    .company-auth-input {
+      background: rgba(10, 15, 28, 0.80);
+      border: 1px solid rgba(255, 179, 71, 0.30);
+      border-radius: 8px;
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      width: 100%;
+      outline: none;
+      transition: border 0.2s ease;
+    }
+    .company-auth-input:focus {
+      border-color: var(--brand-orange);
+      box-shadow: 0 0 0 3px rgba(255,140,66,0.15);
+    }
+    .company-auth-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.45;
+    }
+    .company-auth-notice .shield-icon {
+      font-size: 0.95rem;
+      color: #4FC3F7;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Submit Button with image gold style */
+    .btn-company-auth {
+      background: linear-gradient(135deg, #FFB347 0%, #FF8C42 100%);
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 0.98rem;
+      padding: 15px 24px;
+      border-radius: 12px;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(255, 179, 71, 0.35);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-company-auth:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 179, 71, 0.55);
+      color: #000;
+    }
+
+    /* Floating icons */
+    .floating-icons {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden;
+    }
+    .fi {
+      position: absolute; font-size: 2.2rem; opacity: 0.12; animation: float 6s ease-in-out infinite;
+    }
+    .fi:nth-child(1) { top: 12%; left: 8%;  animation-duration: 7s; }
+    .fi:nth-child(2) { top: 20%; right: 10%; animation-duration: 5.5s; animation-delay: 0.5s; }
+    .fi:nth-child(3) { top: 65%; left: 5%;  animation-duration: 8s;   animation-delay: 1s; }
+    .fi:nth-child(4) { top: 75%; right: 8%; animation-duration: 6s;   animation-delay: 1.5s; }
+
+    /* Key helper tip */
+    .key-hint {
+      margin-top: 8px;
+      font-size: 0.72rem;
+      color: var(--brand-sky);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-bg"></div>
+  <div class="login-overlay"></div>
+  <canvas id="net-bg"></canvas>
+
+  <div class="floating-icons">
+    <div class="fi"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+    <div class="fi"><svg class="ui-icon" style="width:24px;height:24px;stroke:var(--brand-sky)" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+    <div class="fi"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4H2z"/></svg></div>
+    <div class="fi"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+  </div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Brand -->
+      <div class="login-brand">
+        <img src="assets/logiyantra_logo.png" alt="LogiYantra Logo" style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 8px; filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.60));">
+        <div class="login-logo">Logi<span style="color:var(--brand-sky)">Yantra</span></div>
+        <div class="login-sub">Think Smarter. Move Faster.</div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-group">
+        <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+        <button class="tab-btn" id="tab-register" onclick="switchTab('register')">New Registration</button>
+      </div>
+
+      <!-- ================= SIGN IN FORM ================= -->
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Team / Unit Name</label>
+          <input class="form-control" id="login-unit" type="text" placeholder="e.g. Fleet Operations HQ" required autocomplete="organization"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Employee Full Name</label>
+          <input class="form-control" id="login-name" type="text" placeholder="e.g. Chief Dispatcher" required autocomplete="name"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Employee ID</label>
+          <input class="form-control" id="login-empid" type="text" placeholder="e.g. EMP-1001" required autocomplete="username"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-wrapper">
+            <input class="form-control" id="login-pass" type="password" placeholder="Enter password" required autocomplete="current-password"/>
+            <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('login-pass', this)" title="Toggle view"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:1rem;border-radius:12px;margin-top:8px;">
+          Sign In to Control Tower →
+        </button>
+      </form>
+
+      <!-- ================= REGISTRATION FORM ================= -->
+      <form id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label">Team / Unit Name</label>
+          <input class="form-control" id="reg-unit" type="text" placeholder="e.g. Express Dispatch Division" required/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Employee Full Name</label>
+          <input class="form-control" id="reg-name" type="text" placeholder="e.g. Samantha Vance" required/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Employee ID</label>
+          <input class="form-control" id="reg-empid" type="text" placeholder="e.g. EMP-2408" required/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Operational Role</label>
+          <select class="form-control" id="reg-role" required>
+            <option value="Fleet Operations Controller">Fleet Operations Controller</option>
+            <option value="Logistics Intelligence Analyst">Logistics Intelligence Analyst</option>
+            <option value="Warehouse Flow Supervisor">Warehouse Flow Supervisor</option>
+            <option value="Supply Chain Planner">Supply Chain Planner</option>
+            <option value="Autonomous Decision Auditor">Autonomous Decision Auditor</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Create Secure Password</label>
+          <div class="input-wrapper">
+            <input class="form-control" id="reg-pass" type="password" placeholder="Create strong password" required/>
+            <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('reg-pass', this)" title="Toggle view"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </div>
+        </div>
+
+        <!-- Matching the exact visual card from user's uploaded reference image -->
+        <div class="company-auth-box">
+          <div class="company-auth-header">
+            <span class="company-auth-title">Company Authorization Key</span>
+            <span class="company-auth-badge">(For Instant Approval)</span>
+          </div>
+          <input class="company-auth-input" id="reg-company-key" type="password" placeholder="Enter Company Key (required for registration)" required/>
+          <div class="company-auth-notice">
+            <span class="shield-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+            <span>Accounts with a verified Company Key are activated immediately. Without a key or if key does not match company records, new registration is blocked.</span>
+          </div>
+          <div class="key-hint" onclick="fillDemoKey()"><span class="ui-icon" style="margin-right:4px;"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> Paste demo company key: LOGIYANTRA-AUTH-2026-Cntrl</div>
+        </div>
+
+        <button type="submit" class="btn-company-auth">
+          Submit for Company Authorization
+        </button>
+      </form>
+
+      <div id="login-msg" style="margin-top:16px;"></div>
+
+      <div class="login-footer" style="text-align:center;margin-top:22px;font-size:0.82rem;color:var(--text-muted);">
+        <a href="/" style="color:var(--brand-sky);text-decoration:none;">← Back to Home Overview</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function togglePasswordVisibility(fieldId, btn) {
+      const input = document.getElementById(fieldId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = '<svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+        btn.title = 'Hide password';
+      } else {
+        input.type = 'password';
+        btn.innerHTML = '<svg class="ui-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+        btn.title = 'Show password';
+      }
+    }
+
+    function fillDemoKey() {
+      const el = document.getElementById('reg-company-key');
+      if (el) {
+        el.value = 'LOGIYANTRA-AUTH-2026-Cntrl';
+        el.type = 'text';
+      }
+    }
+
+    function switchTab(tab) {
+      document.getElementById('loginForm').style.display    = tab === 'login'    ? '' : 'none';
+      document.getElementById('registerForm').style.display = tab === 'register' ? '' : 'none';
+      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+      setMsg('', '');
+    }
+
+    function setMsg(text, type) {
+      const el = document.getElementById('login-msg');
+      if (!text) { el.innerHTML = ''; return; }
+      const cls = type === 'ok' ? 'alert alert-success' : 'alert alert-error';
+      el.innerHTML = `<div class="${cls}">${text}</div>`;
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const payload = {
+        unit_name: document.getElementById('login-unit').value.trim(),
+        full_name: document.getElementById('login-name').value.trim(),
+        employee_id: document.getElementById('login-empid').value.trim(),
+        password: document.getElementById('login-pass').value
+      };
+
+      setMsg('Validating credentials…', 'ok');
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) {
+          setMsg(res.error || 'Authentication failed.', 'err');
+          return;
+        }
+
+        localStorage.setItem('ly_user', JSON.stringify({
+          name: res.user.full_name,
+          employee_id: res.user.employee_id,
+          unit_name: res.user.unit_name,
+          role: res.user.role,
+          loggedIn: true
+        }));
+
+        setMsg('Signed in successfully. Entering Control Tower…', 'ok');
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+      } catch (err) {
+        setMsg('Login request failed: ' + err.message, 'err');
+      }
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const companyKey = document.getElementById('reg-company-key').value.trim();
+
+      if (!companyKey) {
+        setMsg('Company Authorization Key is strictly required for registration.', 'err');
+        return;
+      }
+
+      const payload = {
+        unit_name: document.getElementById('reg-unit').value.trim(),
+        full_name: document.getElementById('reg-name').value.trim(),
+        employee_id: document.getElementById('reg-empid').value.trim(),
+        role: document.getElementById('reg-role').value,
+        password: document.getElementById('reg-pass').value,
+        company_key: companyKey
+      };
+
+      setMsg('Verifying company authorization key with headquarters…', 'ok');
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) {
+          setMsg('⛔ ' + (res.error || 'Registration rejected.'), 'err');
+          return;
+        }
+
+        // Do not auto-login: switch to Sign In tab so credentials must be entered to access
+        setMsg('Registration successful & company authorized! Please sign in with your credentials to access the Control Tower.', 'ok');
+
+        // Pre-populate Sign In fields with registered details for convenience
+        document.getElementById('login-unit').value = res.user.unit_name;
+        document.getElementById('login-name').value = res.user.full_name;
+        document.getElementById('login-empid').value = res.user.employee_id;
+        document.getElementById('login-pass').value = '';
+
+        // Reset registration form
+        document.getElementById('registerForm').reset();
+
+        // Switch tab to Sign In after brief delay
+        setTimeout(() => {
+          switchTab('login');
+          setMsg('Account activated. Please enter your password to sign in.', 'ok');
+          document.getElementById('login-pass').focus();
+        }, 1200);
+      } catch (err) {
+        setMsg('Registration request failed: ' + err.message, 'err');
+      }
+    }
+  </script>
+
+  <script>
+    // Particle network background
+    (function () {
+      const c = document.getElementById('net-bg');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      let W, H, pts;
+      function resize() {
+        W = c.width = window.innerWidth;
+        H = c.height = window.innerHeight;
+        pts = Array.from({length:32}, () => ({
+          x: Math.random()*W, y: Math.random()*H,
+          vx:(Math.random()-0.5)*0.3, vy:(Math.random()-0.5)*0.3,
+          r: 1.5+Math.random()*2
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+        pts.forEach(p => {
+          p.x+=p.vx; p.y+=p.vy;
+          if(p.x<0||p.x>W) p.vx*=-1;
+          if(p.y<0||p.y>H) p.vy*=-1;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle='rgba(255,183,77,0.55)';
+          ctx.fill();
+        });
+        for(let i=0;i<pts.length;i++)
+          for(let j=i+1;j<pts.length;j++){
+            const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+            const d=Math.sqrt(dx*dx+dy*dy);
+            if(d<140){
+              ctx.beginPath();
+              ctx.moveTo(pts[i].x,pts[i].y);
+              ctx.lineTo(pts[j].x,pts[j].y);
+              ctx.strokeStyle=`rgba(79,195,247,${(1-d/140)*0.25})`;
+              ctx.lineWidth=0.7;
+              ctx.stroke();
+            }
+          }
+        requestAnimationFrame(draw);
+      }
+      resize(); draw();
+      window.addEventListener('resize', resize);
+    })();
+  </script>
+</body>
+</html>

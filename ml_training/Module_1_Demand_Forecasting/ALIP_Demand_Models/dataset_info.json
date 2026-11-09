@@ -1,0 +1,12 @@
+{
+    "original_train_rows": 421570,
+    "features_rows": 8190,
+    "stores_rows": 45,
+    "engineered_rows": 382955,
+    "train_rows": 264874,
+    "validation_rows": 59063,
+    "test_rows": 59018,
+    "number_of_stores": 45,
+    "number_of_departments": 78,
+    "store_department_series": 3135
+}

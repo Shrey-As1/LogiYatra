@@ -1,0 +1,99 @@
+/* LogiYantra Login & Employee Authorization Styles */
+@import url('styles.css');
+
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-glass-card {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(14, 19, 31, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.login-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.brand-pin {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #F5A623, #D97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px var(--amber-glow);
+}
+
+.brand-pin svg {
+  width: 22px;
+  height: 22px;
+  fill: #080A0F;
+}
+
+.brand-text h2 {
+  font-size: 1.25rem;
+  color: #FFFFFF;
+}
+
+.brand-text span {
+  font-size: 0.75rem;
+  color: var(--amber-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrap input {
+  padding-right: 40px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.password-toggle-btn:hover {
+  color: #FFFFFF;
+}
+
+.password-toggle-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.err-msg {
+  color: var(--red-critical);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  display: none;
+}

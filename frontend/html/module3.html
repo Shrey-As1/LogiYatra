@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Module 3 — Multi-Objective Route & Fleet Optimizer | LogiYantra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="stylesheet" href="/css/modules.css"/>
+  <!-- Leaflet.js Mapping Library -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Chart.js for Emissions & Cost Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ── Custom Module 3 Layout & Controls ── */
+    #route-map {
+      height: 440px;
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      z-index: 10;
+      margin-bottom: 20px;
+      background: #0d1117;
+    }
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+      background: rgba(13, 17, 23, 0.95) !important;
+      color: #fff !important;
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+    }
+    .leaflet-container {
+      font-family: 'Inter', sans-serif !important;
+    }
+    .corridor-preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .corridor-preset-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .corridor-preset-btn:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: var(--brand-orange);
+      color: #fff;
+    }
+    .corridor-preset-btn.active {
+      background: rgba(255,140,66,0.12);
+      border-color: var(--brand-orange);
+      color: #fff;
+    }
+    .preset-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .preset-sub {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+    .route-card {
+      margin-bottom: 12px;
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.09);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .route-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.22);
+      transform: translateY(-2px);
+    }
+    .route-card.selected {
+      background: rgba(79, 195, 247, 0.08);
+      border-color: #4FC3F7;
+      box-shadow: 0 0 16px rgba(79, 195, 247, 0.25);
+    }
+    .eco-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 0.70rem;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+    }
+    .eco-a-plus { background: rgba(16,185,129,0.2); border: 1px solid #10B981; color: #10B981; }
+    .eco-a { background: rgba(79,195,247,0.2); border: 1px solid #4FC3F7; color: #4FC3F7; }
+    .eco-b { background: rgba(255,179,71,0.2); border: 1px solid #FFB347; color: #FFB347; }
+    .eco-c { background: rgba(239,83,80,0.2); border: 1px solid #EF5350; color: #EF5350; }
+    .waypoint-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+    }
+    .waypoint-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #4FC3F7;
+      color: #050814;
+      font-weight: 800;
+      font-size: 0.70rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-icon {
+      background: none;
+      border: none;
+      color: #EF5350;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 2px 6px;
+    }
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .config-table tr { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .config-table tr:last-child { border-bottom: none; }
+    .config-table td { padding: 9px 4px; color: var(--text-secondary); vertical-align: middle; }
+    .config-table td:first-child { color: var(--text-muted); font-size: 0.74rem; text-transform: uppercase; width: 44%; }
+    .config-table td:last-child { font-weight: 700; color: #fff; font-family: 'Orbitron', monospace; font-size: 0.78rem; }
+    .analytics-section { margin-top: 32px; margin-bottom: 24px; }
+    .analytics-section-title {
+      font-size: 0.78rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .analytics-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; }
+    .chart-card {
+      background: rgba(255,255,255,0.04); backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 22px 24px 20px;
+    }
+    .chart-card-title {
+      font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 6px;
+    }
+  </style>
+
+  <script>
+    (function(){
+      try {
+        const u = JSON.parse(localStorage.getItem('ly_user') || '{}');
+        if (!u || !u.name) {
+          sessionStorage.setItem('ly_return_to', window.location.pathname);
+          window.location.replace('/login.html');
+        }
+      } catch(e) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div class="module-bg"></div>
+  <div class="module-overlay"></div>
+
+  <!-- Mobile Topbar & Backdrop -->
+  <div class="mobile-topbar">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">&#9776;</button>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;background:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Logi<span style="color:var(--brand-sky);-webkit-text-fill-color:var(--brand-sky);">Yantra</span></div>
+    <a href="/dashboard.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.8rem;display:flex;align-items:center;gap:4px;"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Hub</a>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><img src="/assets/logiyantra_logo.png" alt="LogiYantra Logo" class="sidebar-logo-img"><span>Logi<span style="color:var(--brand-sky)">Yantra</span></span></div>
+      <div class="sidebar-tagline">Think Smarter. Move Faster.</div>
+    </div>
+    <div class="sidebar-label">Navigation</div>
+    <a href="/dashboard.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
+    <div class="sidebar-label" style="margin-top:8px">Modules</div>
+    <a href="/module1.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></span> Demand Forecast</a>
+    <a href="/module2.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Delay Prediction</a>
+    <a href="/module3.html" class="sidebar-link active"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span> Route Optimizer</a>
+    <a href="/module4.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></span> Warehouse AI</a>
+    <a href="/module5.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Inventory Opt.</a>
+    <a href="/module6.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span> Decision Engine</a>
+    <a href="/module7.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></span> Explainable AI</a>
+    <div class="sidebar-bottom">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <div>
+          <div class="user-name" id="sidebarName">User</div>
+          <div class="user-role" id="sidebarRole">Logistics Analyst</div>
+        </div>
+      </div>
+      <button class="btn-signout" onclick="handleSignOut()" title="Sign out" style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:8px;background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.25);border-radius:8px;color:#EF5350;font-size:0.75rem;cursor:pointer;">
+        <svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="module-main">
+    <div class="module-header">
+      <div class="module-icon-lg"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+      <div>
+        <div class="module-number-label">Module 03 &bull; Multi-Objective Fleet Routing &amp; Corridor Intelligence</div>
+        <h1 class="module-title">Autonomous Route &amp; Fleet Optimizer</h1>
+        <p class="module-subtitle">Multi-algorithm highway corridor evaluator with interactive OpenStreetMap visualizer, multi-stop TSP stop sequencer, commercial fleet fuel/CO2 emissions models, and live weather/traffic hazard fusion.</p>
+      </div>
+    </div>
+
+    <!-- Presets Bar -->
+    <div style="margin-bottom:12px;">
+      <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">
+        Curated Freight Corridors (One-Click Auto-Load)
+      </div>
+      <div class="corridor-preset-grid" id="presetContainer">
+        <button class="corridor-preset-btn active" onclick="loadCorridorPreset('chicago_detroit')">
+          <span class="preset-title">Midwest Industrial Corridor</span>
+          <span class="preset-sub">Chicago Hub &rarr; Detroit Assembly (~455 km)</span>
+        </button>
+        <button class="corridor-preset-btn" onclick="loadCorridorPreset('la_ontario')">
+          <span class="preset-title">SoCal Maritime Gateway</span>
+          <span class="preset-sub">Port of LA &rarr; Ontario Inland Empire (~95 km)</span>
+        </button>
+        <button class="corridor-preset-btn" onclick="loadCorridorPreset('dallas_houston')">
+          <span class="preset-title">Texas Triangle Freight</span>
+          <span class="preset-sub">Dallas DC &rarr; Port of Houston (~385 km)</span>
+        </button>
+        <button class="corridor-preset-btn" onclick="loadCorridorPreset('mumbai_pune')">
+          <span class="preset-title">Western India Expressway</span>
+          <span class="preset-sub">JNPT Port &rarr; Pune Chakan (~140 km)</span>
+        </button>
+        <button class="corridor-preset-btn" onclick="loadCorridorPreset('frankfurt_rotterdam')">
+          <span class="preset-title">Trans-Euro Freightway</span>
+          <span class="preset-sub">Frankfurt CargoCity &rarr; Rotterdam Port (~460 km)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive Leaflet Map Container -->
+    <div style="position:relative;">
+      <div id="route-map"></div>
+      <div style="position:absolute;bottom:35px;right:18px;z-index:500;background:rgba(13,17,23,0.85);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);padding:8px 14px;border-radius:10px;font-size:0.72rem;color:var(--text-secondary);display:flex;gap:14px;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:4px;background:#4FC3F7;border-radius:2px;"></span> Primary Route</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:4px;background:#FFB347;border-radius:2px;"></span> Alt Corridor 1</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:4px;background:#B388FF;border-radius:2px;"></span> Alt Corridor 2</span>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <!-- Input Control Panel -->
+      <div class="input-panel">
+        <div class="panel-title">Fleet &amp; Corridor Parameters</div>
+
+        <!-- Algorithm & Objective -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Algorithm</label>
+            <select class="form-control" id="m3-algo">
+              <option value="Yen K-Shortest Paths" selected>Yen's K-Shortest (Corridor Diversity)</option>
+              <option value="A*">A* (Heuristic Distance Search)</option>
+              <option value="Dijkstra">Dijkstra (Strict Shortest Time)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Routing Objective</label>
+            <select class="form-control" id="m3-mode">
+              <option value="fastest" selected>Fastest Transit (Express)</option>
+              <option value="eco">Eco-Optimized (Lowest CO2)</option>
+              <option value="cheapest">Direct Cost Minimal (Avoid Tolls)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Vehicle Fleet Profile -->
+        <div class="form-group">
+          <label class="form-label">Commercial Vehicle Fleet Class</label>
+          <select class="form-control" id="m3-vehicle">
+            <option value="semi_truck" selected>Class 8 Heavy Semi-Truck (18-Wheeler &bull; Diesel)</option>
+            <option value="sprinter_van">Light Commercial Courier Van (Sprinter &bull; Diesel)</option>
+            <option value="ev_truck">Commercial Electric Vehicle (EV Heavy Van &bull; 97% Lower CO2)</option>
+          </select>
+        </div>
+
+        <!-- Origin & Destination Coordinates -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Origin Latitude</label>
+            <input class="form-control" id="m3-olat" type="number" step="0.0001" value="41.8781"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Origin Longitude</label>
+            <input class="form-control" id="m3-olon" type="number" step="0.0001" value="-87.6298"/>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Destination Latitude</label>
+            <input class="form-control" id="m3-dlat" type="number" step="0.0001" value="42.3314"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Destination Longitude</label>
+            <input class="form-control" id="m3-dlon" type="number" step="0.0001" value="-83.0458"/>
+          </div>
+        </div>
+
+        <!-- Environmental & Temporal Controls -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Departure Window</label>
+            <select class="form-control" id="m3-departure">
+              <option value="now" selected>Real-Time Current</option>
+              <option value="am_rush">Morning Rush (07:30 - 09:30)</option>
+              <option value="midday">Midday Window (11:00 - 14:00)</option>
+              <option value="pm_rush">Evening Congestion (16:30 - 19:00)</option>
+              <option value="night">Off-Peak Night (22:00 - 05:00)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Weather Conditions</label>
+            <select class="form-control" id="m3-weather">
+              <option value="clear" selected>Clear &amp; Dry Surface</option>
+              <option value="rain">Rain (Wet Surface Hazard)</option>
+              <option value="fog">Dense Fog (Low Visibility)</option>
+              <option value="storm">Severe Thunderstorm Warning</option>
+              <option value="snow">Ice &amp; Snow Advisory</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Multi-Stop Delivery Waypoints (TSP) -->
+        <div style="margin:14px 0 16px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <div style="font-size:0.76rem;font-weight:700;color:var(--brand-sky);">
+              Intermediate Delivery Stops (Multi-Drop TSP)
+            </div>
+            <button type="button" onclick="addWaypointInput()" style="background:rgba(79,195,247,0.15);border:1px solid rgba(79,195,247,0.3);color:#4FC3F7;border-radius:6px;padding:3px 8px;font-size:0.72rem;cursor:pointer;">
+              + Add Stop
+            </button>
+          </div>
+          <div id="waypointListContainer" style="font-size:0.74rem;color:var(--text-muted);">
+            No intermediate stops added (Direct Point-to-Point Corridor).
+          </div>
+        </div>
+
+        <!-- Live OSRM Toggle (Checked by default) -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+          <input type="checkbox" id="m3-live-osrm" checked style="width:16px;height:16px;accent-color:var(--brand-orange);cursor:pointer;"/>
+          <label for="m3-live-osrm" style="font-size:0.74rem;color:var(--text-secondary);cursor:pointer;">
+            Connect to OpenStreetMap Live Routing Server (OSRM Real Road Topology)
+          </label>
+        </div>
+
+        <button class="submit-btn" onclick="findRoutes()">Calculate Optimized Corridors</button>
+      </div>
+
+      <!-- Output / Results Panel -->
+      <div class="output-panel" id="m3-output">
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+          <h3>Route Intelligence Ready</h3>
+          <p>Select a preset corridor or configure origin/destination to evaluate alternative highway paths, emissions, fuel, and traffic risk.</p>
+        </div>
+      </div>
+    </div><!-- /module-grid -->
+
+    <!-- ── Analytics & Multi-Objective Evaluation ── -->
+    <div class="analytics-section">
+      <div class="analytics-section-title">Multi-Objective Route Analytics &amp; Green Fleet Economics</div>
+      <div class="chart-grid">
+
+        <!-- Chart 1: Route Metrics Radar / Bar Comparison -->
+        <div class="chart-card">
+          <div class="chart-card-title">Candidate Corridors Trade-Off (Distance vs ETA vs Risk)</div>
+          <div style="position:relative;height:260px;">
+            <canvas id="chartCorridorCompare"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Emissions by Fleet Vehicle Class -->
+        <div class="chart-card">
+          <div class="chart-card-title">CO2 Carbon Footprint by Commercial Vehicle Class</div>
+          <div style="position:relative;height:260px;">
+            <canvas id="chartEmissions"></canvas>
+          </div>
+        </div>
+
+        <!-- Technical Architecture Table -->
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <div class="chart-card-title">Algorithmic Formulation &amp; Fleet Logistics Architecture</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:24px;">
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--brand-orange);margin-bottom:8px;text-transform:uppercase;">Algorithms &amp; Complexity</div>
+              <table class="config-table">
+                <tr><td>Yen's K-Shortest</td><td>O(K &times; V &times; (E + V log V)) with edge diversity</td></tr>
+                <tr><td>A* Search</td><td>f(n) = g(n) + h_haversine(n, dest)</td></tr>
+                <tr><td>Dijkstra</td><td>Priority-Queue travel-time minimization</td></tr>
+                <tr><td>TSP Sequencer</td><td>Nearest Neighbor + 2-Opt local search</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--brand-sky);margin-bottom:8px;text-transform:uppercase;">Green Fleet Emissions Model</div>
+              <table class="config-table">
+                <tr><td>Class 8 Diesel</td><td>2.68 kg CO2 / Liter &bull; 32.5 L/100km</td></tr>
+                <tr><td>Sprinter Van</td><td>2.68 kg CO2 / Liter &bull; 10.8 L/100km</td></tr>
+                <tr><td>EV Heavy Van</td><td>0.05 kg CO2 / kWh &bull; 42.0 kWh/100km</td></tr>
+                <tr><td>EV Carbon Delta</td><td>&minus;97.1% emission reduction vs Diesel</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--brand-gold);margin-bottom:8px;text-transform:uppercase;">LogiYantra Pipeline Coupling</div>
+              <table class="config-table">
+                <tr><td>Upstream Feeder</td><td>Module 02 (Carrier Delay Prediction)</td></tr>
+                <tr><td>Downstream Target</td><td>Module 06 (Decision Engine Risk > 0.40)</td></tr>
+                <tr><td>Warehouse Link</td><td>Module 04 (Dock Arrival Time Slot Pacing)</td></tr>
+                <tr><td>Live Fallback</td><td>High-Resolution Curvature Corridor Model</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /analytics-section -->
+  </main>
+
+  <script>
+    // ── LEAFLET MAP INITIALIZATION ──
+    let map = null;
+    let mapRouteLayers = [];
+    let mapMarkerLayers = [];
+    let currentRouteResults = null;
+    let chartCompareInstance = null;
+    let chartEmissionsInstance = null;
+    let waypointsList = [];
+
+    // Pre-curated freight corridors
+    const PRESETS = {
+      chicago_detroit: {
+        name: "Chicago Hub ➔ Detroit Assembly",
+        olat: 41.8781, olon: -87.6298,
+        dlat: 42.3314, dlon: -83.0458,
+        waypoints: []
+      },
+      la_ontario: {
+        name: "Port of LA ➔ Ontario Inland Empire Hub",
+        olat: 33.7432, olon: -118.2673,
+        dlat: 34.0633, dlon: -117.6509,
+        waypoints: []
+      },
+      dallas_houston: {
+        name: "Dallas-Fort Worth ➔ Port of Houston",
+        olat: 32.7767, olon: -96.7970,
+        dlat: 29.7604, dlon: -95.3698,
+        waypoints: []
+      },
+      mumbai_pune: {
+        name: "Mumbai JNPT Port ➔ Pune Chakan Hub",
+        olat: 18.9499, olon: 72.9515,
+        dlat: 18.7606, dlon: 73.8636,
+        waypoints: []
+      },
+      frankfurt_rotterdam: {
+        name: "Frankfurt CargoCity ➔ Rotterdam Seaport",
+        olat: 50.0379, olon: 8.5622,
+        dlat: 51.9244, dlon: 4.4777,
+        waypoints: []
+      }
+    };
+
+    function initMap() {
+      // Default center around Midwest corridor
+      map = L.map('route-map', {
+        center: [41.9, -85.5],
+        zoom: 7,
+        zoomControl: true
+      });
+
+      // Esri World Dark Gray Canvas (100% Free, Zero Watermarks, No API Key Required)
+      const darkLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; <a href="https://www.esri.com">Esri</a> &mdash; World Dark Gray Canvas',
+        maxZoom: 16
+      });
+
+      // Standard OpenStreetMap with detailed roads, exits, and labels
+      const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+      });
+
+      // Satellite Imagery via Esri World Imagery
+      const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; <a href="https://www.esri.com">Esri</a> &mdash; Earthstar Geographics',
+        maxZoom: 19
+      });
+
+      // Add default dark canvas layer
+      darkLayer.addTo(map);
+
+      // Layer Control switcher in top-right
+      L.control.layers({
+        "Dark Obsidian (Default)": darkLayer,
+        "OpenStreetMap (Detailed)": osmLayer,
+        "Satellite Imagery": satelliteLayer
+      }, null, { position: 'topright' }).addTo(map);
+    }
+
+    function loadCorridorPreset(id) {
+      // Update UI active buttons
+      const buttons = document.querySelectorAll('.corridor-preset-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      const activeBtn = event ? event.currentTarget : null;
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const p = PRESETS[id];
+      if (!p) return;
+      document.getElementById('m3-olat').value = p.olat;
+      document.getElementById('m3-olon').value = p.olon;
+      document.getElementById('m3-dlat').value = p.dlat;
+      document.getElementById('m3-dlon').value = p.dlon;
+      waypointsList = [];
+      renderWaypointList();
+      findRoutes();
+    }
+
+    function addWaypointInput() {
+      const olat = parseFloat(document.getElementById('m3-olat').value) || 41.8;
+      const dlat = parseFloat(document.getElementById('m3-dlat').value) || 42.3;
+      const olon = parseFloat(document.getElementById('m3-olon').value) || -87.6;
+      const dlon = parseFloat(document.getElementById('m3-dlon').value) || -83.0;
+
+      // Interpolate default middle point
+      const step = (waypointsList.length + 1) / (waypointsList.length + 2);
+      const wLat = round(olat + step * (dlat - olat) + 0.05, 4);
+      const wLon = round(olon + step * (dlon - olon), 4);
+
+      waypointsList.push({
+        name: `Intermodal Drop #${waypointsList.length + 1}`,
+        lat: wLat,
+        lon: wLon
+      });
+      renderWaypointList();
+    }
+
+    function removeWaypoint(idx) {
+      waypointsList.splice(idx, 1);
+      renderWaypointList();
+    }
+
+    function renderWaypointList() {
+      const c = document.getElementById('waypointListContainer');
+      if (!waypointsList.length) {
+        c.innerHTML = 'No intermediate stops added (Direct Point-to-Point Corridor).';
+        return;
+      }
+      c.innerHTML = waypointsList.map((w, i) => `
+        <div class="waypoint-item">
+          <div class="waypoint-num">${i + 1}</div>
+          <input type="text" value="${w.name}" onchange="waypointsList[${i}].name=this.value" style="background:none;border:none;color:#fff;font-size:0.75rem;font-weight:600;flex:1;"/>
+          <input type="number" step="0.0001" value="${w.lat}" onchange="waypointsList[${i}].lat=parseFloat(this.value)" style="width:75px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#4FC3F7;border-radius:4px;padding:2px 4px;font-size:0.70rem;"/>
+          <input type="number" step="0.0001" value="${w.lon}" onchange="waypointsList[${i}].lon=parseFloat(this.value)" style="width:75px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#4FC3F7;border-radius:4px;padding:2px 4px;font-size:0.70rem;"/>
+          <button class="btn-icon" onclick="removeWaypoint(${i})">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function round(val, dec) {
+      return Number(Math.round(val + 'e' + dec) + 'e-' + dec);
+    }
+
+    // ── MAIN ROUTING EXECUTION ──
+    async function findRoutes() {
+      const out = document.getElementById('m3-output');
+      out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Evaluating multi-objective corridor topology &amp; environmental profiles&hellip;</div>';
+
+      const payload = {
+        origin: {
+          lat: parseFloat(document.getElementById('m3-olat').value),
+          lon: parseFloat(document.getElementById('m3-olon').value)
+        },
+        destination: {
+          lat: parseFloat(document.getElementById('m3-dlat').value),
+          lon: parseFloat(document.getElementById('m3-dlon').value)
+        },
+        k: 3,
+        algorithm: document.getElementById('m3-algo').value,
+        routing_mode: document.getElementById('m3-mode').value,
+        vehicle_type: document.getElementById('m3-vehicle').value,
+        departure_time: document.getElementById('m3-departure').value,
+        weather: document.getElementById('m3-weather').value,
+        waypoints: waypointsList,
+        use_live_osrm: document.getElementById('m3-live-osrm').checked
+      };
+
+      try {
+        const res = await fetch('/api/module3/route', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) {
+          out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`;
+          return;
+        }
+
+        const result = res.result || {};
+        currentRouteResults = result;
+        const routes = result.routes || [];
+        const best = result.best_route || routes[0];
+
+        // Draw Map Layers
+        renderRoutesOnMap(routes, payload.origin, payload.destination, result.tsp_solution);
+
+        // Build HTML Results Panel
+        out.innerHTML = `
+          <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;">
+            <span>Corridor Alternatives Evaluated</span>
+            <span class="pill-badge" style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.35);color:#10B981;">
+              ${routes.length} Corridors Solved
+            </span>
+          </div>
+
+          <!-- TSP Sequence Notice if multi-stop -->
+          ${result.tsp_solution && result.tsp_solution.savings_km > 0 ? `
+            <div style="margin-bottom:12px;padding:10px 14px;background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.3);border-radius:10px;font-size:0.75rem;color:#4FC3F7;">
+              ✨ <strong>Multi-Drop TSP Optimized:</strong> 2-Opt sequencer reorganized ${result.tsp_solution.total_stops} stops, saving <strong>${result.tsp_solution.savings_km} km (${result.tsp_solution.savings_percentage}%)</strong> over original sequence!
+            </div>
+          ` : ''}
+
+          <!-- Routes Cards List -->
+          ${routes.map((r, i) => {
+            const isSelected = i === 0;
+            const ecoClass = r.eco_grade === 'A+' ? 'eco-a-plus' : (r.eco_grade === 'A' ? 'eco-a' : (r.eco_grade === 'B' ? 'eco-b' : 'eco-c'));
+            const statusColor = r.traffic_status === 'FREE_FLOW' ? '#10B981' : (r.traffic_status === 'MODERATE_FLOW' ? '#FFB347' : '#EF5350');
+            const strokeColor = i === 0 ? '#4FC3F7' : (i === 1 ? '#FFB347' : '#B388FF');
+
+            return `
+              <div class="route-card ${isSelected ? 'selected' : ''}" id="routeCard_${i}" onclick="highlightRoute(${i})">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${strokeColor};"></span>
+                    <strong style="color:#fff;font-size:0.88rem;">${r.name}</strong>
+                  </div>
+                  <div style="display:flex;gap:6px;align-items:center;">
+                    <span class="eco-badge ${ecoClass}">Eco: ${r.eco_grade}</span>
+                    ${isSelected ? '<span style="background:rgba(255,140,66,0.25);color:var(--brand-orange);padding:2px 8px;border-radius:12px;font-size:0.68rem;font-weight:800">RECOMMENDED</span>' : ''}
+                  </div>
+                </div>
+
+                <div style="font-size:0.74rem;color:var(--text-muted);margin-bottom:10px;line-height:1.4;">
+                  ${r.description || r.type}
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:8px;background:rgba(255,255,255,0.03);border-radius:10px;padding:8px;text-align:center;">
+                  <div>
+                    <div style="font-size:0.64rem;color:var(--text-muted);text-transform:uppercase;">Distance</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">${r.distance_km} km</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.64rem;color:var(--text-muted);text-transform:uppercase;">ETA</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:0.82rem;font-weight:700;color:var(--brand-gold);">${r.estimated_time_minutes} min</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.64rem;color:var(--text-muted);text-transform:uppercase;">Emissions</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:0.82rem;font-weight:700;color:#10B981;">${r.co2_emissions_kg} kg</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.64rem;color:var(--text-muted);text-transform:uppercase;">Fuel Cost</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:0.82rem;font-weight:700;color:var(--brand-sky);">$${r.fuel_cost_usd}</div>
+                  </div>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:0.72rem;color:var(--text-secondary);">
+                  <span>Tolls: <strong>$${r.toll_cost_usd}</strong></span>
+                  <span>Avg Speed: <strong>${r.average_speed_kmh} km/h</strong></span>
+                  <span style="color:${statusColor};font-weight:700;">● ${r.traffic_status}</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+
+          <!-- Forward to Module 6 Action -->
+          <div style="margin-top:18px;text-align:center;">
+            <button class="submit-btn" style="background:linear-gradient(90deg,var(--brand-purple,#7B61FF),var(--brand-sky,#4FC3F7));display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 24px;width:100%;font-size:0.86rem;" onclick="forwardToModule6(${best.route_risk_score}, '${best.name}', ${best.distance_km}, ${best.estimated_time_minutes})">
+              Send Route Risk (${Math.round(best.route_risk_score * 100)}%) to Module 6 Decision Engine &rarr;
+            </button>
+          </div>
+        `;
+
+        // Update Charts
+        updateCharts(routes, result.vehicle_profile);
+
+      } catch (e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    // ── MAP RENDERING & HIGHLIGHTING ──
+    function renderRoutesOnMap(routes, origin, destination, tsp) {
+      if (!map) return;
+
+      // Clear existing layers
+      mapRouteLayers.forEach(l => map.removeLayer(l));
+      mapRouteLayers = [];
+      mapMarkerLayers.forEach(m => map.removeLayer(m));
+      mapMarkerLayers = [];
+
+      const colors = ['#4FC3F7', '#FFB347', '#B388FF'];
+      const bounds = L.latLngBounds();
+
+      // Render routes as polylines
+      routes.forEach((r, idx) => {
+        const latlngs = (r.waypoints || []).map(p => [p.lat, p.lon]);
+        latlngs.forEach(ll => bounds.extend(ll));
+
+        const isPrimary = idx === 0;
+        const polyline = L.polyline(latlngs, {
+          color: colors[idx % colors.length],
+          weight: isPrimary ? 5 : 3.5,
+          opacity: isPrimary ? 0.95 : 0.65,
+          dashArray: isPrimary ? null : (idx === 1 ? '6, 6' : '3, 6')
+        }).addTo(map);
+
+        polyline.bindPopup(`
+          <div style="font-size:0.82rem;font-weight:700;color:${colors[idx % colors.length]};margin-bottom:4px;">${r.name}</div>
+          <div style="font-size:0.75rem;line-height:1.4;">
+            Distance: <strong>${r.distance_km} km</strong><br>
+            ETA: <strong>${r.estimated_time_minutes} min</strong><br>
+            CO2: <strong>${r.co2_emissions_kg} kg</strong>
+          </div>
+        `);
+
+        mapRouteLayers.push(polyline);
+      });
+
+      // Add Origin Marker
+      const originMarker = L.circleMarker([origin.lat, origin.lon], {
+        radius: 8,
+        fillColor: '#10B981',
+        color: '#fff',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.9
+      }).addTo(map).bindPopup('<strong>Origin A</strong>');
+      mapMarkerLayers.push(originMarker);
+      bounds.extend([origin.lat, origin.lon]);
+
+      // Add Destination Marker
+      const destMarker = L.circleMarker([destination.lat, destination.lon], {
+        radius: 8,
+        fillColor: '#EF5350',
+        color: '#fff',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.9
+      }).addTo(map).bindPopup('<strong>Destination B</strong>');
+      mapMarkerLayers.push(destMarker);
+      bounds.extend([destination.lat, destination.lon]);
+
+      // Add intermediate waypoint markers if any
+      if (tsp && tsp.ordered_waypoints) {
+        tsp.ordered_waypoints.forEach((w, i) => {
+          const wpMarker = L.circleMarker([w.lat, w.lon], {
+            radius: 6,
+            fillColor: '#4FC3F7',
+            color: '#fff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.9
+          }).addTo(map).bindPopup(`<strong>Stop #${i+1}:</strong> ${w.name}`);
+          mapMarkerLayers.push(wpMarker);
+          bounds.extend([w.lat, w.lon]);
+        });
+      }
+
+      // Auto-zoom map to fit all paths
+      if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [40, 40] });
+      }
+    }
+
+    function highlightRoute(idx) {
+      // Toggle card styles
+      const cards = document.querySelectorAll('.route-card');
+      cards.forEach((c, i) => {
+        if (i === idx) c.classList.add('selected');
+        else c.classList.remove('selected');
+      });
+
+      // Highlight map polyline
+      mapRouteLayers.forEach((l, i) => {
+        if (i === idx) {
+          l.setStyle({ weight: 6, opacity: 1.0 });
+          l.bringToFront();
+          map.fitBounds(l.getBounds(), { padding: [50, 50] });
+        } else {
+          l.setStyle({ weight: 3, opacity: 0.45 });
+        }
+      });
+    }
+
+    function forwardToModule6(riskScore, routeName, distance, eta) {
+      const routeData = {
+        route_risk: riskScore,
+        route_name: routeName,
+        distance_km: distance,
+        eta_minutes: eta,
+        source: 'module3_route_optimizer'
+      };
+      localStorage.setItem('logiyantra_m3_route', JSON.stringify(routeData));
+      sessionStorage.setItem('ly_incoming_decision', JSON.stringify({
+        route_risk: riskScore,
+        route_data: routeData
+      }));
+      window.location.href = '/module6.html';
+    }
+
+    // ── CHARTS INITIALIZATION & UPDATES ──
+    const gridLine = { color: 'rgba(255,255,255,0.06)' };
+    const tickStyle = { color: 'rgba(255,255,255,0.55)', font: { size: 10 } };
+
+    function initStaticCharts() {
+      // Chart 1: Candidate Corridors Multi-Metric Bar
+      chartCompareInstance = new Chart(document.getElementById('chartCorridorCompare'), {
+        type: 'bar',
+        data: {
+          labels: ['Interstate Primary', 'Arterial Bypass', 'Orbital Beltway'],
+          datasets: [
+            {
+              label: 'Distance (km)',
+              data: [455, 505, 555],
+              backgroundColor: 'rgba(79, 195, 247, 0.75)',
+              borderRadius: 6
+            },
+            {
+              label: 'ETA (min)',
+              data: [401, 480, 537],
+              backgroundColor: 'rgba(255, 179, 71, 0.75)',
+              borderRadius: 6
+            },
+            {
+              label: 'Fuel (Liters)',
+              data: [148, 164, 180],
+              backgroundColor: 'rgba(179, 136, 255, 0.75)',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: 'rgba(255,255,255,0.7)', font: { size: 10 } } }
+          },
+          scales: {
+            x: { grid: gridLine, ticks: tickStyle },
+            y: { grid: gridLine, ticks: tickStyle, beginAtZero: true }
+          }
+        }
+      });
+
+      // Chart 2: Emissions Comparison by Fleet Class
+      chartEmissionsInstance = new Chart(document.getElementById('chartEmissions'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Heavy 18-Wheeler (Diesel)', 'Sprinter Van (Diesel)', 'EV Commercial (Grid Average)'],
+          datasets: [{
+            data: [396, 131, 11],
+            backgroundColor: [
+              'rgba(239, 83, 80, 0.80)',
+              'rgba(255, 179, 71, 0.80)',
+              'rgba(16, 185, 129, 0.85)'
+            ],
+            borderColor: ['#EF5350', '#FFB347', '#10B981'],
+            borderWidth: 1.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,0.7)', font: { size: 9.5 } } },
+            tooltip: { callbacks: { label: ctx => ` CO2 Output: ${ctx.raw} kg` } }
+          },
+          cutout: '60%'
+        }
+      });
+    }
+
+    function updateCharts(routes, vehicleProfile) {
+      if (chartCompareInstance && routes.length > 0) {
+        chartCompareInstance.data.labels = routes.map(r => r.name.length > 20 ? r.name.slice(0, 18) + '…' : r.name);
+        chartCompareInstance.data.datasets[0].data = routes.map(r => r.distance_km);
+        chartCompareInstance.data.datasets[1].data = routes.map(r => r.estimated_time_minutes);
+        chartCompareInstance.data.datasets[2].data = routes.map(r => r.fuel_consumption);
+        chartCompareInstance.update();
+      }
+
+      if (chartEmissionsInstance && routes.length > 0) {
+        const best = routes[0];
+        const dist = best.distance_km;
+        // Compare same distance across 3 vehicle classes:
+        // Heavy Truck (32.5 L/100km * 2.68 kg CO2/L)
+        const heavyCO2 = Math.round((dist / 100.0) * 32.5 * 2.68);
+        // Sprinter (10.8 L/100km * 2.68 kg CO2/L)
+        const vanCO2 = Math.round((dist / 100.0) * 10.8 * 2.68);
+        // EV (42.0 kWh/100km * 0.05 kg CO2/kWh)
+        const evCO2 = Math.round((dist / 100.0) * 42.0 * 0.05);
+
+        chartEmissionsInstance.data.datasets[0].data = [heavyCO2, vanCO2, evCO2];
+        chartEmissionsInstance.update();
+      }
+    }
+
+    // ── AUTH & USER CHIP ──
+    const user = JSON.parse(localStorage.getItem('ly_user') || '{}');
+    if (user.name) {
+      const sName = document.getElementById('sidebarName');
+      const sAvatar = document.getElementById('sidebarAvatar');
+      const sRole = document.getElementById('sidebarRole');
+      if (sName) sName.textContent = user.name;
+      if (sAvatar) sAvatar.textContent = user.name[0].toUpperCase();
+      if (sRole && user.role) sRole.textContent = user.role + (user.employee_id ? ' • ' + user.employee_id : '');
+    }
+
+    function toggleSidebar() {
+      const sb = document.querySelector('.sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (sb) sb.classList.toggle('open');
+      if (bd) bd.classList.toggle('active');
+    }
+
+    function handleSignOut() {
+      if (confirm('Are you sure you want to sign out?')) {
+        localStorage.removeItem('ly_user');
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      initStaticCharts();
+      findRoutes();
+    });
+  </script>
+  <script src="/js/chatbot.js"></script>
+</body>
+</html>

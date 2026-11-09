@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Module 5 &mdash; Inventory Optimization | LogiYantra</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <link rel="stylesheet" href="/css/modules.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ── Module 5 Custom Styling & Analytics ── */
+    .analytics-section {
+      margin-top: 32px;
+      margin-bottom: 24px;
+    }
+    .analytics-section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .analytics-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 20px;
+    }
+    .chart-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 22px 24px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-card-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chart-card canvas {
+      width: 100% !important;
+    }
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    .config-table tr {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .config-table tr:last-child { border-bottom: none; }
+    .config-table td {
+      padding: 10px 4px;
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .config-table td:first-child {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      width: 44%;
+      padding-right: 10px;
+    }
+    .config-table td:last-child {
+      font-weight: 700;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+    }
+    .formula-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.74rem;
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.25);
+      color: #4FC3F7;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .preset-btn {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: var(--text-secondary);
+    }
+    .preset-btn:hover {
+      background: rgba(255,255,255,0.09);
+      color: #fff;
+      border-color: rgba(255,255,255,0.22);
+    }
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.70rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-critical {
+      background: rgba(239, 83, 80, 0.15);
+      border: 1px solid rgba(239, 83, 80, 0.35);
+      color: #EF5350;
+    }
+    .badge-warning {
+      background: rgba(255, 179, 71, 0.15);
+      border: 1px solid rgba(255, 179, 71, 0.35);
+      color: #FFB347;
+    }
+    .badge-healthy {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #10B981;
+    }
+    .stat-hero {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .stat-caption {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 4px;
+    }
+    @media (max-width: 768px) {
+      .chart-grid { grid-template-columns: 1fr; }
+      .preset-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script>
+    // Authentication Guard
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem('ly_user') || '{}');
+        if (!u || !u.name) {
+          sessionStorage.setItem('ly_return_to', window.location.pathname);
+          window.location.replace('/login.html');
+        }
+      } catch (e) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div class="module-bg"></div>
+  <div class="module-overlay"></div>
+
+  <!-- Mobile Topbar & Backdrop -->
+  <div class="mobile-topbar">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">&#9776;</button>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;background:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Logi<span style="color:var(--brand-sky);-webkit-text-fill-color:var(--brand-sky);">Yantra</span></div>
+    <a href="/dashboard.html" style="color:var(--text-secondary);text-decoration:none;font-size:0.8rem;display:flex;align-items:center;gap:4px;"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Hub</a>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><img src="/assets/logiyantra_logo.png" alt="LogiYantra Logo" class="sidebar-logo-img"><span>Logi<span style="color:var(--brand-sky)">Yantra</span></span></div>
+      <div class="sidebar-tagline">Think Smarter. Move Faster.</div>
+    </div>
+    <div class="sidebar-label">Navigation</div>
+    <a href="/dashboard.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
+    <div class="sidebar-label" style="margin-top:8px">Modules</div>
+    <a href="/module1.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></span> Demand Forecast</a>
+    <a href="/module2.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Delay Prediction</a>
+    <a href="/module3.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span> Route Optimizer</a>
+    <a href="/module4.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></span> Warehouse AI</a>
+    <a href="/module5.html" class="sidebar-link active"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Inventory Opt.</a>
+    <a href="/module6.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span> Decision Engine</a>
+    <a href="/module7.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></span> Explainable AI</a>
+    <div class="sidebar-bottom">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <div>
+          <div class="user-name" id="sidebarName">User</div>
+          <div class="user-role" id="sidebarRole">Logistics Analyst</div>
+        </div>
+      </div>
+      <button class="btn-signout" onclick="handleSignOut()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 14px;background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.25);border-radius:10px;color:#EF5350;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;" title="Sign out and return to landing page">
+        <svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="module-main">
+    <div class="module-header">
+      <div class="module-icon-lg"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <div>
+        <div class="module-number-label">Module 05 &bull; Operations Research &amp; Inventory Policy</div>
+        <h1 class="module-title">Inventory Optimization &amp; Safety Stock Engine</h1>
+        <p class="module-subtitle">Deterministic &amp; stochastic continuous review (s, S) policy simulator. Computes dynamic safety buffers, reorder points, economic carrying risk, and pack-aligned replenishment batches.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">
+          <span class="pill-badge badge-healthy"><span style="width:6px;height:6px;border-radius:50%;background:#10B981"></span> (s, S) Policy Active</span>
+          <span class="pill-badge" style="background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.3);color:#4FC3F7;">Coupled to Module 01 Forecast</span>
+          <span class="pill-badge" style="background:rgba(255,140,66,0.12);border:1px solid rgba(255,140,66,0.3);color:#FF8C42;">Auto-Feed to Module 06</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Incoming Demand Alert Banner if piped from Module 1 -->
+    <div id="m1-handoff-banner" style="display:none;margin-bottom:20px;padding:12px 18px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);border-radius:12px;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="ui-icon" style="width:24px;height:24px;"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>
+        <div>
+          <div style="font-size:0.85rem;font-weight:700;color:#10B981;">Live Demand Forecast Ingested from Module 1</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);" id="m1-handoff-detail">Demand rate auto-synchronized with Walmart sales forecast model.</div>
+        </div>
+      </div>
+      <button onclick="dismissHandoff()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.1rem;">&times;</button>
+    </div>
+
+    <div class="module-grid">
+      <!-- Input Panel -->
+      <div class="input-panel">
+        <div class="panel-title">Replenishment Control Parameters</div>
+
+        <!-- Presets -->
+        <label class="form-label" style="font-size:0.75rem;margin-bottom:6px;">Quick Operational Scenarios</label>
+        <div class="preset-grid">
+          <button type="button" class="preset-btn" onclick="applyPreset('critical')" style="border-left:3px solid #EF5350;">
+            <span class="status-indicator critical"></span>
+            <div>
+              <div style="font-weight:700;color:#EF5350;">Stockout Crisis</div>
+              <div style="font-size:0.64rem;color:var(--text-muted);">Stock below safety floor</div>
+            </div>
+          </button>
+          <button type="button" class="preset-btn" onclick="applyPreset('reorder')" style="border-left:3px solid #FFB347;">
+            <span></span>
+            <div>
+              <div style="font-weight:700;color:#FFB347;">ROP Breached</div>
+              <div style="font-size:0.64rem;color:var(--text-muted);">Standard replenishment</div>
+            </div>
+          </button>
+          <button type="button" class="preset-btn" onclick="applyPreset('healthy')" style="border-left:3px solid #10B981;">
+            <span class="status-indicator normal"></span>
+            <div>
+              <div style="font-weight:700;color:#10B981;">Healthy Buffer</div>
+              <div style="font-size:0.64rem;color:var(--text-muted);">Adequate supply on-hand</div>
+            </div>
+          </button>
+          <button type="button" class="preset-btn" onclick="applyPreset('surge')" style="border-left:3px solid #7B61FF;">
+            <span class="ui-icon"><svg class="ui-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+            <div>
+              <div style="font-weight:700;color:#7B61FF;">Demand Spike</div>
+              <div style="font-size:0.64rem;color:var(--text-muted);">High velocity surge</div>
+            </div>
+          </button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Current Stock on Hand <span class="formula-tag">I</span></label>
+            <input class="form-control" id="m5-stock" type="number" min="0" value="80"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Daily Demand Rate <span class="formula-tag">d</span></label>
+            <input class="form-control" id="m5-demand" type="number" min="0.1" step="0.1" value="12"/>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Supplier Lead Time (days) <span class="formula-tag">L</span></label>
+            <input class="form-control" id="m5-lead" type="number" min="1" value="7"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Safety Buffer (days) <span class="formula-tag">T_safe</span></label>
+            <input class="form-control" id="m5-safety" type="number" min="0" step="0.5" value="3"/>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Review Period (days) <span class="formula-tag">R</span></label>
+            <input class="form-control" id="m5-review" type="number" min="1" value="7"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pack / Case Batch Size <span class="formula-tag">Pack</span></label>
+            <input class="form-control" id="m5-pack" type="number" min="1" value="10"/>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Unit Holding Cost ($/yr) <span class="formula-tag">H</span></label>
+            <input class="form-control" id="m5-holding" type="number" min="0.1" step="0.1" value="1.50"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Stockout Penalty ($/unit) <span class="formula-tag">Cs</span></label>
+            <input class="form-control" id="m5-stockout" type="number" min="1" step="1" value="25.00"/>
+          </div>
+        </div>
+
+        <button class="submit-btn" onclick="optimizeInventory()">Calculate Optimal Policy</button>
+
+        <div style="margin-top:12px">
+          <button class="btn btn-secondary" style="width:100%;justify-content:center;font-size:0.80rem;padding:9px 12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s ease;" onclick="scrollToArchitecture()">📐 View Mathematical Formulations &amp; Specs</button>
+        </div>
+      </div>
+
+      <!-- Output Panel -->
+      <div class="output-panel" id="m5-output">
+        <div class="empty-state">
+          <div class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <h3>Inventory Simulator Ready</h3>
+          <p>Configure on-hand inventory, lead time, and forecast consumption rate to compute safety buffer thresholds and integer pack replenishment.</p>
+        </div>
+      </div>
+    </div><!-- /module-grid -->
+
+    <!-- ── Analytics & Visualizations Section ── -->
+    <div class="analytics-section">
+      <div class="analytics-section-title">Operational Research Visualizations &amp; Inventory Dynamics</div>
+      <div class="chart-grid">
+
+        <!-- Card 1: 30-Day Inventory Depletion Trajectory (Sawtooth Curve) -->
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+            <div class="chart-card-title" style="margin-bottom:0;">
+              30-Day Inventory Depletion &amp; Replenishment Trajectory (Sawtooth Simulation)
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-muted);display:flex;align-items:center;gap:14px;">
+              <span><span style="display:inline-block;width:10px;height:10px;background:#4FC3F7;border-radius:2px;margin-right:4px;"></span>Simulated Stock</span>
+              <span><span style="display:inline-block;width:10px;height:2px;background:#FFB347;margin-right:4px;"></span>ROP Threshold</span>
+              <span><span style="display:inline-block;width:10px;height:2px;background:#EF5350;margin-right:4px;"></span>Safety Floor</span>
+              <span><span style="display:inline-block;width:10px;height:2px;background:#10B981;margin-right:4px;"></span>Target Ceiling</span>
+            </div>
+          </div>
+          <div style="position:relative;height:290px;">
+            <canvas id="chartTrajectory"></canvas>
+          </div>
+          <div style="font-size:0.74rem;color:var(--text-muted);margin-top:10px;line-height:1.4;">
+            <strong>Trajectory Logic:</strong> On-hand inventory continuously depletes at daily rate \(d\). When stock breaches the Reorder Point (ROP), a purchase order is triggered. After supplier lead time \(L\), batch quantity \(Q\) arrives, restoring stock to target level \(S\).
+          </div>
+        </div>
+
+        <!-- Card 2: Stock Allocation Breakdown (Doughnut) -->
+        <div class="chart-card">
+          <div class="chart-card-title">Inventory Capital &amp; Buffer Allocation</div>
+          <div style="position:relative;height:250px;">
+            <canvas id="chartAllocation"></canvas>
+          </div>
+          <div style="font-size:0.74rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Proportional split between working stock, safety buffer, and pipeline replenishment.
+          </div>
+        </div>
+
+        <!-- Card 3: Carrying vs Stockout Cost Trade-Off Curve -->
+        <div class="chart-card">
+          <div class="chart-card-title">Total Cost of Ownership (TCO) Trade-Off Curve</div>
+          <div style="position:relative;height:250px;">
+            <canvas id="chartCostTradeoff"></canvas>
+          </div>
+          <div style="font-size:0.74rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Minimizes U-shaped curve: Annual Carrying Cost \((H \cdot SS)\) vs Expected Stockout Risk \((C_s \cdot P_{so})\).
+          </div>
+        </div>
+
+        <!-- Card 4: Service Level vs. Required Safety Stock Multiplier (Z-Factor) -->
+        <div class="chart-card">
+          <div class="chart-card-title">Service Level Reliability vs Safety Multiplier (Z-Score)</div>
+          <div style="position:relative;height:250px;">
+            <canvas id="chartServiceLevel"></canvas>
+          </div>
+          <div style="font-size:0.74rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Demonstrates non-linear inventory penalty for high-availability reliability (85% &rarr; 99.9%).
+          </div>
+        </div>
+
+        <!-- Card 5: Inventory Sensitivity Matrix -->
+        <div class="chart-card">
+          <div class="chart-card-title">Lead-Time Demand Vulnerability Grid</div>
+          <div style="position:relative;height:250px;">
+            <canvas id="chartSensitivity"></canvas>
+          </div>
+          <div style="font-size:0.74rem;color:var(--text-muted);margin-top:10px;text-align:center;">
+            Projected stockout risk exposure across fluctuating supplier delays (\(\pm 3\) days).
+          </div>
+        </div>
+
+        <!-- Card 6: Operations Research Architecture & Mathematical Specs -->
+        <div class="chart-card" id="architectureSection" style="grid-column: 1 / -1;">
+          <div class="chart-card-title">Operations Research Formulation &amp; Policy Architecture</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:24px;">
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--brand-orange);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;">Mathematical Model Formulations</div>
+              <table class="config-table">
+                <tr>
+                  <td>Safety Buffer (SS)</td>
+                  <td><span class="formula-tag">SS = d &times; T_safety</span></td>
+                </tr>
+                <tr>
+                  <td>Reorder Point (ROP)</td>
+                  <td><span class="formula-tag">ROP = (d &times; L) + SS</span></td>
+                </tr>
+                <tr>
+                  <td>Order-Up-To Target (S)</td>
+                  <td><span class="formula-tag">S = d &times; (L + T_safe + R)</span></td>
+                </tr>
+                <tr>
+                  <td>Pack Reorder Qty (Q)</td>
+                  <td><span class="formula-tag">&lceil;(S - I) / Pack&rceil; &times; Pack</span></td>
+                </tr>
+                <tr>
+                  <td>Days of Supply (DoS)</td>
+                  <td><span class="formula-tag">DoS = I / d</span></td>
+                </tr>
+              </table>
+            </div>
+
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--brand-sky);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;">Logistics Policy Specification</div>
+              <table class="config-table">
+                <tr>
+                  <td>Inventory Model</td>
+                  <td>Continuous Review (s, S) with Pack Rounding</td>
+                </tr>
+                <tr>
+                  <td>Demand Coupler</td>
+                  <td>Module 01 (Walmart XGBoost / LSTM AI)</td>
+                </tr>
+                <tr>
+                  <td>Downstream Recipient</td>
+                  <td>Module 06 Decision Engine &amp; Module 07</td>
+                </tr>
+                <tr>
+                  <td>Carrying Rate</td>
+                  <td>$1.50 / unit / year (Configurable)</td>
+                </tr>
+                <tr>
+                  <td>Stockout Penalty</td>
+                  <td>$25.00 / incident (Configurable)</td>
+                </tr>
+              </table>
+            </div>
+
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--brand-gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;">Automated Decision Triggers</div>
+              <table class="config-table">
+                <tr>
+                  <td>CRITICAL_REPLENISH</td>
+                  <td>Stock &le; SS &rarr; Trigger immediate expedite</td>
+                </tr>
+                <tr>
+                  <td>REPLENISH</td>
+                  <td>Stock &le; ROP &rarr; Issue standard purchase PO</td>
+                </tr>
+                <tr>
+                  <td>HEALTHY</td>
+                  <td>Stock &gt; ROP &rarr; Nominal buffer maintained</td>
+                </tr>
+                <tr>
+                  <td>Human Sign-Off</td>
+                  <td>Enforced via Module 06 Operator Cockpit</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /analytics-section -->
+  </main>
+
+  <script>
+    // Global Chart Instances for dynamic updates
+    let chartTrajectoryInstance = null;
+    let chartAllocationInstance = null;
+    let chartCostInstance = null;
+    let chartServiceInstance = null;
+    let chartSensitivityInstance = null;
+
+    // Apply Scenario Presets
+    function applyPreset(type) {
+      if (type === 'critical') {
+        document.getElementById('m5-stock').value = 25;
+        document.getElementById('m5-demand').value = 14;
+        document.getElementById('m5-lead').value = 7;
+        document.getElementById('m5-safety').value = 3;
+        document.getElementById('m5-review').value = 7;
+        document.getElementById('m5-pack').value = 10;
+      } else if (type === 'reorder') {
+        document.getElementById('m5-stock').value = 95;
+        document.getElementById('m5-demand').value = 12;
+        document.getElementById('m5-lead').value = 6;
+        document.getElementById('m5-safety').value = 3;
+        document.getElementById('m5-review').value = 7;
+        document.getElementById('m5-pack').value = 25;
+      } else if (type === 'healthy') {
+        document.getElementById('m5-stock').value = 320;
+        document.getElementById('m5-demand').value = 10;
+        document.getElementById('m5-lead').value = 5;
+        document.getElementById('m5-safety').value = 3;
+        document.getElementById('m5-review').value = 7;
+        document.getElementById('m5-pack').value = 20;
+      } else if (type === 'surge') {
+        document.getElementById('m5-stock').value = 130;
+        document.getElementById('m5-demand').value = 35;
+        document.getElementById('m5-lead').value = 4;
+        document.getElementById('m5-safety').value = 4;
+        document.getElementById('m5-review').value = 5;
+        document.getElementById('m5-pack').value = 50;
+      }
+      optimizeInventory();
+    }
+
+    function scrollToArchitecture() {
+      const el = document.getElementById('architectureSection');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function dismissHandoff() {
+      const b = document.getElementById('m1-handoff-banner');
+      if (b) b.style.display = 'none';
+    }
+
+    async function optimizeInventory() {
+      const out = document.getElementById('m5-output');
+      out.innerHTML = '<div class="panel-loading visible"><div class="spinner"></div>Computing optimal replenishment policy&hellip;</div>';
+
+      const stock = parseFloat(document.getElementById('m5-stock').value);
+      const demand = parseFloat(document.getElementById('m5-demand').value);
+      const lead = parseFloat(document.getElementById('m5-lead').value);
+      const safetyDays = parseFloat(document.getElementById('m5-safety').value);
+      const reviewDays = parseFloat(document.getElementById('m5-review').value);
+      const pack = parseFloat(document.getElementById('m5-pack').value);
+      const holdingCost = parseFloat(document.getElementById('m5-holding').value) || 1.5;
+      const stockoutCost = parseFloat(document.getElementById('m5-stockout').value) || 25.0;
+
+      const payload = {
+        current_stock: stock,
+        forecast_daily_demand: demand,
+        daily_demand: demand,
+        lead_time_days: lead,
+        safety_stock_days: safetyDays,
+        review_period_days: reviewDays,
+        pack_size: pack,
+        holding_cost_per_unit: holdingCost,
+        stockout_cost_per_unit: stockoutCost
+      };
+
+      try {
+        const res = await fetch('/api/module5/optimize', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (!res.success) {
+          out.innerHTML = `<div class="alert alert-error"> ${res.error}</div>`;
+          return;
+        }
+
+        const r = res.result;
+        const isCritical = r.status === 'CRITICAL_REPLENISH';
+        const isReplenish = r.status === 'REPLENISH';
+        const statusColor = isCritical ? '#EF5350' : isReplenish ? '#FFB347' : '#10B981';
+        const statusIcon = isCritical ? '<span class="status-indicator critical"></span>' : isReplenish ? '<span class="status-indicator alert"></span>' : '<span class="status-indicator normal"></span>';
+        const statusTitle = isCritical ? 'CRITICAL REPLENISHMENT' : isReplenish ? 'REORDER REQUIRED' : 'STOCK HEALTHY';
+
+        // Annual Carrying Cost Estimate
+        const annualCarrying = Math.round(r.safety_stock_units * holdingCost + (r.target_stock / 2) * holdingCost);
+        const annualStockoutExposure = isCritical ? Math.round(r.reorder_point * stockoutCost * 0.45) : (isReplenish ? Math.round(r.safety_stock_units * stockoutCost * 0.15) : 0);
+
+        out.innerHTML = `
+          <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;">
+            <span>Inventory Recommendation</span>
+            <span class="pill-badge" style="background:${statusColor}22;border:1px solid ${statusColor}55;color:${statusColor}">
+              ${r.status}
+            </span>
+          </div>
+
+          <div style="text-align:center;padding:14px 0 10px;">
+            <div style="font-size:2.4rem;margin-bottom:6px">${statusIcon}</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:1.35rem;font-weight:900;color:${statusColor};letter-spacing:0.8px;">
+              ${statusTitle}
+            </div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:6px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.45;">
+              ${r.recommendation || ''}
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:10px;margin:14px 0;">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px;text-align:center;">
+              <div class="stat-hero" style="color:var(--brand-orange);">${r.recommended_order_quantity.toLocaleString()}</div>
+              <div class="stat-caption">Recommended Order (Units)</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px;text-align:center;">
+              <div class="stat-hero" style="color:${statusColor};">${r.days_of_supply}</div>
+              <div class="stat-caption">Days of Supply On-Hand</div>
+            </div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-item"><span class="metric-key">Current Stock</span><span class="metric-val">${r.current_stock.toLocaleString()} units</span></div>
+            <div class="metric-item"><span class="metric-key">Reorder Point (ROP)</span><span class="metric-val" style="color:var(--brand-gold)">${r.reorder_point.toLocaleString()} units</span></div>
+            <div class="metric-item"><span class="metric-key">Safety Buffer</span><span class="metric-val">${r.safety_stock_units.toLocaleString()} units</span></div>
+            <div class="metric-item"><span class="metric-key">Target Stock (S)</span><span class="metric-val" style="color:var(--brand-sky)">${r.target_stock.toLocaleString()} units</span></div>
+            <div class="metric-item"><span class="metric-key">Pack Rounding</span><span class="metric-val">${r.pack_size} units/case</span></div>
+            <div class="metric-item"><span class="metric-key">Est. Annual Carrying</span><span class="metric-val">$${annualCarrying.toLocaleString()}/yr</span></div>
+          </div>
+
+          ${r.assumptions && r.assumptions.length ? `
+            <div style="margin-top:12px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:8px;font-size:0.75rem;color:var(--text-muted);line-height:1.5;">
+              <strong style="color:var(--text-secondary)">Assumptions:</strong> ${r.assumptions.join(' &bull; ')}
+            </div>
+          ` : ''}
+
+          <div style="margin-top:18px;text-align:center;">
+            <button class="submit-btn" style="background:linear-gradient(90deg,var(--brand-purple,#7B61FF),var(--brand-sky,#4FC3F7));display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 24px;width:100%;font-size:0.86rem;" onclick="forwardToModule6('${r.status}', ${r.current_stock}, ${r.reorder_point})">
+              Send Stock Telemetry to Module 6 Decision Engine &rarr;
+            </button>
+          </div>
+        `;
+
+        // Update Dynamic Live Charts!
+        updateLiveCharts(stock, demand, lead, safetyDays, reviewDays, pack, r);
+
+      } catch (e) {
+        out.innerHTML = `<div class="alert alert-error"> ${e.message}</div>`;
+      }
+    }
+
+    function forwardToModule6(status, stock, rop) {
+      const invData = {
+        status: status,
+        inventory_status: status,
+        current_stock: stock,
+        stock_level: stock,
+        reorder_point: rop
+      };
+      localStorage.setItem('logiyantra_m5_inventory', JSON.stringify(invData));
+      sessionStorage.setItem('ly_incoming_decision', JSON.stringify(invData));
+      window.location.href = '/module6.html';
+    }
+
+    // ── CHARTS INITIALIZATION & UPDATES ──
+    const gridLine = { color: 'rgba(255,255,255,0.06)' };
+    const tickStyle = { color: 'rgba(255,255,255,0.55)', font: { size: 11 } };
+
+    function updateLiveCharts(stock, demand, lead, safetyDays, reviewDays, pack, r) {
+      // 1. Sawtooth Curve Simulation (30 Days)
+      const days = [];
+      const simulatedStock = [];
+      const ropLine = [];
+      const safetyLine = [];
+      const targetLine = [];
+
+      let current = stock;
+      let orderInTransit = false;
+      let arrivalDay = -1;
+      const orderQty = r.recommended_order_quantity > 0 ? r.recommended_order_quantity : Math.max(pack, Math.round(demand * (lead + reviewDays)));
+
+      for (let day = 0; day <= 30; day++) {
+        days.push(`Day ${day}`);
+        ropLine.push(r.reorder_point);
+        safetyLine.push(r.safety_stock_units);
+        targetLine.push(r.target_stock);
+
+        if (day > 0) {
+          current = Math.max(0, current - demand);
+          // Check order arrival
+          if (orderInTransit && day === arrivalDay) {
+            current += orderQty;
+            orderInTransit = false;
+          }
+          // Check order placement trigger
+          if (current <= r.reorder_point && !orderInTransit) {
+            orderInTransit = true;
+            arrivalDay = day + Math.round(lead);
+          }
+        }
+        simulatedStock.push(Math.round(current));
+      }
+
+      if (chartTrajectoryInstance) {
+        chartTrajectoryInstance.data.labels = days;
+        chartTrajectoryInstance.data.datasets[0].data = simulatedStock;
+        chartTrajectoryInstance.data.datasets[1].data = ropLine;
+        chartTrajectoryInstance.data.datasets[2].data = safetyLine;
+        chartTrajectoryInstance.data.datasets[3].data = targetLine;
+        chartTrajectoryInstance.update();
+      }
+
+      // 2. Allocation Breakdown
+      if (chartAllocationInstance) {
+        const workingStock = Math.max(0, stock - r.safety_stock_units);
+        const safetyUnits = Math.min(stock, r.safety_stock_units);
+        const shortage = Math.max(0, r.target_stock - stock);
+
+        chartAllocationInstance.data.datasets[0].data = [
+          Math.round(workingStock),
+          Math.round(safetyUnits),
+          Math.round(shortage)
+        ];
+        chartAllocationInstance.update();
+      }
+
+      // 3. Sensitivity Matrix Update
+      if (chartSensitivityInstance) {
+        const leadVariations = [-2, -1, 0, 1, 2, 3];
+        const stockoutRisks = leadVariations.map(offset => {
+          const effectiveLead = Math.max(1, lead + offset);
+          const leadDemand = effectiveLead * demand;
+          const availableBuffer = stock + r.safety_stock_units;
+          if (availableBuffer < leadDemand) {
+            return Math.min(100, Math.round(((leadDemand - availableBuffer) / leadDemand) * 100));
+          }
+          return Math.max(0, Math.round((1 - (availableBuffer - leadDemand) / (r.safety_stock_units || 1)) * 20));
+        });
+        chartSensitivityInstance.data.datasets[0].data = stockoutRisks;
+        chartSensitivityInstance.update();
+      }
+    }
+
+    function initStaticCharts() {
+      // ── Chart 1: Trajectory Sawtooth ──
+      const initialDays = Array.from({length: 31}, (_, i) => `Day ${i}`);
+      const initialStock = [80];
+      let cur = 80;
+      let orderPl = false;
+      let arr = -1;
+      for (let i = 1; i <= 30; i++) {
+        cur = Math.max(0, cur - 12);
+        if (orderPl && i === arr) { cur += 130; orderPl = false; }
+        if (cur <= 120 && !orderPl) { orderPl = true; arr = i + 7; }
+        initialStock.push(Math.round(cur));
+      }
+
+      chartTrajectoryInstance = new Chart(document.getElementById('chartTrajectory'), {
+        type: 'line',
+        data: {
+          labels: initialDays,
+          datasets: [
+            {
+              label: 'On-Hand Stock Level (I)',
+              data: initialStock,
+              borderColor: '#4FC3F7',
+              backgroundColor: 'rgba(79,195,247,0.10)',
+              fill: true,
+              tension: 0.1,
+              borderWidth: 2.5,
+              pointRadius: 3,
+              pointBackgroundColor: '#4FC3F7'
+            },
+            {
+              label: 'Reorder Point (ROP = 120)',
+              data: Array(31).fill(120),
+              borderColor: '#FFB347',
+              borderDash: [5, 5],
+              borderWidth: 2,
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Safety Stock Floor (SS = 36)',
+              data: Array(31).fill(36),
+              borderColor: '#EF5350',
+              borderDash: [3, 3],
+              borderWidth: 2,
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Target Stock Ceiling (S = 204)',
+              data: Array(31).fill(204),
+              borderColor: '#10B981',
+              borderDash: [4, 4],
+              borderWidth: 1.5,
+              pointRadius: 0,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: 'rgba(255,255,255,0.7)', font: { size: 11 }, boxWidth: 14 }
+            },
+            tooltip: {
+              callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} units` }
+            }
+          },
+          scales: {
+            x: { grid: gridLine, ticks: { ...tickStyle, maxTicksLimit: 16 } },
+            y: { grid: gridLine, ticks: tickStyle, beginAtZero: true, title: { display: true, text: 'Inventory Units', color: 'rgba(255,255,255,0.4)', font: { size: 11 } } }
+          }
+        }
+      });
+
+      // ── Chart 2: Inventory Capital Breakdown ──
+      chartAllocationInstance = new Chart(document.getElementById('chartAllocation'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Cycle / Working Stock', 'Safety Buffer Reserve', 'Target Deficit / Order Required'],
+          datasets: [{
+            data: [44, 36, 124],
+            backgroundColor: [
+              'rgba(79, 195, 247, 0.75)',
+              'rgba(255, 179, 71, 0.75)',
+              'rgba(239, 83, 80, 0.75)'
+            ],
+            borderColor: ['#4FC3F7', '#FFB347', '#EF5350'],
+            borderWidth: 1.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,0.7)', font: { size: 10 } } }
+          },
+          cutout: '62%'
+        }
+      });
+
+      // ── Chart 3: Cost Trade-Off Curve ──
+      const safetyDaysRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      const holdingCosts = safetyDaysRange.map(d => d * 12 * 1.50);
+      const stockoutCosts = safetyDaysRange.map(d => Math.round(600 * Math.exp(-0.6 * d)));
+      const totalCosts = safetyDaysRange.map((_, i) => holdingCosts[i] + stockoutCosts[i]);
+
+      chartCostInstance = new Chart(document.getElementById('chartCostTradeoff'), {
+        type: 'line',
+        data: {
+          labels: safetyDaysRange.map(d => `${d}d Safe`),
+          datasets: [
+            {
+              label: 'Total Inventory Cost (TCO)',
+              data: totalCosts,
+              borderColor: '#FF8C42',
+              backgroundColor: 'rgba(255,140,66,0.1)',
+              borderWidth: 3,
+              pointRadius: 4,
+              pointBackgroundColor: '#FF8C42',
+              fill: true,
+              tension: 0.3
+            },
+            {
+              label: 'Holding Cost (H)',
+              data: holdingCosts,
+              borderColor: '#4FC3F7',
+              borderWidth: 1.8,
+              borderDash: [4, 4],
+              pointRadius: 0
+            },
+            {
+              label: 'Stockout Penalty Risk',
+              data: stockoutCosts,
+              borderColor: '#EF5350',
+              borderWidth: 1.8,
+              borderDash: [4, 4],
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: 'rgba(255,255,255,0.7)', font: { size: 10 } } },
+            tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: $${ctx.raw}` } }
+          },
+          scales: {
+            x: { grid: gridLine, ticks: tickStyle },
+            y: { grid: gridLine, ticks: { ...tickStyle, callback: v => '$' + v } }
+          }
+        }
+      });
+
+      // ── Chart 4: Service Level vs. Z-Score ──
+      chartServiceInstance = new Chart(document.getElementById('chartServiceLevel'), {
+        type: 'bar',
+        data: {
+          labels: ['85% (Z=1.04)', '90% (Z=1.28)', '95% (Z=1.65)', '98% (Z=2.05)', '99% (Z=2.33)', '99.9% (Z=3.09)'],
+          datasets: [{
+            label: 'Required Safety Stock Multiplier',
+            data: [1.04, 1.28, 1.65, 2.05, 2.33, 3.09],
+            backgroundColor: [
+              'rgba(129, 199, 132, 0.65)',
+              'rgba(79, 195, 247, 0.65)',
+              'rgba(79, 195, 247, 0.85)',
+              'rgba(255, 179, 71, 0.75)',
+              'rgba(255, 140, 66, 0.85)',
+              'rgba(239, 83, 80, 0.85)'
+            ],
+            borderColor: ['#81C784', '#4FC3F7', '#4FC3F7', '#FFB347', '#FF8C42', '#EF5350'],
+            borderWidth: 1.5,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => ` Z-Score Factor: ${ctx.raw} &times; &sigma;_L` } }
+          },
+          scales: {
+            x: { grid: gridLine, ticks: { ...tickStyle, font: { size: 9.5 } } },
+            y: { grid: gridLine, ticks: tickStyle, beginAtZero: true, title: { display: true, text: 'Z-Factor Multiplier', color: 'rgba(255,255,255,0.4)', font: { size: 10 } } }
+          }
+        }
+      });
+
+      // ── Chart 5: Sensitivity Matrix ──
+      chartSensitivityInstance = new Chart(document.getElementById('chartSensitivity'), {
+        type: 'line',
+        data: {
+          labels: ['-2 Days Early', '-1 Day', 'Nominal Lead Time', '+1 Day Late', '+2 Days Late', '+3 Days Delay'],
+          datasets: [{
+            label: 'Stockout Probability (%)',
+            data: [0, 2, 8, 28, 62, 89],
+            borderColor: '#EF5350',
+            backgroundColor: 'rgba(239, 83, 80, 0.15)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#EF5350'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => ` Stockout Risk: ${ctx.raw}%` } }
+          },
+          scales: {
+            x: { grid: gridLine, ticks: { ...tickStyle, font: { size: 9.5 } } },
+            y: { grid: gridLine, ticks: { ...tickStyle, callback: v => v + '%' }, beginAtZero: true, max: 100 }
+          }
+        }
+      });
+    }
+
+    // Auth & Navigation helpers
+    const user = JSON.parse(localStorage.getItem('ly_user') || '{}');
+    if (user.name) {
+      const sName = document.getElementById('sidebarName');
+      const sAvatar = document.getElementById('sidebarAvatar');
+      const sRole = document.getElementById('sidebarRole');
+      if (sName) sName.textContent = user.name;
+      if (sAvatar) sAvatar.textContent = user.name[0].toUpperCase();
+      if (sRole && user.role) sRole.textContent = user.role + (user.employee_id ? ' • ' + user.employee_id : '');
+    }
+
+    function toggleSidebar() {
+      const sb = document.querySelector('.sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (sb) sb.classList.toggle('open');
+      if (bd) bd.classList.toggle('active');
+    }
+
+    function handleSignOut() {
+      if (confirm('Are you sure you want to sign out?')) {
+        localStorage.removeItem('ly_user');
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
+
+    // Auto-receive incoming forecast from Module 1 Demand Forecasting handoff
+    document.addEventListener('DOMContentLoaded', () => {
+      initStaticCharts();
+
+      // Check incoming forecast from Module 1
+      const incoming = sessionStorage.getItem('ly_incoming_demand');
+      if (incoming) {
+        try {
+          const data = JSON.parse(incoming);
+          if (data && data.daily_demand) {
+            const demandInput = document.getElementById('m5-demand');
+            if (demandInput) {
+              demandInput.value = Math.round(data.daily_demand);
+              demandInput.style.borderColor = 'var(--brand-orange)';
+              demandInput.style.boxShadow = '0 0 10px rgba(255,140,66,0.4)';
+            }
+            const banner = document.getElementById('m1-handoff-banner');
+            const bannerDetail = document.getElementById('m1-handoff-detail');
+            if (banner && bannerDetail) {
+              banner.style.display = 'flex';
+              bannerDetail.textContent = `Forecast of ${Math.round(data.daily_demand).toLocaleString()} units/day imported directly from Walmart sales model.`;
+            }
+            sessionStorage.removeItem('ly_incoming_demand');
+          }
+        } catch(e) {
+          console.warn(e);
+        }
+      }
+
+      // Automatically run optimization on page load
+      optimizeInventory();
+    });
+  </script>
+  <script src="/js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+{
+    "generated_at": "2026-10-10T21:37:47.759173",
+    "result": {
+        "origin": {
+            "lat": 20.2961,
+            "lon": 85.8245
+        },
+        "destination": {
+            "lat": 20.33,
+            "lon": 85.82
+        },
+        "best_route": {
+            "route_id": "route_1",
+            "name": "Primary Highway Corridor",
+            "distance_km": 4.86,
+            "distance_meters": 4860,
+            "estimated_time_minutes": 4.5,
+            "estimated_time_seconds": 270,
+            "route_risk_score": 0.15,
+            "live_traffic_applied": false,
+            "traffic_status": "FREE_FLOW_ESTIMATE",
+            "waypoints": [
+                {
+                    "lat": 20.2961,
+                    "lon": 85.8245
+                },
+                {
+                    "lat": 20.297,
+                    "lon": 85.8236
+                },
+                {
+                    "lat": 20.30015,
+                    "lon": 85.8227
+                },
+                {
+                    "lat": 20.30693,
+                    "lon": 85.8218
+                },
+                {
+                    "lat": 20.31734,
+                    "lon": 85.8209
+                },
+                {
+                    "lat": 20.33,
+                    "lon": 85.82
+                }
+            ],
+            "source": "geometric_road_model"
+        },
+        "alternatives": [
+            {
+                "route_id": "route_2",
+                "name": "Arterial Bypass Route",
+                "distance_km": 5.44,
+                "distance_meters": 5440,
+                "estimated_time_minutes": 5.9,
+                "estimated_time_seconds": 354,
+                "route_risk_score": 0.25,
+                "live_traffic_applied": false,
+                "traffic_status": "FREE_FLOW_ESTIMATE",
+                "waypoints": [
+                    {
+                        "lat": 20.2961,
+                        "lon": 85.8245
+                    },
+                    {
+                        "lat": 20.30288,
+                        "lon": 85.8236
+                    },
+                    {
+                        "lat": 20.30966,
+                        "lon": 85.8227
+                    },
+                    {
+                        "lat": 20.31644,
+                        "lon": 85.8218
+                    },
+                    {
+                        "lat": 20.32322,
+                        "lon": 85.8209
+                    },
+                    {
+                        "lat": 20.33,
+                        "lon": 85.82
+                    }
+                ],
+                "source": "geometric_road_model"
+            },
+            {
+                "route_id": "route_3",
+                "name": "Secondary Ring Road Corridor",
+                "distance_km": 5.93,
+                "distance_meters": 5930,
+                "estimated_time_minutes": 7.4,
+                "estimated_time_seconds": 444,
+                "route_risk_score": 0.35,
+                "live_traffic_applied": false,
+                "traffic_status": "FREE_FLOW_ESTIMATE",
+                "waypoints": [
+                    {
+                        "lat": 20.2961,
+                        "lon": 85.8245
+                    },
+                    {
+                        "lat": 20.30876,
+                        "lon": 85.8236
+                    },
+                    {
+                        "lat": 20.31917,
+                        "lon": 85.8227
+                    },
+                    {
+                        "lat": 20.32595,
+                        "lon": 85.8218
+                    },
+                    {
+                        "lat": 20.3291,
+                        "lon": 85.8209
+                    },
+                    {
+                        "lat": 20.33,
+                        "lon": 85.82
+                    }
+                ],
+                "source": "geometric_road_model"
+            }
+        ],
+        "total_candidates": 3,
+        "data_source": "LogiYantra Geometric Road Model (OSM Graph Offline)",
+        "live_traffic_connected": false,
+        "note": "Road network graph was offline; calculations reflect free-flow geometric corridor estimates."
+    }
+}

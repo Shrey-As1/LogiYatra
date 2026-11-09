@@ -1,0 +1,76 @@
+{
+    "project": "ALIP",
+    "module": "Module 1 - Demand Forecasting",
+    "dataset": "Walmart Recruiting - Store Sales Forecasting",
+    "methodology": {
+        "split": "Chronological",
+        "train_ratio": 0.7,
+        "validation_ratio": 0.15,
+        "test_ratio": 0.15,
+        "lstm_window": 12
+    },
+    "models": {
+        "baseline_lag1": {
+            "MAE": 1533.633461387958,
+            "RMSE": 3439.704825862374,
+            "MAPE": 132.1028404073508,
+            "WAPE": 9.671530108458409,
+            "R2": 0.9755288520427622
+        },
+        "baseline_seasonal": {
+            "MAE": 2884.4723522806544,
+            "RMSE": 6286.816780384363,
+            "MAPE": 3975.3918811861618,
+            "WAPE": 18.19030550940824,
+            "R2": 0.9182526658562458
+        },
+        "xgboost": {
+            "MAE": 1259.5017258284743,
+            "RMSE": 2611.7978649795346,
+            "MAPE": 834.8259811514251,
+            "WAPE": 7.942777182222652,
+            "R2": 0.9858911662350344
+        },
+        "lstm": {
+            "MAE": 1788.8588395359359,
+            "RMSE": 3269.755176689035,
+            "MAPE": 1557.846514065637,
+            "WAPE": 11.281054151424257,
+            "R2": 0.9778872648907381
+        },
+        "hybrid": {
+            "MAE": 1259.5017258284743,
+            "RMSE": 2611.7978649795346,
+            "MAPE": 834.8259811514251,
+            "WAPE": 7.942777182222652,
+            "R2": 0.9858911662350344
+        }
+    },
+    "selected_xgboost_configuration": {
+        "name": "XGB_C",
+        "n_estimators": 1000,
+        "max_depth": 10,
+        "learning_rate": 0.02,
+        "min_child_weight": 5,
+        "subsample": 0.85,
+        "colsample_bytree": 0.85,
+        "reg_alpha": 0.1,
+        "reg_lambda": 2.0
+    },
+    "selected_lstm_configuration": {
+        "name": "LSTM_B",
+        "lstm_units_1": 128,
+        "lstm_units_2": 64,
+        "dense_units": 32,
+        "dropout": 0.2
+    },
+    "selected_lstm_epochs": 6,
+    "hybrid_weights": {
+        "xgboost_weight": 1.0,
+        "lstm_weight": 0.0,
+        "optimization_metric": "Validation RMSE",
+        "search_step": 0.05
+    },
+    "best_test_model": "XGBoost",
+    "best_test_rmse": 2611.7978649795346
+}

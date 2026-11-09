@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — LogiYantra</title>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <script>
+    // Authentication Guard: Ensure user is logged in before entering Control Tower
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem('ly_user') || '{}');
+        if (!u || !u.name) {
+          sessionStorage.setItem('ly_return_to', '/dashboard.html');
+          window.location.replace('/login.html');
+        }
+      } catch (e) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+  <style>
+    /* ===== DASHBOARD BG ===== */
+    .dash-bg {
+      position: fixed; inset: 0; z-index: -2;
+      background-image: url('../assets/bg1.jpg');
+      background-size: cover; background-position: center 30%;
+    }
+    .dash-overlay {
+      position: fixed; inset: 0; z-index: -1;
+      background: linear-gradient(180deg,
+        rgba(5,8,20,0.60) 0%,
+        rgba(5,8,20,0.80) 40%,
+        rgba(5,8,20,0.92) 100%
+      );
+    }
+
+    /* ===== LAYOUT ===== */
+    .dash-layout {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      grid-row: 1 / -1;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 230px;
+      background: rgba(5,8,20,0.75);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      padding: 16px 0 12px;
+      z-index: 500;
+      box-sizing: border-box;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+      animation: slideInLeft 0.5s ease both;
+    }
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+    .sidebar-brand {
+      padding: 0 18px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+    .sidebar-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, var(--brand-orange), var(--brand-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .sidebar-logo-img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(255, 106, 0, 0.50));
+    }
+    .sidebar-tagline {
+      font-size: 0.60rem;
+      color: var(--text-muted);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .sidebar-label {
+      padding: 4px 18px 2px;
+      font-size: 0.60rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 18px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.80rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .sidebar-link:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.06);
+      border-left-color: var(--brand-orange);
+    }
+    .sidebar-link.active {
+      color: var(--brand-orange);
+      background: rgba(255,140,66,0.08);
+      border-left-color: var(--brand-orange);
+      font-weight: 600;
+    }
+    .sidebar-link .icon { font-size: 0.95rem; width: 18px; text-align: center; }
+    .sidebar-bottom {
+      margin-top: auto;
+      padding: 10px 16px 4px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      flex-shrink: 0;
+    }
+    .user-chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+    }
+    .user-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-orange), var(--brand-purple));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.82rem;
+    }
+    .user-name { font-size: 0.78rem; font-weight: 600; color: var(--text-primary); }
+    .user-role { font-size: 0.62rem; color: var(--text-muted); }
+
+    /* ===== MAIN CONTENT ===== */
+    .dash-main {
+      margin-left: 230px;
+      padding: 88px 28px 40px;
+    }
+
+    /* ===== TOP HEADER ===== */
+    .dash-header {
+      margin-bottom: 32px;
+      animation: fadeInDown 0.6s ease both;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .dash-greeting {
+      font-size: 0.82rem; color: var(--text-muted);
+      font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .dash-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      color: #fff;
+    }
+    .dash-title span { color: var(--brand-orange); }
+
+    /* Live Date, Day & Time Widget (Top Right - White Translucent Frosted Glass) */
+    .dash-time-widget {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      padding: 10px 18px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+    }
+    .dash-time-icon {
+      font-size: 1.5rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dash-time-details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+    }
+    .dash-live-time {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #4FC3F7;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      text-shadow: 0 0 12px rgba(79, 195, 247, 0.40);
+    }
+    .dash-live-date {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #CBD5E1;
+      margin-top: 4px;
+      letter-spacing: 0.4px;
+    }
+    .dash-live-day {
+      color: var(--brand-gold);
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-right: 4px;
+    }
+
+    /* Sign Out Button in Sidebar */
+    .btn-signout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      width: 100%;
+      margin-top: 6px;
+      padding: 6px 10px;
+      background: rgba(239, 83, 80, 0.12);
+      border: 1px solid rgba(239, 83, 80, 0.25);
+      border-radius: 8px;
+      color: #EF5350;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-signout:hover {
+      background: rgba(239, 83, 80, 0.25);
+      border-color: #EF5350;
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(239, 83, 80, 0.30);
+    }
+
+    /* ===== HERO KPI STRIP (Matching reference image structure: icon container -> line -> value -> label -> subtext) ===== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 9px;
+      margin-bottom: 24px;
+      overflow-x: visible;
+      padding-bottom: 4px;
+    }
+    .kpi-card {
+      background: rgba(18, 24, 38, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 12px 10px 10px;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.6s ease both;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+    }
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--kpi-color, #4FC3F7);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.50), 0 0 14px rgba(79, 195, 247, 0.15);
+    }
+    .kpi-icon {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      width: 34px;
+      height: 34px;
+      background: var(--kpi-bg, rgba(79, 195, 247, 0.18));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .kpi-indicator-bar {
+      width: 20px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--kpi-color, #4FC3F7);
+      margin-bottom: 8px;
+      box-shadow: 0 0 8px var(--kpi-color, #4FC3F7);
+    }
+    .kpi-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--kpi-color, #4FC3F7);
+      margin-bottom: 4px;
+      line-height: 1.15;
+      letter-spacing: 0.5px;
+      min-height: 20px;
+    }
+    .kpi-label {
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 100%;
+      margin-bottom: 2px;
+    }
+    .kpi-trend {
+      font-size: 0.63rem;
+      color: #CBD5E1;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 100%;
+      font-weight: 500;
+    }
+    @media (max-width: 860px) {
+      .kpi-grid {
+        grid-template-columns: repeat(7, minmax(110px, 1fr));
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+    }
+
+    /* ===== MODULE CARDS GRID ===== */
+    .modules-headline {
+      font-size: 0.80rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+    }
+    .mod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .mod-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 18px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.35s ease;
+      animation: fadeInUp 0.6s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+    .mod-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--mod-color, linear-gradient(90deg, var(--brand-orange), var(--brand-gold)));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .mod-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.40);
+    }
+    .mod-card:hover::after { opacity: 1; }
+
+    .mod-top { display: flex; align-items: center; justify-content: space-between; }
+    .mod-icon-wrap {
+      width: 46px; height: 46px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.35rem;
+      background: var(--mod-icon-bg, rgba(255,140,66,0.12));
+    }
+    .mod-status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+    .mod-name { font-size: 0.95rem; font-weight: 700; color: #fff; }
+    .mod-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+    .mod-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .mod-badge { font-size: 0.70rem; font-weight: 600; color: var(--text-muted); }
+    .mod-launch {
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--brand-sky);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .mod-launch:hover { color: var(--brand-orange); }
+
+    /* ===== DECISION ENGINE SECTION ===== */
+    .decision-section {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s 0.3s ease both;
+    }
+    .decision-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .decision-title {
+      font-size: 1rem; font-weight: 700; color: #fff;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .quick-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .decision-output {
+      margin-top: 16px;
+      animation: fadeInUp 0.4s ease;
+      display: none;
+    }
+    .decision-output.visible { display: block; }
+
+    /* Action items */
+    .action-list { display: flex; flex-direction: column; gap: 10px; }
+    .action-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      border-left: 4px solid;
+      animation: slideInLeft 0.4s ease both;
+    }
+    .action-item.CRITICAL { border-left-color: var(--danger);  }
+    .action-item.HIGH     { border-left-color: var(--warning); }
+    .action-item.MEDIUM   { border-left-color: var(--info);    }
+    .action-item.LOW      { border-left-color: var(--success); }
+    .action-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .action-name { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .action-reason { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* Spinner overlay */
+    .loading-overlay {
+      display: none;
+      align-items: center; justify-content: center;
+      padding: 32px;
+      flex-direction: column;
+      gap: 14px;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+    .loading-overlay.visible { display: flex; }
+
+    /* ===== LANDSCAPE MODULAR ARCHITECTURE DIAGRAM ===== */
+    .arch-section {
+      background: rgba(14, 20, 36, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      padding: 24px 26px 26px;
+      margin-bottom: 30px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s 0.2s ease both;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .arch-section.wide-view {
+      margin-left: -200px;
+      margin-right: -10px;
+      padding: 28px 32px 32px;
+    }
+    @media (max-width: 1280px) {
+      .arch-section.wide-view {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+    .arch-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .arch-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.30);
+      color: #4FC3F7;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .arch-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: 0.5px;
+    }
+    .arch-title span {
+      background: linear-gradient(90deg, var(--brand-orange), var(--brand-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .arch-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .arch-subtitle strong { color: #F1F5F9; }
+    .arch-subtitle em { color: var(--brand-gold); font-style: normal; }
+
+    .arch-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .arch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      color: #E2E8F0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .arch-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #FFF;
+      transform: translateY(-1px);
+    }
+    .arch-btn.active {
+      background: rgba(79, 195, 247, 0.18);
+      border-color: #4FC3F7;
+      color: #FFF;
+    }
+
+    /* Landscape horizontal scrolling wrapper */
+    .arch-landscape-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 140, 66, 0.6) rgba(255, 255, 255, 0.05);
+    }
+    .arch-landscape-wrapper::-webkit-scrollbar {
+      height: 7px;
+    }
+    .arch-landscape-wrapper::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+    .arch-landscape-wrapper::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, var(--brand-orange), var(--brand-sky));
+      border-radius: 4px;
+    }
+
+    /* Horizontal Landscape Pipeline Layout */
+    .arch-pipeline-landscape {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      min-width: 1320px;
+      padding: 8px 4px 6px;
+    }
+
+    /* Column Stage */
+    .arch-stage-col {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 170px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed rgba(255, 255, 255, 0.09);
+      border-radius: 16px;
+      padding: 12px 10px;
+      position: relative;
+    }
+    .arch-stage-col.stage-ingest   { min-width: 165px; max-width: 180px; }
+    .arch-stage-col.stage-predict  { min-width: 235px; flex: 1.35; }
+    .arch-stage-col.stage-inventory{ min-width: 175px; }
+    .arch-stage-col.stage-decision { min-width: 230px; flex: 1.30; }
+    .arch-stage-col.stage-routing  { min-width: 205px; flex: 1.15; }
+    .arch-stage-col.stage-xai      { min-width: 205px; flex: 1.15; }
+    .arch-stage-col.stage-human    { min-width: 175px; max-width: 195px; }
+
+    .arch-stage-label {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #94A3B8;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .arch-stage-label .stage-num {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.58rem;
+      color: #fff;
+    }
+
+    /* Stage Connector (Arrow between columns) */
+    .arch-stage-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .arch-conn-track {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      position: relative;
+    }
+    .arch-conn-line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(79, 195, 247, 0.45));
+      position: relative;
+      border-radius: 1px;
+    }
+    .arch-conn-arrow-svg {
+      width: 12px;
+      height: 12px;
+      fill: none;
+      stroke: #4FC3F7;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      margin-left: -2px;
+      filter: drop-shadow(0 0 6px rgba(79, 195, 247, 0.65));
+    }
+    .arch-signal-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4FC3F7;
+      position: absolute;
+      top: -2px;
+      box-shadow: 0 0 8px #4FC3F7;
+      animation: pulseTravel 2.2s infinite ease-in-out;
+    }
+    .arch-signal-dot.paused {
+      animation-play-state: paused;
+      opacity: 0.3;
+    }
+    @keyframes pulseTravel {
+      0% { left: 0%; opacity: 0.2; }
+      50% { opacity: 1; transform: scale(1.3); }
+      100% { left: 90%; opacity: 0.2; }
+    }
+
+    /* Modular Cards */
+    .arch-card {
+      background: rgba(18, 24, 38, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 13px;
+      padding: 11px 11px 9px;
+      margin-bottom: 8px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .arch-card:last-child { margin-bottom: 0; }
+    .arch-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3.5px;
+      background: var(--card-accent, #4FC3F7);
+    }
+    .arch-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--card-accent, #4FC3F7);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 14px var(--card-glow, rgba(79, 195, 247, 0.25));
+    }
+
+    /* Specific Module Accents */
+    .card-mod-1 { --card-accent: #FF8C42; --card-glow: rgba(255, 140, 66, 0.25); }
+    .card-mod-2 { --card-accent: #EF5350; --card-glow: rgba(239, 83, 80, 0.25); }
+    .card-mod-3 { --card-accent: #4FC3F7; --card-glow: rgba(79, 195, 247, 0.25); }
+    .card-mod-4 { --card-accent: #FFB347; --card-glow: rgba(255, 179, 71, 0.25); }
+    .card-mod-5 { --card-accent: #26C6DA; --card-glow: rgba(38, 198, 218, 0.25); }
+    .card-mod-6 { --card-accent: #7B61FF; --card-glow: rgba(123, 97, 255, 0.30); }
+    .card-mod-7 { --card-accent: #FFCA28; --card-glow: rgba(255, 202, 40, 0.25); }
+    .card-data  { --card-accent: #38BDF8; --card-glow: rgba(56, 189, 248, 0.25); }
+    .card-human { --card-accent: #10B981; --card-glow: rgba(16, 185, 129, 0.25); }
+
+    .arch-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+    .arch-card-tag {
+      font-size: 0.60rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--card-accent, #4FC3F7);
+    }
+    .arch-card-badge {
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #CBD5E1;
+      white-space: nowrap;
+    }
+    .arch-card-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.25;
+      margin-bottom: 3px;
+    }
+    .arch-card-desc {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .arch-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 7px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.64rem;
+    }
+    .arch-card-tech {
+      color: #94A3B8;
+      font-family: monospace;
+      font-size: 0.62rem;
+    }
+    .arch-card-action {
+      color: var(--card-accent, #4FC3F7);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    /* Sub-nodes / Branch Chips (Reroute, Replenish, Alert, Why, What-If) */
+    .arch-chip-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 8px 0;
+    }
+    .arch-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 9px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 8px;
+      font-size: 0.67rem;
+      font-weight: 700;
+      color: #E2E8F0;
+      transition: all 0.2s ease;
+    }
+    .arch-chip:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.20);
+    }
+    .arch-chip-icon {
+      font-size: 0.85rem;
+      line-height: 1;
+    }
+    .arch-chip-label {
+      flex: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .arch-chip-pill {
+      font-size: 0.58rem;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.10);
+      color: #CBD5E1;
+    }
+
+    /* Flow Connectors within columns */
+    .arch-internal-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 0;
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 0.72rem;
+    }
+    .arch-flow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.60rem;
+      font-weight: 700;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 2px 8px;
+    }
+
+    /* Legend Bar at Bottom of Architecture */
+    .arch-legend-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.70rem;
+      color: var(--text-muted);
+    }
+    .arch-legend-items {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .arch-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .arch-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-bg"></div>
+  <div class="dash-overlay"></div>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <img src="../assets/logiyantra_logo.png" alt="LogiYantra Logo" class="sidebar-logo-img">
+        <span>Logi<span style="color:var(--brand-sky)">Yantra</span></span>
+      </div>
+      <div class="sidebar-tagline">Think Smarter. Move Faster.</div>
+    </div>
+
+    <div class="sidebar-label">Navigation</div>
+    <a href="dashboard.html" class="sidebar-link active"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
+
+    <div class="sidebar-label" style="margin-top:8px">Modules</div>
+    <a href="module1.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></span> Demand Forecast</a>
+    <a href="module2.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Delay Prediction</a>
+    <a href="module3.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span> Route Optimizer</a>
+    <a href="module4.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></span> Warehouse AI</a>
+    <a href="module5.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Inventory Opt.</a>
+    <a href="module6.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span> Decision Engine</a>
+    <a href="module7.html" class="sidebar-link"><span class="icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></span> Explainable AI</a>
+
+    <div class="sidebar-bottom">
+      <div class="user-chip">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <div>
+          <div class="user-name" id="sidebarName">User</div>
+          <div class="user-role">Logistics Analyst</div>
+        </div>
+      </div>
+      <button class="btn-signout" onclick="handleSignOut()" title="Sign out and return to landing page">
+        <svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="dash-main">
+
+    <!-- Header with Top-Right Date, Day & Time Widget -->
+    <div class="dash-header">
+      <div>
+        <div class="dash-greeting">Good day, <span id="headerName">User</span></div>
+        <h1 class="dash-title">Control <span>Tower</span></h1>
+      </div>
+
+      <!-- Live Date, Day & Time Display (Top Right) -->
+      <div class="dash-time-widget">
+        <div class="dash-time-icon"><svg class="ui-icon" viewBox="0 0 24 24" style="stroke:var(--brand-orange)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="dash-time-details">
+          <div class="dash-live-time" id="dashLiveTime">--:--:-- --</div>
+          <div class="dash-live-date">
+            <span class="dash-live-day" id="dashLiveDay">---</span>
+            <span id="dashLiveDate">-- --- ----</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI Strip -->
+    <!-- KPI Strip: All 7 Intelligence Modules in a Single Row -->
+    <div class="kpi-grid">
+      <!-- Module 1: Demand Forecasting -->
+      <a href="module1.html" class="kpi-card anim-fade-up delay-1" title="Module 1: Demand Forecasting" style="--kpi-color:#FF8C42;--kpi-bg:rgba(255,140,66,0.18);text-decoration:none;">
+        <div class="kpi-icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></div>
+        <div class="kpi-indicator-bar" style="background:#FF8C42"></div>
+        <div class="kpi-value" id="kpi-demand">—</div>
+        <div class="kpi-label">Forecast Demand</div>
+        <div class="kpi-trend" id="kpi-demand-sub">Module 1 live</div>
+      </a>
+
+      <!-- Module 2: Delay Risk -->
+      <a href="module2.html" class="kpi-card anim-fade-up delay-2" title="Module 2: Delay Risk" style="--kpi-color:#EF5350;--kpi-bg:rgba(239,83,80,0.18);text-decoration:none;">
+        <div class="kpi-icon"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="kpi-indicator-bar" style="background:#EF5350"></div>
+        <div class="kpi-value" id="kpi-delay">—</div>
+        <div class="kpi-label">Delay Risk</div>
+        <div class="kpi-trend" id="kpi-delay-sub">Module 2 live</div>
+      </a>
+
+      <!-- Module 3: Route Optimizer -->
+      <a href="module3.html" class="kpi-card anim-fade-up delay-3" title="Module 3: Route Corridor" style="--kpi-color:#4FC3F7;--kpi-bg:rgba(79,195,247,0.18);text-decoration:none;">
+        <div class="kpi-icon"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+        <div class="kpi-indicator-bar" style="background:#4FC3F7"></div>
+        <div class="kpi-value" id="kpi-route">—</div>
+        <div class="kpi-label">Route Corridor</div>
+        <div class="kpi-trend" id="kpi-route-sub">Module 3 live</div>
+      </a>
+
+      <!-- Module 4: Warehouse Congestion -->
+      <a href="module4.html" class="kpi-card anim-fade-up delay-4" title="Module 4: Warehouse Congestion" style="--kpi-color:#FFB347;--kpi-bg:rgba(255,179,71,0.18);text-decoration:none;">
+        <div class="kpi-icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></div>
+        <div class="kpi-indicator-bar" style="background:#FFB347"></div>
+        <div class="kpi-value" id="kpi-congestion">—</div>
+        <div class="kpi-label">Congestion</div>
+        <div class="kpi-trend" id="kpi-congestion-sub">Module 4 live</div>
+      </a>
+
+      <!-- Module 5: Inventory Status -->
+      <a href="module5.html" class="kpi-card anim-fade-up delay-5" title="Module 5: Inventory Status" style="--kpi-color:#26C6DA;--kpi-bg:rgba(38,198,218,0.18);text-decoration:none;">
+        <div class="kpi-icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+        <div class="kpi-indicator-bar" style="background:#26C6DA"></div>
+        <div class="kpi-value" id="kpi-inventory">—</div>
+        <div class="kpi-label">Inventory Status</div>
+        <div class="kpi-trend" id="kpi-inventory-sub">Module 5 live</div>
+      </a>
+
+      <!-- Module 6: Autonomous Decision Engine -->
+      <a href="module6.html" class="kpi-card anim-fade-up delay-1" title="Module 6: Actions Queued" style="--kpi-color:#7B61FF;--kpi-bg:rgba(123,97,255,0.18);text-decoration:none;">
+        <div class="kpi-icon"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+        <div class="kpi-indicator-bar" style="background:#7B61FF"></div>
+        <div class="kpi-value" id="kpi-actions">—</div>
+        <div class="kpi-label">Actions Queued</div>
+        <div class="kpi-trend" id="kpi-actions-sub">Module 6 live</div>
+      </a>
+
+      <!-- Module 7: Explainable AI & What-If -->
+      <a href="module7.html" class="kpi-card anim-fade-up delay-2" title="Module 7: Explainable AI" style="--kpi-color:#FFCA28;--kpi-bg:rgba(255,202,40,0.18);text-decoration:none;">
+        <div class="kpi-icon"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></div>
+        <div class="kpi-indicator-bar" style="background:#FFCA28"></div>
+        <div class="kpi-value" id="kpi-xai">—</div>
+        <div class="kpi-label">Explainable AI</div>
+        <div class="kpi-trend" id="kpi-xai-sub">Module 7 live</div>
+      </a>
+    </div>
+
+
+    <!-- Module cards -->
+    <div class="modules-headline">Intelligence Modules</div>
+    <div class="mod-grid">
+      <a href="module1.html" class="mod-card delay-1" style="--mod-color:linear-gradient(90deg,var(--brand-orange),var(--brand-gold));--mod-icon-bg:rgba(255,140,66,0.12)">
+        <div class="mod-top">
+          <div class="mod-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-6 6"/></svg></div>
+          <div class="mod-status-dot"></div>
+        </div>
+        <div class="mod-name">Demand Forecasting</div>
+        <div class="mod-desc">XGBoost + LSTM hybrid. 29-feature inference for supply planning.</div>
+        <div class="mod-footer">
+          <span class="mod-badge">MODULE 1</span>
+          <a href="module1.html" class="mod-launch">Open →</a>
+        </div>
+      </a>
+
+      <a href="module2.html" class="mod-card delay-2" style="--mod-color:linear-gradient(90deg,#EF5350,#FF8A80);--mod-icon-bg:rgba(244,67,54,0.12)">
+        <div class="mod-top">
+          <div class="mod-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="mod-status-dot"></div>
+        </div>
+        <div class="mod-name">Delivery Delay Prediction</div>
+        <div class="mod-desc">Binary risk classifier. ROC-AUC 0.74, threshold-optimized F1.</div>
+        <div class="mod-footer">
+          <span class="mod-badge">MODULE 2</span>
+          <a href="module2.html" class="mod-launch">Open →</a>
+        </div>
+      </a>
+
+      <a href="module3.html" class="mod-card delay-3" style="--mod-color:linear-gradient(90deg,var(--brand-sky),var(--brand-teal));--mod-icon-bg:rgba(79,195,247,0.12)">
+        <div class="mod-top">
+          <div class="mod-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+          <div class="mod-status-dot"></div>
+        </div>
+        <div class="mod-name">Route Optimization</div>
+        <div class="mod-desc">Multi-route alternatives with haversine + OSM. TomTom when configured.</div>
+        <div class="mod-footer">
+          <span class="mod-badge">MODULE 3</span>
+          <a href="module3.html" class="mod-launch">Open →</a>
+        </div>
+      </a>
+
+      <a href="module4.html" class="mod-card delay-4" style="--mod-color:linear-gradient(90deg,var(--brand-gold),#FF8C42);--mod-icon-bg:rgba(255,183,77,0.12)">
+        <div class="mod-top">
+          <div class="mod-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg></div>
+          <div class="mod-status-dot"></div>
+        </div>
+        <div class="mod-name">Warehouse Congestion</div>
+        <div class="mod-desc">LSTM sequence model on 12-step dock utilization & truck flow data.</div>
+        <div class="mod-footer">
+          <span class="mod-badge">MODULE 4</span>
+          <a href="module4.html" class="mod-launch">Open →</a>
+        </div>
+      </a>
+
+      <a href="module5.html" class="mod-card delay-5" style="--mod-color:linear-gradient(90deg,var(--brand-teal),var(--brand-sky));--mod-icon-bg:rgba(38,198,218,0.12)">
+        <div class="mod-top">
+          <div class="mod-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <div class="mod-status-dot"></div>
+        </div>
+        <div class="mod-name">Inventory Optimization</div>
+        <div class="mod-desc">s,S policy with reorder point, safety stock and replenishment qty.</div>
+        <div class="mod-footer">
+          <span class="mod-badge">MODULE 5</span>
+          <a href="module5.html" class="mod-launch">Open →</a>
+        </div>
+      </a>
+
+      <a href="module6.html" class="mod-card delay-1" style="--mod-color:linear-gradient(90deg,var(--brand-purple),var(--brand-sky));--mod-icon-bg:rgba(123,97,255,0.12)">
+        <div class="mod-top">
+          <div class="mod-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+          <div class="mod-status-dot"></div>
+        </div>
+        <div class="mod-name">Autonomous Decision Engine</div>
+        <div class="mod-desc">Combines all modules. Prioritized actions with human approval gate.</div>
+        <div class="mod-footer">
+          <span class="mod-badge">MODULE 6</span>
+          <a href="module6.html" class="mod-launch">Open →</a>
+        </div>
+      </a>
+
+      <a href="module7.html" class="mod-card delay-2" style="--mod-color:linear-gradient(90deg,var(--brand-gold),var(--brand-orange));--mod-icon-bg:rgba(255,183,77,0.12)">
+        <div class="mod-top">
+          <div class="mod-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg></div>
+          <div class="mod-status-dot"></div>
+        </div>
+        <div class="mod-name">Explainable AI + What-If</div>
+        <div class="mod-desc">Decision explanations and scenario simulation for governance.</div>
+        <div class="mod-footer">
+          <span class="mod-badge">MODULE 7</span>
+          <a href="module7.html" class="mod-launch">Open →</a>
+        </div>
+      </a>
+    </div><!-- /mod-grid -->
+
+    <!-- ===== SYSTEM ARCHITECTURE SECTION (LANDSCAPE MODULAR FORMAT) ===== -->
+    <section class="arch-section" id="archSection">
+      <div class="arch-header">
+        <div class="arch-header-left">
+          <div class="arch-badge">
+            <span class="pulse-dot"></span> System Architecture • Landscape Pipeline
+          </div>
+          <h2 class="arch-title">Autonomous <span>Logistics Architecture</span></h2>
+          <p class="arch-subtitle">
+            <strong>LOGIYANTRA</strong> — AI-Powered Autonomous Logistics Intelligence • <em>Think Smarter. Move Faster.</em>
+          </p>
+        </div>
+        <div class="arch-header-actions">
+          <button class="arch-btn active" onclick="toggleArchPulse()" id="btnArchPulse" title="Toggle signal pulse animation">
+            <span><svg class="ui-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span> Signal Flow: <strong id="archPulseLabel" style="color:var(--success)">Active</strong>
+          </button>
+          <button class="arch-btn" onclick="toggleArchOrientation()" id="btnArchWide" title="Toggle wide landscape view">
+            <span><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><polyline points="21 15 21 21 15 21"/><polyline points="3 9 3 3 9 3"/></svg></span> Wide View
+          </button>
+        </div>
+      </div>
+
+      <!-- Landscape Modular Flow Canvas -->
+      <div class="arch-landscape-wrapper" id="archLandscapeWrapper">
+        <div class="arch-pipeline-landscape">
+
+          <!-- STAGE 01: SUPPLY CHAIN DATA -->
+          <div class="arch-stage-col stage-ingest">
+            <div class="arch-stage-label">
+              <span class="stage-num">1</span> Ingestion
+            </div>
+            <div class="arch-card card-data">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Input Feeds</span>
+                <span class="arch-card-badge">Raw Data</span>
+              </div>
+              <div class="arch-card-title">SUPPLY CHAIN DATA</div>
+              <div class="arch-card-desc">Unified multi-source telemetry &amp; operational logs.</div>
+              <div class="arch-chip-group">
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span><span class="arch-chip-label">Orders &amp; Lags</span></div>
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><span class="arch-chip-label">Fleet Telemetry</span></div>
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4H2z"/></svg></span><span class="arch-chip-label">Dock Sensors</span></div>
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span class="arch-chip-label">ERP Master</span></div>
+              </div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">Multi-Modal</span>
+                <span class="arch-card-action">Stream →</span>
+              </div>
+            </div>
+            <div class="arch-internal-flow">
+              <span class="arch-flow-pill">Branching to M1, M2, M4 ↓</span>
+            </div>
+          </div>
+
+          <!-- CONNECTOR 1 -> 2 -->
+          <div class="arch-stage-connector">
+            <div class="arch-conn-track">
+              <div class="arch-conn-line">
+                <div class="arch-signal-dot"></div>
+              </div>
+              <svg class="arch-conn-arrow-svg" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+
+          <!-- STAGE 02: PREDICTION CORE (MODULE 1, 2, 4) -->
+          <div class="arch-stage-col stage-predict">
+            <div class="arch-stage-label">
+              <span class="stage-num">2</span> Prediction Core
+            </div>
+
+            <!-- Module 1: Demand Forecast -->
+            <a href="module1.html" class="arch-card card-mod-1" title="Open Module 1 — Demand Forecasting">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Module 1</span>
+                <span class="arch-card-badge">XGBoost + LSTM</span>
+              </div>
+              <div class="arch-card-title">DEMAND FORECAST</div>
+              <div class="arch-card-desc">29 lag, rolling &amp; calendar features predicting weekly sales.</div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">Feeds → Module 5</span>
+                <span class="arch-card-action">Open →</span>
+              </div>
+            </a>
+
+            <!-- Module 2: Delivery Delay Prediction -->
+            <a href="module2.html" class="arch-card card-mod-2" title="Open Module 2 — Delivery Delay Prediction">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Module 2</span>
+                <span class="arch-card-badge">ROC 0.745</span>
+              </div>
+              <div class="arch-card-title">DELIVERY DELAY PREDICTION</div>
+              <div class="arch-card-desc">DataCo classifier with 0.36 threshold-tuned risk probability.</div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">Feeds → Module 6</span>
+                <span class="arch-card-action">Open →</span>
+              </div>
+            </a>
+
+            <!-- Module 4: Warehouse Congestion -->
+            <a href="module4.html" class="arch-card card-mod-4" title="Open Module 4 — Warehouse Congestion">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Module 4</span>
+                <span class="arch-card-badge">LSTM 12-Steps</span>
+              </div>
+              <div class="arch-card-title">WAREHOUSE CONGESTION</div>
+              <div class="arch-card-desc">Sequence model predicting dock bottlenecks &amp; truck queues.</div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">Feeds → Module 6</span>
+                <span class="arch-card-action">Open →</span>
+              </div>
+            </a>
+          </div>
+
+          <!-- CONNECTOR 2 -> 3 -->
+          <div class="arch-stage-connector">
+            <div class="arch-conn-track">
+              <div class="arch-conn-line">
+                <div class="arch-signal-dot" style="animation-delay:0.35s"></div>
+              </div>
+              <svg class="arch-conn-arrow-svg" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+
+          <!-- STAGE 03: INVENTORY OPTIMIZATION (MODULE 5) -->
+          <div class="arch-stage-col stage-inventory">
+            <div class="arch-stage-label">
+              <span class="stage-num">3</span> Inventory Policy
+            </div>
+            <div class="arch-internal-flow" style="margin-bottom:6px">
+              <span class="arch-flow-pill" style="color:var(--brand-orange)">← In: M1 Forecast</span>
+            </div>
+            <a href="module5.html" class="arch-card card-mod-5" title="Open Module 5 — Inventory Optimization">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Module 5</span>
+                <span class="arch-card-badge">(s, S) Policy</span>
+              </div>
+              <div class="arch-card-title">INVENTORY OPTIMIZATION</div>
+              <div class="arch-card-desc">Calculates safety stock, reorder point (ROP), and restock batches.</div>
+              <div class="arch-chip-group">
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span class="arch-chip-label">Reorder Point</span><span class="arch-chip-pill">ROP</span></div>
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span class="arch-chip-label">Safety Stock</span><span class="arch-chip-pill">Z·σ</span></div>
+              </div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">Feeds → Module 6</span>
+                <span class="arch-card-action">Open →</span>
+              </div>
+            </a>
+            <div class="arch-internal-flow">
+              <span class="arch-flow-pill">Stock Level Health Status</span>
+            </div>
+          </div>
+
+          <!-- CONNECTOR 3 -> 4 -->
+          <div class="arch-stage-connector">
+            <div class="arch-conn-track">
+              <div class="arch-conn-line">
+                <div class="arch-signal-dot" style="animation-delay:0.7s"></div>
+              </div>
+              <svg class="arch-conn-arrow-svg" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+
+          <!-- STAGE 04: AUTONOMOUS DECISION ENGINE (MODULE 6) -->
+          <div class="arch-stage-col stage-decision">
+            <div class="arch-stage-label">
+              <span class="stage-num">4</span> Autonomous Core
+            </div>
+            <div class="arch-internal-flow" style="margin-bottom:6px">
+              <span class="arch-flow-pill" style="color:#7B61FF">← In: M2, M4, M5 Signals</span>
+            </div>
+            <a href="module6.html" class="arch-card card-mod-6" title="Open Module 6 — Autonomous Decision Engine">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Module 6</span>
+                <span class="arch-card-badge">Policy Nexus</span>
+              </div>
+              <div class="arch-card-title">AUTONOMOUS DECISION ENGINE</div>
+              <div class="arch-card-desc">Multi-signal arbitration engine ranking operational priorities.</div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">Heuristic + Policy</span>
+                <span class="arch-card-action">Open →</span>
+              </div>
+            </a>
+
+            <!-- 3 Branches from Decision Engine -->
+            <div style="font-size:0.60rem;font-weight:800;color:#94A3B8;text-transform:uppercase;letter-spacing:0.8px;margin:8px 0 4px;">
+              Action Dispatch Branches:
+            </div>
+            <div class="arch-chip-group" style="margin:0">
+              <div class="arch-chip" style="border-left:3px solid #4FC3F7">
+                <span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></span>
+                <span class="arch-chip-label">Reroute</span>
+                <span class="arch-chip-pill" style="color:#4FC3F7">→ M3</span>
+              </div>
+              <div class="arch-chip" style="border-left:3px solid #26C6DA">
+                <span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>
+                <span class="arch-chip-label">Replenish Inventory</span>
+                <span class="arch-chip-pill" style="color:#26C6DA">PO Gen</span>
+              </div>
+              <div class="arch-chip" style="border-left:3px solid #FF8C42">
+                <span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+                <span class="arch-chip-label">Alert Customer</span>
+                <span class="arch-chip-pill" style="color:#FF8C42">ETA Alert</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONNECTOR 4 -> 5 -->
+          <div class="arch-stage-connector">
+            <div class="arch-conn-track">
+              <div class="arch-conn-line">
+                <div class="arch-signal-dot" style="animation-delay:1.05s"></div>
+              </div>
+              <svg class="arch-conn-arrow-svg" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+
+          <!-- STAGE 05: ROUTE OPTIMIZATION & ACTIONS (MODULE 3) -->
+          <div class="arch-stage-col stage-routing">
+            <div class="arch-stage-label">
+              <span class="stage-num">5</span> Route &amp; Execution
+            </div>
+            <div class="arch-internal-flow" style="margin-bottom:6px">
+              <span class="arch-flow-pill" style="color:#4FC3F7">← In: Reroute Action</span>
+            </div>
+
+            <!-- Module 3: Route Optimization -->
+            <a href="module3.html" class="arch-card card-mod-3" title="Open Module 3 — Route Optimization">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Module 3</span>
+                <span class="arch-card-badge">OSM + TomTom</span>
+              </div>
+              <div class="arch-card-title">ROUTE OPTIMIZATION</div>
+              <div class="arch-card-desc">Graph network shortest path with live incident rerouting.</div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">NetworkX / A*</span>
+                <span class="arch-card-action">Open →</span>
+              </div>
+            </a>
+
+            <!-- Sub Node: Best / Alternative Route -->
+            <div class="arch-card" style="--card-accent:#38BDF8;background:rgba(18,24,38,0.60)">
+              <div class="arch-card-top">
+                <span class="arch-card-tag" style="color:#38BDF8">Path Selection</span>
+              </div>
+              <div class="arch-card-title" style="font-size:0.75rem">BEST / ALTERNATIVE ROUTE</div>
+              <div class="arch-card-desc">Latency, toll &amp; fuel comparison candidates.</div>
+            </div>
+
+            <!-- Sub Node: Operational Action -->
+            <div class="arch-card" style="--card-accent:#10B981;background:rgba(18,24,38,0.60)">
+              <div class="arch-card-top">
+                <span class="arch-card-tag" style="color:#10B981">Execution</span>
+              </div>
+              <div class="arch-card-title" style="font-size:0.75rem">OPERATIONAL ACTION</div>
+              <div class="arch-card-desc">Carrier re-dispatch, dock booking &amp; driver notify.</div>
+            </div>
+          </div>
+
+          <!-- CONNECTOR 5 -> 6 -->
+          <div class="arch-stage-connector">
+            <div class="arch-conn-track">
+              <div class="arch-conn-line">
+                <div class="arch-signal-dot" style="animation-delay:1.4s"></div>
+              </div>
+              <svg class="arch-conn-arrow-svg" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+
+          <!-- STAGE 06: EXPLAINABLE AI & WHAT-IF (MODULE 7) -->
+          <div class="arch-stage-col stage-xai">
+            <div class="arch-stage-label">
+              <span class="stage-num">6</span> Explainability &amp; Sim
+            </div>
+            <div class="arch-internal-flow" style="margin-bottom:6px">
+              <span class="arch-flow-pill" style="color:#FFCA28">← In: Operational Action</span>
+            </div>
+
+            <!-- Module 7: Explainable AI -->
+            <a href="module7.html" class="arch-card card-mod-7" title="Open Module 7 — Explainable AI + What-If">
+              <div class="arch-card-top">
+                <span class="arch-card-tag">Module 7</span>
+                <span class="arch-card-badge">SHAP + What-If</span>
+              </div>
+              <div class="arch-card-title">EXPLAINABLE AI + WHAT-IF ENGINE</div>
+              <div class="arch-card-desc">Transparent justification &amp; counterfactual stress testing.</div>
+              <div class="arch-card-meta">
+                <span class="arch-card-tech">Auditability</span>
+                <span class="arch-card-action">Open →</span>
+              </div>
+            </a>
+
+            <!-- Two Branches: Why? and What If? -->
+            <div class="arch-chip-group">
+              <div class="arch-chip" style="border-left:3px solid #FFCA28">
+                <span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                <span class="arch-chip-label">WHY?</span>
+                <span class="arch-chip-pill">SHAP Factors</span>
+              </div>
+              <div class="arch-chip" style="border-left:3px solid #FF8C42">
+                <span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M10 2v7.31L4.1 19.46A2 2 0 0 0 5.8 22h12.4a2 2 0 0 0 1.7-2.54L14 9.31V2"/></svg></span>
+                <span class="arch-chip-label">WHAT IF?</span>
+                <span class="arch-chip-pill">Scenario Sim</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONNECTOR 6 -> 7 -->
+          <div class="arch-stage-connector">
+            <div class="arch-conn-track">
+              <div class="arch-conn-line">
+                <div class="arch-signal-dot" style="animation-delay:1.75s"></div>
+              </div>
+              <svg class="arch-conn-arrow-svg" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+
+          <!-- STAGE 07: HUMAN GOVERNANCE & FINAL DECISION -->
+          <div class="arch-stage-col stage-human">
+            <div class="arch-stage-label">
+              <span class="stage-num">7</span> Governance Gate
+            </div>
+            <div class="arch-card card-human" style="background:rgba(18,24,38,0.85);margin-top:auto;margin-bottom:auto;">
+              <div class="arch-card-top">
+                <span class="arch-card-tag" style="color:#10B981">Final Output</span>
+                <span class="arch-card-badge" style="color:#10B981;background:rgba(16,185,129,0.15)">Governed</span>
+              </div>
+              <div style="text-align:center;margin:6px 0 4px;"><svg class="ui-icon" style="width:26px;height:26px;stroke:#10B981" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div class="arch-card-title" style="text-align:center;font-size:0.80rem;">
+                HUMAN-UNDERSTANDABLE DECISION
+              </div>
+              <div class="arch-card-desc" style="text-align:center;margin-top:4px;">
+                Transparent plain-text rationale with operator approval gate &amp; regulatory audit compliance.
+              </div>
+              <div class="arch-chip-group" style="margin-top:10px;">
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24" style="stroke:#10B981"><polyline points="20 6 9 17 4 12"/></svg></span><span class="arch-chip-label">Operator Sign-Off</span></div>
+                <div class="arch-chip"><span class="arch-chip-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span class="arch-chip-label">Audit Log Stored</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /arch-pipeline-landscape -->
+      </div><!-- /arch-landscape-wrapper -->
+
+      <!-- Legend bar -->
+      <div class="arch-legend-bar">
+        <div class="arch-legend-items">
+          <span style="font-weight:700;color:#CBD5E1;margin-right:4px;">Modules:</span>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#FF8C42"></span> M1 Demand</div>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#EF5350"></span> M2 Delay</div>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#4FC3F7"></span> M3 Routes</div>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#FFB347"></span> M4 Congestion</div>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#26C6DA"></span> M5 Inventory</div>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#7B61FF"></span> M6 Decisions</div>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#FFCA28"></span> M7 XAI &amp; What-If</div>
+          <div class="arch-legend-item"><span class="arch-legend-dot" style="background:#10B981"></span> Human Gate</div>
+        </div>
+        <div>
+          <span>Tip: Click any module card to enter its dedicated workspace</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Decision engine quick-fire -->
+    <div class="decision-section">
+      <div class="decision-header">
+        <div class="decision-title">
+          <svg class="ui-icon" viewBox="0 0 24 24" style="stroke:var(--brand-orange);margin-right:6px;"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg> Quick Decision
+          <span class="badge badge-orange"><span class="pulse-dot"></span> Live</span>
+        </div>
+        <button class="btn btn-primary" style="font-size:0.80rem;padding:8px 20px"
+                onclick="runQuickDecision()">Run Now</button>
+      </div>
+
+      <div class="quick-form">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Delay Risk (0-1)</label>
+          <input class="form-control" id="qd-delay" type="number" step="0.01" min="0" max="1" value="0.75"/>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Congestion Risk (0-1)</label>
+          <input class="form-control" id="qd-congestion" type="number" step="0.01" min="0" max="1" value="0.60"/>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Stock Level</label>
+          <input class="form-control" id="qd-stock" type="number" value="80"/>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Reorder Point</label>
+          <input class="form-control" id="qd-rop" type="number" value="100"/>
+        </div>
+      </div>
+
+      <div class="loading-overlay" id="qd-loading">
+        <div class="spinner"></div>
+        Consulting Decision Engine…
+      </div>
+
+      <div class="decision-output" id="qd-output">
+        <div class="action-list" id="qd-actions"></div>
+      </div>
+    </div>
+
+  </main><!-- /dash-main -->
+
+  <script src="../js/api.js"></script>
+  <script src="../js/dashboard.js"></script>
+  <script>
+    // Set user info from localStorage
+    const user = JSON.parse(localStorage.getItem('ly_user') || '{}');
+    if (user.name) {
+      document.getElementById('headerName').textContent = user.name;
+      document.getElementById('sidebarName').textContent = user.name;
+      document.getElementById('sidebarAvatar').textContent = user.name[0].toUpperCase();
+      const roleEl = document.querySelector('.user-role');
+      if (roleEl && user.role) {
+        roleEl.textContent = user.role + (user.employee_id ? ' • ' + user.employee_id : '');
+      }
+    }
+
+    // Sign Out Handler: Clear session and redirect to landing page
+    function handleSignOut() {
+      if (confirm('Are you sure you want to sign out of the Control Tower?')) {
+        localStorage.removeItem('ly_user');
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
+
+    // Live Date, Day & Time Updater (Top Right)
+    function updateLiveDateTime() {
+      const now = new Date();
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      const dayName = days[now.getDay()];
+      const dayNum = String(now.getDate()).padStart(2, '0');
+      const monthName = months[now.getMonth()];
+      const year = now.getFullYear();
+
+      // Format time with AM/PM
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const formattedHours = String(hours).padStart(2, '0');
+
+      const timeStr = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
+      const dateStr = `${dayNum} ${monthName} ${year}`;
+
+      const timeEl = document.getElementById('dashLiveTime');
+      const dayEl = document.getElementById('dashLiveDay');
+      const dateEl = document.getElementById('dashLiveDate');
+
+      if (timeEl) timeEl.textContent = timeStr;
+      if (dayEl) dayEl.textContent = dayName;
+      if (dateEl) dateEl.textContent = dateStr;
+    }
+
+    updateLiveDateTime();
+    setInterval(updateLiveDateTime, 1000);
+
+    // Architecture Pulse & Landscape Helpers
+    let archPulseActive = true;
+    function toggleArchPulse() {
+      archPulseActive = !archPulseActive;
+      const dots = document.querySelectorAll('.arch-signal-dot');
+      dots.forEach(d => {
+        if (archPulseActive) {
+          d.classList.remove('paused');
+        } else {
+          d.classList.add('paused');
+        }
+      });
+      const lbl = document.getElementById('archPulseLabel');
+      const btn = document.getElementById('btnArchPulse');
+      if (lbl) {
+        lbl.textContent = archPulseActive ? 'Active' : 'Paused';
+        lbl.style.color = archPulseActive ? 'var(--success)' : 'var(--text-muted)';
+      }
+      if (btn) {
+        if (archPulseActive) btn.classList.add('active');
+        else btn.classList.remove('active');
+      }
+    }
+
+    function toggleArchOrientation() {
+      const section = document.getElementById('archSection');
+      const btn = document.getElementById('btnArchWide');
+      if (section) {
+        section.classList.toggle('wide-view');
+        const isWide = section.classList.contains('wide-view');
+        if (btn) {
+          btn.innerHTML = isWide ? '<span>⛶</span> Standard View' : '<span><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><polyline points="21 15 21 21 15 21"/><polyline points="3 9 3 3 9 3"/></svg></span> Wide View';
+          if (isWide) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      }
+    }
+  </script>
+  <script src="/js/chatbot.js"></script>
+</body>
+</html>

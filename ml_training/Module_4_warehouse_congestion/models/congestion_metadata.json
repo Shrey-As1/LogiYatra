@@ -1,0 +1,26 @@
+{
+    "module": "warehouse_congestion",
+    "model_type": "XGBoost feature selection + LSTM sequence classifier",
+    "sequence_length": 12,
+    "threshold": 0.5,
+    "metrics": {
+        "accuracy": 0.7662476598020861,
+        "precision": 0.7252535007242877,
+        "recall": 0.8312119535141118,
+        "f1": 0.774626095925735,
+        "roc_auc": 0.8370668014083715
+    },
+    "train_rows": 17500,
+    "validation_rows": 3750,
+    "test_rows": 3750,
+    "selected_features": [
+        "dock_utilization",
+        "order_volume",
+        "burst_event",
+        "trucks_per_staff",
+        "orders_per_staff",
+        "shift_change",
+        "truck_arrivals",
+        "hour_cos"
+    ]
+}

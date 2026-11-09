@@ -1,0 +1,256 @@
+/* LogiYantra Landing Page Styles (index.html) */
+@import url('styles.css');
+
+#sat-bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.site-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.site-nav {
+  height: 72px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(8, 10, 15, 0.7);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #FFFFFF;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 80px 0 60px;
+}
+
+.hero-content {
+  max-width: 820px;
+  margin-bottom: 48px;
+}
+
+.hero-headline {
+  font-size: 2.75rem;
+  line-height: 1.18;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  letter-spacing: -0.03em;
+}
+
+.hero-subhead {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-large {
+  padding: 14px 24px;
+  font-size: 1rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Hero Visual Card (HUD & Corridor Route) */
+.hero-visual-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-visual-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hud-status-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hud-live-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mint-positive);
+  box-shadow: 0 0 10px var(--mint-positive);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+.hud-metric-pill {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.hud-metric-pill strong {
+  color: #FFFFFF;
+  margin-left: 4px;
+}
+
+.hero-svg-wrapper {
+  width: 100%;
+  background: rgba(5, 7, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.hero-svg-wrapper svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Honesty / Operating Principle Block */
+.honesty-section {
+  padding: 60px 0;
+}
+
+.honesty-card {
+  background: rgba(245, 166, 35, 0.04);
+  border: 1px dashed var(--border-amber);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  margin: 40px 0;
+}
+
+.honesty-quote {
+  font-size: 1.125rem;
+  font-style: italic;
+  color: #FBBF24;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.honesty-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8125rem;
+}
+
+.honesty-author {
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.honesty-meta {
+  color: var(--text-dim);
+}
+
+/* Footer CTA */
+.footer-cta-section {
+  padding: 60px 0 100px;
+}
+
+.footer-cta-card {
+  text-align: center;
+  background: linear-gradient(180deg, rgba(18, 24, 38, 0.8), rgba(10, 13, 20, 0.95));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 56px 24px;
+}
+
+.footer-cta-title {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  color: #FFFFFF;
+}
+
+.footer-cta-desc {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 28px;
+  font-size: 1rem;
+}
+
+.site-footer {
+  padding: 24px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}

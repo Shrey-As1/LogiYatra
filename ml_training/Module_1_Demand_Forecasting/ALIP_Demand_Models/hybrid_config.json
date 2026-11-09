@@ -1,0 +1,6 @@
+{
+    "xgboost_weight": 1.0,
+    "lstm_weight": 0.0,
+    "optimization_metric": "Validation RMSE",
+    "search_step": 0.05
+}

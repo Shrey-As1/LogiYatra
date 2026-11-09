@@ -1,0 +1,25 @@
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# Environment secrets & credentials
+.env
+*.env.local
+
+# Python caches and artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.pytest_cache/
+
+# OS and IDE caches
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local cache
+cache/
+*.log

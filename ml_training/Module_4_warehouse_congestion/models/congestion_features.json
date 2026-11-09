@@ -1,0 +1,28 @@
+{
+    "candidate_features": [
+        "order_volume",
+        "dock_utilization",
+        "staff_count",
+        "truck_arrivals",
+        "shift",
+        "shift_change",
+        "burst_event",
+        "hour_sin",
+        "hour_cos",
+        "day_sin",
+        "day_cos",
+        "orders_per_staff",
+        "trucks_per_staff"
+    ],
+    "selected_features": [
+        "dock_utilization",
+        "order_volume",
+        "burst_event",
+        "trucks_per_staff",
+        "orders_per_staff",
+        "shift_change",
+        "truck_arrivals",
+        "hour_cos"
+    ],
+    "sequence_length": 12
+}
